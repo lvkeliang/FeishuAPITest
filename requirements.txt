@@ -8,6 +8,7 @@ pytest~=8.4.1
 pytest-yaml~=1.2.1
 PyYAML~=6.0.2
 requests_toolbelt~=1.0.0
+allure-pytest
 
 jsonschema~=4.24.0
 pydantic~=2.11.7
