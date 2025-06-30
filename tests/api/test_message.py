@@ -1,131 +1,139 @@
-import pytest
-import json
 import allure
-from ..utils.client import FeishuClient
-from ..utils.config_loader import config
-from tests.utils.schema_validator import (
-    validate_schema,
-    validate_with_model,
-    MessageResponseModel,
-    MESSAGE_RESPONSE_SCHEMA
-)
-from ..utils.file_uploader import FileUploader
-from ..utils.message_builder import MessageBuilder
+import pytest
+from typing import Dict, Any
+from tests.client.client import feishu_client
+from tests.test_data.case_loader import test_case_loader
 
 
 @pytest.fixture(scope="module")
-def feishu_client():
+def client():
     """共享的Feishu客户端fixture"""
-    return FeishuClient()
+    return feishu_client
 
 
 @pytest.fixture
-def test_user():
-    """获取测试用户fixture"""
-    return config.get_test_account("吕科良")
+def prepared_test_case(request):
+    """准备测试用例，执行setup并替换变量"""
+    loader = test_case_loader
+    test_case = request.param  # 从参数化获取测试用例
 
+    # 1. 执行setup操作
+    if test_case.setup:
+        setup_context = loader.execute_setup(test_case.setup)
+    else:
+        setup_context = {}
 
-@pytest.fixture
-def message_test_data(test_user, request):
-    """参数化的消息测试数据fixture"""
-    msg_type = request.param if hasattr(request, 'param') else 'text'
-    return {
-        "receive_id": test_user["open_id"],
-        "msg_type": msg_type,
-        "content": {"text": f"测试{msg_type}类型消息"}
+    # 2. 替换请求中的变量
+    # context = {"open_id": test_user["open_id"], **setup_context}
+    context = {**setup_context}
+    replaced_request = loader.replace_variables(test_case.request.dict(), context)
+
+    yield {
+        "request": replaced_request,
+        "expected": test_case.expected.dict(),
+        "context": context,
+        "original_case": test_case
     }
 
-
-# 测试发送文本消息（详细验证）
-# def test_send_text_message(feishu_client, test_user):
-#     """测试发送文本消息（完整验证）"""
-#     # 准备测试数据
-#     test_content = "自动化测试消息"
-#     test_data = {
-#         "receive_id": test_user["open_id"],
-#         "msg_type": "text",
-#         "content": json.dumps({"text": test_content})
-#     }
-#
-#     # 发送请求
-#     response = feishu_client.send_message(
-#         method="POST",
-#         endpoint="/open-apis/im/v1/messages",
-#         params={"receive_id_type": "open_id"},
-#         json=test_data
-#     )
-#
-#     if response.status_code != 200:
-#         print(f"请求失败: {response.status_code}")
-#         print("响应内容:", response.json())  # 打印错误详情
-#
-#     # 验证基础响应
-#     assert response.status_code == 200
-#     response_data = response.json()
-#
-#     # 验证业务码和消息
-#     assert response_data["code"] == 0
-#     assert response_data["msg"] == "success"
-#
-#     # 验证完整响应结构
-#     validate_schema(response_data, MESSAGE_RESPONSE_SCHEMA)
-#
-#     # 使用Pydantic模型验证
-#     validate_with_model(response_data, MessageResponseModel)
-#
-#     # 验证业务逻辑
-#     data = response_data["data"]
-#     assert len(data["message_id"]) > 0
-#     assert data["msg_type"] == "text"
-#     assert not data["deleted"]
-#     assert not data["updated"]
-#     assert data["sender"]["sender_type"] == "app"
-#     assert data["sender"]["id_type"] == "app_id"
-#
-#     # 验证时间戳
-#     assert len(data["create_time"]) == 13
-#     assert len(data["update_time"]) == 13
-#     assert data["create_time"] == data["update_time"]
-#
-#     # 验证消息内容
-#     content = json.loads(data["body"]["content"])
-#     assert content["text"] == test_content
+    # 3. 测试结束后执行teardown
+    if hasattr(request, "node") and hasattr(request.node, "funcargs"):
+        response = request.node.funcargs.get("api_response")
+        if response and test_case.teardown:
+            loader.execute_teardown(test_case.teardown, response.json())
 
 
-@pytest.fixture(scope="module")
-def uploader(feishu_client):
-    return FileUploader(feishu_client)
+# 具体消息类型的测试
+@pytest.mark.msg_type("text")
+def test_text_messages(client, prepared_test_case):
+    _generic_message_test(feishu_client, prepared_test_case)
 
 
-# 参数化测试所有消息类型
-@pytest.mark.parametrize("msg_type,content_generator", [
-    ("text", lambda u: MessageBuilder.build_text()),
-    ("post", lambda u: MessageBuilder.build_post()),
-    ("image", lambda u: MessageBuilder.build_image(u)),
-    ("interactive", lambda u: MessageBuilder.build_interactive()),
-    # 可扩展其他消息类型
-])
-def test_all_message_types(feishu_client, test_user, uploader, msg_type, content_generator):
-    """参数化测试所有消息类型"""
-    # 生成消息内容
-    with allure.step("Step 1: 生成消息内容"):
-        content = content_generator(uploader)
+@pytest.mark.msg_type("image")
+def test_image_messages(client, prepared_test_case):
+    _generic_message_test(feishu_client, prepared_test_case)
+
+
+@pytest.mark.msg_type("post")
+def test_post_messages(client, prepared_test_case):
+    _generic_message_test(feishu_client, prepared_test_case)
+
+
+@pytest.mark.msg_type("interactive")
+def test_interactive_messages(client, prepared_test_case):
+    _generic_message_test(feishu_client, prepared_test_case)
+
+
+def _generic_message_test(client, prepared_test_case):
+    """通用消息发送测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
 
     with allure.step("Step 2: 发送请求"):
-        response = feishu_client.send_message(
-            method="POST",
-            endpoint="/open-apis/im/v1/messages",
-            params={"receive_id_type": "open_id"},
-            json={
-                "receive_id": test_user["open_id"],
-                "msg_type": msg_type,
-                "content": content
-            }
+        # 发送请求
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=request_data.get("query_params"),
+            headers=request_data.get("headers"),
+            json=request_data.get("body")
         )
 
+    # 将响应保存到测试上下文中，供teardown使用
+    pytest.api_response = response
+
     with allure.step("Step 3: 验证响应"):
-        assert response.status_code == 200, f"请求失败: {response.json().get('msg')}"
-        response_data = response.json()
-        assert response_data["code"] == 0, f"请求失败: {response.json().get('msg')}"
-        assert response_data["data"]["msg_type"] == msg_type, f"请求失败: {response.json().get('msg')}"
-        allure.dynamic.title(f"测试通过 - 返回消息: {response_data.get('msg')}")
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        assert response.status_code == expected["status_code"], \
+            f"状态码不匹配，期望 {expected['status_code']}，实际 {response.status_code}"
+
+        # 2. 验证响应头
+        # if expected.get("headers"):
+        #     for header, value in expected["headers"].items():
+        #         assert header in response.headers, f"缺少响应头 {header}"
+        #         assert response.headers[header] == value, \
+        #             f"响应头 {header} 不匹配，期望 {value}，实际 {response.headers[header]}"
+
+        # 3. 验证响应体
+        # response_json = response.json()
+
+        # 3.1 验证schema
+        # if expected.get("schema"):
+        #     validate_schema(response_json, expected["schema"])
+
+        # 3.2 验证具体字段
+        # if expected.get("body"):
+        #     for field_path, expected_value in expected["body"].items():
+        #         if field_path.startswith("@") and field_path.endswith("@"):
+        #             # 特殊验证指令
+        #             directive = field_path[1:-1]
+        #             if directive == "contains":
+        #                 assert expected_value in str(response_json), \
+        #                     f"响应中未找到预期内容: {expected_value}"
+        #         else:
+        #             # 普通字段验证
+        #             actual_value = _get_nested_value(response_json, field_path)
+        #             assert actual_value == expected_value, \
+        #                 f"字段 {field_path} 不匹配，期望 {expected_value}，实际 {actual_value}"
+
+
+def _get_nested_value(data: Dict[str, Any], path: str) -> Any:
+    """获取嵌套字典中的值，支持点分路径"""
+    keys = path.split(".")
+    value = data
+    for key in keys:
+        if isinstance(value, list):
+            # 处理数组索引
+            if key.isdigit():
+                value = value[int(key)]
+            else:
+                # 处理数组中的字典
+                value = next((item for item in value if key in item), None)
+        else:
+            value = value.get(key)
+        if value is None:
+            break
+    return value

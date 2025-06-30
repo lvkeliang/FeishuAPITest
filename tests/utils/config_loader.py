@@ -3,6 +3,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, Any
 
+
 class ConfigLoader:
     _instance = None
 
@@ -35,12 +36,34 @@ class ConfigLoader:
         """获取环境配置"""
         return self._env_config
 
-    def get_test_account(self, name: str) -> Dict[str, str]:
-        """获取测试账号信息"""
-        for account in self._env_config["test_accounts"]:
-            if account["name"] == name:
-                return account
-        raise ValueError(f"Test account '{name}' not found")
+    def get_test_account(self, identifier: str | int) -> Dict[str, str]:
+        """获取测试账号信息
+        可以通过账号名称(name)或索引位置(index)获取
+
+        Args:
+            identifier: 可以是账号名称(str)或索引位置(int)
+
+        Returns:
+            账号信息的字典
+
+        Raises:
+            ValueError: 当找不到对应账号或索引超出范围时
+        """
+        accounts = self._env_config["test_accounts"]
+
+        if isinstance(identifier, int):
+            # 通过索引获取
+            if 0 <= identifier < len(accounts):
+                return accounts[identifier]
+            raise ValueError(f"Test account index {identifier} out of range (0-{len(accounts) - 1})")
+        elif isinstance(identifier, str):
+            # 通过名称获取
+            for account in accounts:
+                if account["name"] == identifier:
+                    return account
+            raise ValueError(f"Test account '{identifier}' not found")
+        else:
+            raise TypeError("Identifier must be either int (index) or str (name)")
 
 
 # 全局配置访问点

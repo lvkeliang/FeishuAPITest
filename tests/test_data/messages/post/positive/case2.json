@@ -1,0 +1,107 @@
+{
+    "name": "基础富文本消息测试",
+    "description": "测试发送基础富文本消息",
+    "category": "positive",
+    "request": {
+        "method": "POST",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "receive_id_type": "open_id"
+        },
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $access_token$"
+        },
+        "body": {
+            "receive_id": "$open_id$",
+            "msg_type": "post",
+            "content_json": {
+                "zh_cn": {
+                    "title": "测试富文本2标题",
+                    "content": [
+                        [
+                            {
+                                "tag": "text",
+                                "text": "第一行: ",
+                                "style": [
+                                    "bold"
+                                ]
+                            },
+                            {
+                                "tag": "a",
+                                "text": "飞书官网",
+                                "href": "https://www.feishu.cn"
+                            }
+                        ],
+                        [
+                            {
+                                "tag": "text",
+                                "text": "这是一段测试文本"
+                            }
+                        ],
+                        [
+                            {
+                                "tag": "hr"
+                            }
+                        ],
+                        [
+                            {
+                                "tag": "img",
+                                "image_key": "$uploaded_image_key$"
+                            }
+                        ]
+                    ]
+                }
+            },
+            "uuid": "$random_uuid$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "schema": "message_response_schema",
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "msg_type": "text",
+                "deleted": false,
+                "updated": false,
+                "sender.id_type": "app_id",
+                "body.content": {
+                    "@contains": "test content"
+                }
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_access_token",
+            "save_to": "access_token"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id"
+        },
+        {
+            "action": "generate_uuid",
+            "save_to": "random_uuid"
+        },
+        {
+            "action": "upload_image",
+            "save_to": "uploaded_image_key",
+            "image_path": "F:\\pictures\\mountainschool2.jpg",
+            "image_type": "message"
+        }
+    ],
+    "teardown": [
+        {
+            "action": "delete_message",
+            "params": {
+                "message_id": "$response.data.message_id$"
+            }
+        }
+    ]
+}
