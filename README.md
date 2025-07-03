@@ -30,8 +30,8 @@
 4. 填写飞书API配置信息：
 
    - 打开`dev.yaml`文件
-   - 在`test_accounts`部分填写你的飞书`open_id`[如何获取？详见快速获取Open ID](#快速获取Open ID)这个会控制你的机器人向哪个用户发送消息
-   - 在`feishu`部分填写你的飞书应用的`app_id`和`app_secret`[如何获取？详见获取APP ID和APP SECRET](#获取APP ID和APP SECRET)
+   - 在`test_accounts`部分填写你的飞书`open_id`[如何获取？详见快速获取Open ID](#快速获取openid)这个会控制你的机器人向哪个用户发送消息
+   - 在`feishu`部分填写你的飞书应用的`app_id`和`app_secret`[如何获取？详见获取APP ID和APP SECRET](#获取appid和appsecret)
    
    ![dev.yaml部分示例](https://picture-0-1320983848.cos.ap-chongqing.myqcloud.com/blog/20250703090939.png)
 
@@ -55,7 +55,7 @@ pytest tests/api/test_message.py -v --alluredir=./reports/allure --html=reports/
 allure serve reports/allure
 ```
 
-## 快速获取Open ID
+## 快速获取Open_ID
 
 1. 访问[发送消息 - 服务端 API - 开发文档 - 飞书开放平台](https://open.feishu.cn/document/server-docs/im-v1/message/create)
 2. 在右侧查询参数选项中选择`open_id`
@@ -70,7 +70,7 @@ allure serve reports/allure
 
 详细更多方法请参考[如何获取用户的 Open ID - 开发指南 - 开发文档 - 飞书开放平台](https://open.feishu.cn/document/faq/trouble-shooting/how-to-obtain-openid)
 
-## 获取APP ID和APP SECRET
+## 获取APP_ID和APP_SECRET
 
 1. 访问[飞书开放平台](https://open.feishu.cn/app/)
 2. 进入"飞书QA训练营演示企业"的应用后台，进入对应的应用
