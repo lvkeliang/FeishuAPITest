@@ -1,6 +1,6 @@
 {
-  "name": "基础文本消息测试",
-  "description": "测试发送基本文本消息",
+  "name": "基础富文本消息测试",
+  "description": "测试发送基础富文本消息",
   "category": "positive",
   "request": {
     "method": "POST",
@@ -14,18 +14,28 @@
     },
     "body": {
       "receive_id": "$open_id$",
-      "msg_type": "text",
+      "msg_type": "post",
       "content": {
-        "__needs_json_encode": true,
-        "text": "test content json dumps1"
-      },
+            "__needs_json_encode": true,
+            "zh_cn": {
+                "title": "测试富文本标题",
+                "content": [
+                    [
+                        {"tag": "text", "text": "第一行: ", "style": ["bold"]},
+                        {"tag": "a", "text": "飞书官网", "href": "https://www.feishu.cn"}
+                    ],
+                    [{"tag": "text", "text": "这是一段测试文本"}],
+                    [{"tag": "hr"}]
+                ]
+            }
+        },
       "uuid": "$random_uuid$"
     }
   },
   "expected": {
     "status_code": 200,
     "headers": {
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json"
     },
     "schema": "message_response_schema",
     "body": {
@@ -37,14 +47,14 @@
         "updated": false,
         "sender.id_type": "app_id",
         "body.content": {
-          "@contains": "test content json dumps1"
+          "@contains": "test content"
         }
       }
     }
   },
   "setup": [
     {
-      "action": "get_access_token",
+      "action": "get_tenant_access_token",
       "save_to": "access_token"
     },
     {

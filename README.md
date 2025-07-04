@@ -9,7 +9,7 @@
 
 1. 克隆代码仓库：
 
-   ```
+   ```shell
    git clone https://github.com/lvkeliang/FeishuAPITest.git
    ```
 
@@ -17,7 +17,7 @@
 
    可以运行下面的命令，通过项目中的requirements.txt进行安装
 
-   ```
+   ```shell
    pip install -r requirements.txt
    ```
 
@@ -40,7 +40,7 @@
 执行以下命令运行测试并生成报告：
 
 ```shell
-pytest tests/api/test_message.py -v --alluredir=./reports/allure --html=reports/html/report.html --self-contained-html -rA
+pytest tests/api/ -v --alluredir=./reports/allure --html=reports/html/report.html --self-contained-html -rA
 ```
 
 至此，该项目应该可以成功运行了

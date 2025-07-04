@@ -41,7 +41,7 @@
     },
     "setup": [
         {
-            "action": "get_access_token",
+            "action": "get_tenant_access_token",
             "save_to": "access_token"
         },
         {
@@ -55,7 +55,7 @@
         {
             "action": "load_and_dump_json",
             "save_to": "json_card",
-            "json_path": "tests\\test_data\\messages\\interactive\\cards\\test_card1.json"
+            "json_path": "tests\\test_data\\message\\interactive\\cards\\test_card1.json"
         }
     ],
     "teardown": [

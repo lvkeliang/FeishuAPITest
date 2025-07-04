@@ -9,6 +9,7 @@ feishu:
 test_accounts:
   - name: "张麻子"
     open_id: "your_open_id"
+    chat_id: "your_chat_id"
 #    email: "testuser@example.com"
 
 #  - name: "测试群组A"

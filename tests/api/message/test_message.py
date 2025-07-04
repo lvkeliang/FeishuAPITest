@@ -43,22 +43,18 @@ def prepared_test_case(request):
 
 
 # 具体消息类型的测试
-@pytest.mark.msg_type("text")
 def test_text_messages(client, prepared_test_case):
     _generic_message_test(feishu_client, prepared_test_case)
 
 
-@pytest.mark.msg_type("image")
 def test_image_messages(client, prepared_test_case):
     _generic_message_test(feishu_client, prepared_test_case)
 
 
-@pytest.mark.msg_type("post")
 def test_post_messages(client, prepared_test_case):
     _generic_message_test(feishu_client, prepared_test_case)
 
 
-@pytest.mark.msg_type("interactive")
 def test_interactive_messages(client, prepared_test_case):
     _generic_message_test(feishu_client, prepared_test_case)
 
@@ -118,22 +114,3 @@ def _generic_message_test(client, prepared_test_case):
         #             actual_value = _get_nested_value(response_json, field_path)
         #             assert actual_value == expected_value, \
         #                 f"字段 {field_path} 不匹配，期望 {expected_value}，实际 {actual_value}"
-
-
-def _get_nested_value(data: Dict[str, Any], path: str) -> Any:
-    """获取嵌套字典中的值，支持点分路径"""
-    keys = path.split(".")
-    value = data
-    for key in keys:
-        if isinstance(value, list):
-            # 处理数组索引
-            if key.isdigit():
-                value = value[int(key)]
-            else:
-                # 处理数组中的字典
-                value = next((item for item in value if key in item), None)
-        else:
-            value = value.get(key)
-        if value is None:
-            break
-    return value

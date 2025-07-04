@@ -53,9 +53,9 @@ class TestCaseLoader:
         case_data = json.loads(case_file.read_text(encoding='utf-8'))
         return TestCaseModel(**case_data)
 
-    def load_cases_by_type(self, api_name: str, msg_type: str) -> List[TestCaseModel]:
+    def load_cases_by_type(self, api_name: str, test_type: str) -> List[TestCaseModel]:
         """加载指定API和消息类型的所有测试用例"""
-        api_path = self.base_path / api_name / msg_type
+        api_path = self.base_path / api_name / test_type
         if not api_path.exists():
             raise ValueError(f"消息类型目录不存在: {api_path}")
 
@@ -92,7 +92,7 @@ class TestCaseLoader:
         for action in setup_actions:
             action_type = action["action"]
 
-            if action_type == "get_access_token":
+            if action_type == "get_tenant_access_token":
                 # 实际获取token的逻辑
                 context[action["save_to"]] = feishu_client.tenant_access_token
 
@@ -116,6 +116,10 @@ class TestCaseLoader:
             elif action_type == "load_text":
                 file_path = Path(action["text_path"])
                 context[action["save_to"]] = file_path.read_text(encoding='utf-8')
+
+            elif action_type == "get_chat_id":
+                context[action["save_to"]] = config.get_test_account(0)["chat_id"]
+
 
             # 可以添加更多setup操作
 
