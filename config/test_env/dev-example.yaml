@@ -9,11 +9,16 @@ feishu:
 test_accounts:
   - name: "张麻子"
     open_id: "your_open_id"
+    # 该chat_id标识机器人与用户的对话
     chat_id: "your_chat_id"
-#    email: "testuser@example.com"
+    union_id: "your_union_id:"
+    user_id : "your_user_id"
+    email: "your_email"
 
-#  - name: "测试群组A"
-#    chat_id: "oc_xxxxx"
+test_groups:
+  - name: "chat_id测试群组"
+    # 该chat_id标识群组对话
+    chat_id: "your_chat_id"
 
 # API特定配置
 apis:
