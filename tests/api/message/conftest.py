@@ -4,6 +4,7 @@ from tests.test_data.case_loader import test_case_loader
 
 import pytest
 from tests.test_data.case_loader import test_case_loader
+from tests.utils.config_loader import config
 
 
 def extract_msg_type_from_test_name(test_name):
@@ -32,6 +33,22 @@ def pytest_generate_tests(metafunc):
             ids=lambda c: f"{c.category}_{c.name}"
         )
 
+
+@pytest.fixture(params=[
+    ("open_id", config.get_test_account(0)["open_id"]),
+    ("union_id", config.get_test_account(0)["union_id"]),
+    ("user_id", config.get_test_account(0)["user_id"]),
+    # ("email", config.get_test_account(0)["email"]),
+    ("chat_id", config.get_test_group(0)["chat_id"]),
+], ids=[
+    "open_id",  # 对应第一个参数组合
+    "union_id",  # 对应第二个参数组合
+    "user_id",   # 对应第三个参数组合
+    # "email",     # 对应第四个参数组合
+    "chat_id",   # 对应第五个参数组合
+])
+def receiver_info(request):
+    return request.param
 
 # def pytest_generate_tests(metafunc):
 #     if "prepared_test_case" in metafunc.fixturenames:

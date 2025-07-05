@@ -3,6 +3,7 @@ import pytest
 from typing import Dict, Any
 from tests.client.client import feishu_client
 from tests.test_data.case_loader import test_case_loader
+from tests.utils.config_loader import config
 
 
 @pytest.fixture(scope="module")
@@ -43,36 +44,49 @@ def prepared_test_case(request):
 
 
 # 具体消息类型的测试
-def test_text_messages(client, prepared_test_case):
-    _generic_message_test(feishu_client, prepared_test_case)
+def test_text_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
-def test_image_messages(client, prepared_test_case):
-    _generic_message_test(feishu_client, prepared_test_case)
+def test_image_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
-def test_post_messages(client, prepared_test_case):
-    _generic_message_test(feishu_client, prepared_test_case)
+def test_post_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
-def test_interactive_messages(client, prepared_test_case):
-    _generic_message_test(feishu_client, prepared_test_case)
+def test_interactive_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
-def _generic_message_test(client, prepared_test_case):
+# def test_file_messages(client, prepared_test_case):
+#     _generic_message_test(feishu_client, prepared_test_case)
+
+
+def _generic_message_test(client, prepared_test_case, receiver_info):
+    receive_id_type, receive_id = receiver_info
     """通用消息发送测试"""
     with allure.step("Step 1: 准备测试用例"):
         test_data = prepared_test_case
         request_data = test_data["request"]
 
+        # --- 关键修改：动态注入参数 ---
+        # 1. 注入 receive_id_type 到查询参数
+        query_params = request_data.get("query_params", {})
+        query_params["receive_id_type"] = receive_id_type  # 覆盖或新增
+
+        # 2. 注入 receive_id 到请求体
+        request_body = request_data.get("body", {})
+        request_body["receive_id"] = receive_id  # 覆盖或新增
+
     with allure.step("Step 2: 发送请求"):
-        # 发送请求
         response = client.request(
             method=request_data["method"],
             endpoint=request_data["endpoint"],
-            params=request_data.get("query_params"),
+            params=query_params,  # 使用修改后的查询参数
             headers=request_data.get("headers"),
-            json=request_data.get("body")
+            json=request_body  # 使用修改后的请求体
         )
 
     # 将响应保存到测试上下文中，供teardown使用
