@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 511
+Body:
+{"receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs", "msg_type": "post", "content": "{\"zh_cn\": {\"title\": \"\u6d4b\u8bd5\u5bcc\u6587\u672c\u6807\u9898\", \"content\": [[{\"tag\": \"text\", \"text\": \"\u7b2c\u4e00\u884c: \", \"style\": [\"bold\"]}, {\"tag\": \"a\", \"text\": \"\u98de\u4e66\u5b98\u7f51\", \"href\": \"https://www.feishu.cn\"}], [{\"tag\": \"text\", \"text\": \"\u8fd9\u662f\u4e00\u6bb5\u6d4b\u8bd5\u6587\u672c\"}], [{\"tag\": \"hr\"}]]}}", "uuid": "f4f97b48-0292-44b6-b2d1-1658e69b73de"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 835
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:22:08 GMT
+  Request-Id: 134215f3-8e37-428f-90a4-067e0d6c5ce9
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: kFa_8HrSqkZlDVHDW27J3eufcU32RCNbFYP4bKkFP43G_pjDkdBguzSbiTgC0KF3B8tji1sTc7kntd80jHqZFGbmpWSjpfrz-6C0BhjvGXsEvjgj9dZAyB64NDiXA-CN0J7FyOdLeqCrRPt6XItm7JePgcc5JSrn66yHrjfNwtaXaO6vD4xyBK-f64qOOFVEF5n3jt-1BHXbS4l2c9gWWQ==
+  X-Request-Id: 134215f3-8e37-428f-90a4-067e0d6c5ce9
+  X-Tt-Logid: 20250705202207B1ACDAE6A444B7D00B51
+  server-timing: inner; dur=82, cdn-cache;desc=MISS,edge;dur=0,origin;dur=207
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dbbba4f033514282be9860bbaebd642777c94a634f7695a587b3cf05799c686ad567bc5336e699b799b63aa69eb66149a2033d110841739ea083e582ccba4ff084ff1071bdad084b97fa57181a47203d0
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705202207B1ACDAE6A444B7D00B51-04D55FD506F7A572-00
+  X-Timestamp: 1751718128.001
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache7.cn7993[207,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601b17517181278234757e
+Body: {'code': 99992351, 'msg': 'The request you send is not a valid {open_id} or not exists, and the example value is {ou_da5****************dfe}. Invalid ids: [ou_7d8a6e6df7621556ce0d21922b676706ccs] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit', 'error': {'message': 'Refer to the documentation to fix the error: https://open.feishu.cn/document/uAjLw4CM/ugTN1YjL4UTN24CO1UjN/trouble-shooting/how-to-obtain-openid', 'log_id': '20250705202207B1ACDAE6A444B7D00B51', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250705202207B1ACDAE6A444B7D00B51&code=99992351&method_id=6936075528891154460', 'field_violations': [{'field': 'receive_id', 'value': 'ou_7d8a6e6df7621556ce0d21922b676706ccs', 'description': 'id not exist'}]}}

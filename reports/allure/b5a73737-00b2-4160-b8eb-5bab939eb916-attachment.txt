@@ -1,0 +1,35 @@
+
+=== Request Details ===
+Method: GET
+URL: https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=your_chat_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json; charset=utf-8
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 352
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:51:33 GMT
+  Request-Id: 644ae9cf-aab0-4dd9-aeb5-9a9b48a3ec2a
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: _58qDvdc7pLENaCBo2MDAkdIkzR78PZHrCYNWRdkUBX6kMCQ1TKI4BLMu7RRiaX58-uG6kQkVLaB2ydrLpShSRfDOnVhuM13wd-deJzcLklWgiofAVdp-pjKxjetVc9M2O262iYpdMS9nGTZSsEJGDYrvsMeKZHz-tJCWtC-23eni_vpfJ03V0dXMMtg1_BHmIyAkh5Vu4cI-NgtCorcnBRBxuaH4Wr2yjrQFbKgmtNITAkxWOhaAKha-u0CgKjvdcwA7arTxzhskP6MOcv5WMMG7l19HCT-ZJJxjxHQ9t7bJF2PB_5f
+  X-Request-Id: 644ae9cf-aab0-4dd9-aeb5-9a9b48a3ec2a
+  X-Tt-Logid: 2025070520513326E949CEE28675B81821
+  server-timing: inner; dur=74, cdn-cache;desc=MISS,edge;dur=0,origin;dur=157
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d8441d01d693631324833aff5f25c6fef4f8cf56b1bfb1be67b431a80238079a3e8833cdea65f548888a903de55db66b36832b9ae448a180980c2fad2827edbb4cc3140b67091cb9120bf251c868800b2
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070520513326E949CEE28675B81821-493200265142F965-00
+  X-Timestamp: 1751719893.741
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache7.cn7993[157,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601b17517198935987958e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid container_id.', 'error': {'log_id': '2025070520513326E949CEE28675B81821', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070520513326E949CEE28675B81821&code=230001&method_id=6936075528891187228'}}

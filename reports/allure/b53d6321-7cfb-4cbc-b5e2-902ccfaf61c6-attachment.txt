@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 253
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "interactive", "content": "{\"type\": \"template\", \"data\": {\"template_id\": \"AAqI8MeXJcWEG\", \"template_version_name\": \"1.0.0\"}}", "uuid": "ab2d5b61-2e45-44c9-9676-3bcc79af1091"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:51:38 GMT
+  Vary: Accept-Encoding
+  Request-Id: bc96ac35-d767-41c6-85eb-961177901792
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: HY7aaHLg2HmwUGGjI3x9FcDwgf3id9NVWTczi7uXY_7HoKKhmx1BYFGk4U3Gbg9vitEgZfDUjDpr5gnIr6nAktBhyHnyokb7hwfmLxhoA4gLjwzVJMjqFa40V9hbAKoRS83oL6VVYQCykcalIENjCjG0_lbKRGt2fPnw7n2OK0bGWlzaA7cYGPRNRXyv1mFOMLMj6l5ubqKUlc3jt3eS2zq4bUQJHqH-RT2QmbuygrPkzSxS7ZCz3rfcp6YRfBn-P0_wkrcMkhcJoSc9xgd2Pp7bCfS2L-BoQbchhR-QZqXuGQ==
+  X-Request-Id: bc96ac35-d767-41c6-85eb-961177901792
+  X-Tt-Logid: 20250705205138C994466DB66C7FD1D943
+  server-timing: inner; dur=500, cdn-cache;desc=MISS,edge;dur=0,origin;dur=620
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d14062524a21bef5ee66864a6ad97709de5f1e96c58dac2110da90521215e2f5333e307f165bb0730015153c885459a2bba7e0186708e9401c007535f0ad93b670ccb7b4d150ecf55abd95c67a7e80a2e
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705205138C994466DB66C7FD1D943-6FE967E760A0AF16-00
+  X-Timestamp: 1751719898.823
+  Content-Encoding: gzip
+  Via: ens-cache4.cn7993[620,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601817517198982263784e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":null,"elements":[[{"tag":"img","image_key":"img_v3_02ad_e19fca1f-912a-450e-95de-3c229091b53g"},{"tag":"text","text":"Upgrade to the latest app version to view the content"},{"tag":"text","text":""}]]}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751719898792', 'deleted': False, 'message_id': 'om_x100b49a5b36a1c880f2679d76ec64f0', 'msg_type': 'interactive', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751719898792', 'updated': False}, 'msg': 'success'}

@@ -1,0 +1,35 @@
+
+=== Request Details ===
+Method: GET
+URL: https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=invalid_chat_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json; charset=utf-8
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 352
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:22:06 GMT
+  Request-Id: 436083ae-bb86-4bff-a654-fcb46d69cf27
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: DPvr93IFEWciD1UZWGP-wFKgpdfWgfw2LU1DXrOWTVW5wLX-oYAPwZ5I_E-8u2110GNs6w0sR9LqZlzocwuS5c_UNv0uOhWhk8mabPvm3WOk1rz4C1rXBA-Xx1ZRAh3CDlJ-aQVGTCe8YIqcmle8-jraqzbrbJgDJKkHIb31JZUa18CogJOXVcKLr_HNdysms2hhya965Mx2_Vy_TTwpFMQX4UYEiqs07gHTV_DPZBz0KHWfx9cWCWb4Ctu7iWN4JiarauFIqMVJNXv7B_8F6rOISuNIL3IjFGa4zNnz19q0Bm6re-lV
+  X-Request-Id: 436083ae-bb86-4bff-a654-fcb46d69cf27
+  X-Tt-Logid: 202507052022061332DE59642FEDB68476
+  server-timing: inner; dur=67, cdn-cache;desc=MISS,edge;dur=0,origin;dur=149
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d2d2da9f72f85fc98f54a3a16d4940ee9e4c0e8569ddeebe4dcdb586ec2c08a3b050cd05c16c34517b1e274d2ea57ec23f5e5203fdbd7980d5e48931d93f9c1c3cbe1b1371d22636b33fb745c114e6f9a
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507052022061332DE59642FEDB68476-55236492424B1E4A-00
+  X-Timestamp: 1751718126.733
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache9.cn7993[149,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601d17517181266024344e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid container_id.', 'error': {'log_id': '202507052022061332DE59642FEDB68476', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=202507052022061332DE59642FEDB68476&code=230001&method_id=6936075528891187228'}}

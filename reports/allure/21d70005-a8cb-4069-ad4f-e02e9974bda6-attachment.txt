@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 159
+Body:
+{"receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs", "msg_type": "file", "content": "{\"file_key\": null}", "uuid": "0227c8c7-7cc4-45aa-9539-ef339487cba9"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 835
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:22:09 GMT
+  Request-Id: 8e25d9f2-26d0-4a70-9101-41e3df16073c
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: bghcKcYpdJ6ZDQSr1S7CDGvWnsOERvlWaqoJ1TJ1CoDaK49Kbm6aK4aQbc4CZ8HQ0vi0_RX15QCarcKdpBL8MApWp_0Zvtl0Psfo7_trDomphHGTyEv3M-2Imfil7rttxkZZA-E7XfazSw4zPgw8RJ9LUltENE9z5c6WyZ-ke5osfngI4D52WO3Zfn1iiBS5mbK2CDHfCrIAGdcWH7qpmw==
+  X-Request-Id: 8e25d9f2-26d0-4a70-9101-41e3df16073c
+  X-Tt-Logid: 2025070520220936968CC25529D8B65696
+  server-timing: inner; dur=58, cdn-cache;desc=MISS,edge;dur=0,origin;dur=144
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dc3f8318dd543b347dd62266b6a46c65e256ab1c91c5100cf18b166eb7b506ca0aca03068567e4506783f4217036f0a381519b8954196e76112dc4cacd853d8f4d2113d87cf703401a460c67cf94b1e9a
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070520220936968CC25529D8B65696-36C1FBCB2F9BBF78-00
+  X-Timestamp: 1751718129.900
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache1.cn7993[144,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601517517181297733247e
+Body: {'code': 99992351, 'msg': 'The request you send is not a valid {open_id} or not exists, and the example value is {ou_da5****************dfe}. Invalid ids: [ou_7d8a6e6df7621556ce0d21922b676706ccs] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit', 'error': {'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070520220936968CC25529D8B65696&code=99992351&method_id=6936075528891154460', 'field_violations': [{'field': 'receive_id', 'value': 'ou_7d8a6e6df7621556ce0d21922b676706ccs', 'description': 'id not exist'}], 'message': 'Refer to the documentation to fix the error: https://open.feishu.cn/document/uAjLw4CM/ugTN1YjL4UTN24CO1UjN/trouble-shooting/how-to-obtain-openid', 'log_id': '2025070520220936968CC25529D8B65696'}}

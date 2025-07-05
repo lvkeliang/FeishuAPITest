@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1182
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "text", "content": "{\"text\": \"\u95ee\u9898\u6982\u8ff0\uff1aJSON\u53cd\u659c\u6760\u8f6c\u4e49\u5f02\u5e38\\n\\n\u5728\u4f7f\u7528Jackson\u5904\u7406JSON\u6570\u636e\u65f6\uff0c\u53cd\u659c\u6760\u8f6c\u4e49\u5b57\u7b26\uff08\u5982\\\"\\\\n\\\"\u3001\\\"\\\\\\\"\\\"\uff09\u53ef\u80fd\u5bfc\u81f4\u5e8f\u5217\u5316\u6216\u53cd\u5e8f\u5217\u5316\u5931\u8d25\u3002\u8fd9\u79cd\u95ee\u9898\u901a\u5e38\u51fa\u73b0\u5728API\u4f20\u8f93\u4e2d\uff0c\u670d\u52a1\u7aef\u8fd4\u56de\u7684JSON\u5b57\u7b26\u4e32\u88ab\u989d\u5916\u6dfb\u52a0\u4e86\u8f6c\u659c\u6760\uff0c\u5ba2\u6237\u7aef\u89e3\u6790\u65f6\u65e0\u6cd5\u6b63\u786e\u8bc6\u522b\u3002\\n\\n\u4ee5\u4e0b\u662f\u5e38\u89c1\u573a\u666f\uff1a\\n\\n\u670d\u52a1\u7aef\u8fd4\u56de\u7684JSON\u5b57\u7b26\u4e32\u4e2d\u5305\u542b\u591a\u4f59\u7684\u8f6c\u4e49\u7b26\u3002\\n\u5ba2\u6237\u7aef\u89e3\u6790\u65f6\u56e0\u672a\u6b63\u786e\u5904\u7406\u8f6c\u4e49\u7b26\u800c\u629b\u51fa\u5f02\u5e38\u3002\\n\u53cc\u65b9\u7f16\u7801\u89c4\u8303\u4e0d\u4e00\u81f4\u5bfc\u81f4\u6570\u636e\u683c\u5f0f\u9519\u8bef\u3002\\n\"}", "uuid": "ac24a978-37d7-4c8a-a31b-a1fe09a52a6c"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:51:35 GMT
+  Vary: Accept-Encoding
+  Request-Id: c57415cb-4cb5-46ba-a81e-63497f623783
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: HaltTCGoeX6BCZfS6KWVN9uhzuBpgTCaFTFh1Lf46A5bYDfhtrEo-WFdbqJidqul2uOJKEvUkfMMCeJg8tujQyDc7iw8nrMCX94qzKdIjzRAsuDKXoY-hWZ8JlA7wXF0YV0uFGjZ4aC0p8zXpIC3GOlha_vL1lqdJ9gKptvLtF8lXfyF5c-YfOzZLDBRvltt4JAOXFv6JMOhtGNLNZ8yiyB75zxMsqWNEwJdTLxppV7Wt5x9MoxXuSzHZxhCI-kSRDSnBZPpuqVCrtL4JtUOJjQoTexm71uBupPDGPCrkc_3aw==
+  X-Request-Id: c57415cb-4cb5-46ba-a81e-63497f623783
+  X-Tt-Logid: 20250705205135113DC711B12E0AD5CD95
+  server-timing: inner; dur=329, cdn-cache;desc=MISS,edge;dur=0,origin;dur=446
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d03c17709836935288d01a8dfc6d6a17c68c449bbe296be5600a635cfaae7813b9c4f16cd76ee885b26585b593f2637e9214029024dcf35a5f49e3083511d898b965ef1ee8bbcda604689ae8172342fca
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705205135113DC711B12E0AD5CD95-5C49F7CB2FC94FBF-00
+  X-Timestamp: 1751719895.453
+  Content-Encoding: gzip
+  Via: ens-cache11.cn7993[446,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601f17517198950323644e
+Body: {'code': 0, 'data': {'body': {'content': '{"text":"问题概述：JSON反斜杠转义异常\\n\\n在使用Jackson处理JSON数据时，反斜杠转义字符（如\\"\\\\n\\"、\\"\\\\\\"\\"）可能导致序列化或反序列化失败。这种问题通常出现在API传输中，服务端返回的JSON字符串被额外添加了转斜杠，客户端解析时无法正确识别。\\n\\n以下是常见场景：\\n\\n服务端返回的JSON字符串中包含多余的转义符。\\n客户端解析时因未正确处理转义符而抛出异常。\\n双方编码规范不一致导致数据格式错误。\\n"}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751719895427', 'deleted': False, 'message_id': 'om_x100b49a5b3b960a40ec3b8bb47d121f', 'msg_type': 'text', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751719895427', 'updated': False}, 'msg': 'success'}

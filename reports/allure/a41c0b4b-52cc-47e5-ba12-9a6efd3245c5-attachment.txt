@@ -1,0 +1,39 @@
+文件上传失败 tests/test_data/message/file/sample.mp4: HTTP错误: 400
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 156
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "file", "content": "{\"file_key\": null}", "uuid": "a8cc8b6b-7aef-41c2-9d8c-16a07f46e72a"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 378
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:26:07 GMT
+  Request-Id: 73359156-fe1f-4049-a6f5-dd0c1ef38234
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: 9DXwPyNIK84z0gKWL1c10jLC5p3g-P1AoYOp1r5mZT6quJwReuaY18_Gg69pkReCpGHyn0s1n7CnTK5zdg5lMi7TGNXQmW3r3qqxt2dS45zlo_OXNvztzIOxn4ojddPEjDJpLn4S3iuO0mMrniokpYIUuLhe8SxOnWxjV9WsRZweyNvl7Q4sP25iNbY71Jr6ftdqb4pvxfBv9qOGTIdoBmIXrqRNgK2Z2TNqWonmUQIq7Eg1P0E44_EuU5mHfqqcI95e1GKdgYAwjYci_TbnXh1t0Mcg4wJNhZFD6MV7UrAxDw==
+  X-Request-Id: 73359156-fe1f-4049-a6f5-dd0c1ef38234
+  X-Tt-Logid: 2025070521260700CF255C44739FBD199C
+  server-timing: inner; dur=167, cdn-cache;desc=MISS,edge;dur=0,origin;dur=245
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dd095cf670cbd95d8cd84e56fb32555cfa2c20d5745ce5608e2ec4128750854406a272ea23c815a1c45fdc9395752abcad9935365f4c649848a2bb127f82c3dd103cb4d5f5cc6e04996f625ac7dcff440
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070521260700CF255C44739FBD199C-6175689A78CBEA20-00
+  X-Timestamp: 1751721967.677
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: vcache1.cn3178[245,0]
+  Timing-Allow-Origin: *
+  EagleId: 7105b71517517219674481695e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid message content. validate content fail.', 'error': {'log_id': '2025070521260700CF255C44739FBD199C', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070521260700CF255C44739FBD199C&code=230001&method_id=6936075528891154460'}}

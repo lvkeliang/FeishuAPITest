@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 205
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "file", "content": "{\"file_key\": \"file_v3_00nt_0a90c91e-a3a3-4933-b2ac-a3e7406d794g\"}", "uuid": "61b09576-2fe3-4b95-bc17-ea257e6991c0"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:26:54 GMT
+  Vary: Accept-Encoding
+  Request-Id: 4d432c5e-6e40-45d7-a87d-7c3401220226
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: pQZ4YeBhSmQOH9nVE0muY-UWdX2OTZi2tZGA2bdtKc1X_ch4mr45lhbj3irSaVE6TO2TrsJGnxA7jNunaa0UhhFOoWPYtZUCz1dBoBya2pUPe1oIwjwgx_dKqkw1I1K1TkJ3si7Kyl0UG4WjUzJnwV9x8w5eCz-YnlMnByxrQlZv1JaQvgh7HBw1iT535zcrJqsMRjbKhYkgrT1h3L_CtXon_1geq0fNz475jX08JNy8ati-dShfSPue0UOGimyCCCz7f38ctMnLDJarr8z7fR9q46HQ11OaFl1H578c4vq5
+  X-Request-Id: 4d432c5e-6e40-45d7-a87d-7c3401220226
+  X-Tt-Logid: 2025070521265440B18B4B20CC78DAE8E2
+  server-timing: inner; dur=390, cdn-cache;desc=MISS,edge;dur=0,origin;dur=432
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d727cba18658c9332e96eec34ce2554bcf5723d644903dce4eae77587b9d61e420f93114e9fb9cdb6c012fd8bc93960ce558c557a376b9c63f0ff0135ee06d321a114b74eb143b64ee4e9ee773e5f8bc2
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070521265440B18B4B20CC78DAE8E2-3ABC2C22193A1E9F-00
+  X-Timestamp: 1751722014.949
+  Content-Encoding: gzip
+  Via: vcache7.cn3178[432,0]
+  Timing-Allow-Origin: *
+  EagleId: 7105b71b17517220145458018e
+Body: {'code': 0, 'data': {'body': {'content': '{"file_key":"file_v3_00nt_293fbd9f-7329-4354-962a-efda2d3e8cfg","file_name":"sample.pdf"}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751722014922', 'deleted': False, 'message_id': 'om_x100b49a6cf2134f80f1806dec2fac2c', 'msg_type': 'file', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751722014922', 'updated': False}, 'msg': 'success'}

@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1513
+Body:
+{"receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\u897f\u6e56\uff0c\u4f4d\u4e8e\u4e2d\u56fd\u6d59\u6c5f\u7701\u676d\u5dde\u5e02\u897f\u6e56\u533a\u9f99\u4e95\u8def1\u53f7\uff0c\u676d\u5dde\u5e02\u533a\u897f\u90e8\uff0c\u6c47\u6c34\u9762\u79ef\u4e3a21.22\u5e73\u65b9\u5343\u7c73\uff0c\u6e56\u9762\u9762\u79ef\u4e3a6.38\u5e73\u65b9\u5343\u7c73\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\ud83c\udf1e\u66f4\u591a\u666f\u70b9\u4ecb\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\u4eca\u65e5\u65c5\u6e38\u63a8\u8350(\u6d4b\u8bd5\u5361\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "ccecbefc-dc9a-4c31-8aca-13d0a06e8767"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 835
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:25:04 GMT
+  Request-Id: 81e577b7-aa22-43cc-a02a-983bb6d42565
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: wimcTOmvPxxv-m1aFbjq7GCmmAi65y_ANdVXQq7nqY7L7J9scmlXBrX9b6w0eG7PCARHzySRaHz1mjw5Fqnm1xfCpCYQcRQX-tRJIwdcn1pfrWzZO7DMUX2T-LLIHwLF4JV2sNiK4xfJLrf-t2U1Tj8UqSqFNLmKOViNCFYAtzXBAkTQZ2-iQpUtWA-aPeg4Uzw5vV0oyQOHq57ZBo7OTw==
+  X-Request-Id: 81e577b7-aa22-43cc-a02a-983bb6d42565
+  X-Tt-Logid: 20250705202503F36B368B872220D16C76
+  server-timing: inner; dur=58, cdn-cache;desc=MISS,edge;dur=0,origin;dur=181
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d48accb31f577627e97a81cf4a207bd1a190d7fb84c4649ed448e61579a65f431614561a75da85e5148012633cc140a2f140d34ae2ab80d25562c3680e99349011bd9c2f92d5f51653dfc2be6869fd75b
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705202503F36B368B872220D16C76-4647848253047956-00
+  X-Timestamp: 1751718304.046
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: cache9.cn6934[181,0]
+  Timing-Allow-Origin: *
+  EagleId: 7a9c829d17517183038957835e
+Body: {'code': 99992351, 'msg': 'The request you send is not a valid {open_id} or not exists, and the example value is {ou_da5****************dfe}. Invalid ids: [ou_7d8a6e6df7621556ce0d21922b676706ccs] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit', 'error': {'field_violations': [{'field': 'receive_id', 'value': 'ou_7d8a6e6df7621556ce0d21922b676706ccs', 'description': 'id not exist'}], 'message': 'Refer to the documentation to fix the error: https://open.feishu.cn/document/uAjLw4CM/ugTN1YjL4UTN24CO1UjN/trouble-shooting/how-to-obtain-openid', 'log_id': '20250705202503F36B368B872220D16C76', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250705202503F36B368B872220D16C76&code=99992351&method_id=6936075528891154460'}}

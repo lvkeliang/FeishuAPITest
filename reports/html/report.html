@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title id="head-title">report.html</title>
+      <style type="text/css">body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  /* do not increase min-width as some may use split screens */
+  min-width: 800px;
+  color: #999;
+}
+
+h1 {
+  font-size: 24px;
+  color: black;
+}
+
+h2 {
+  font-size: 16px;
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+a {
+  color: #999;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+#environment td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+#environment tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+#environment ul {
+  margin: 0;
+  padding: 0 20px;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed,
+.passed .col-result {
+  color: green;
+}
+
+span.skipped,
+span.xfailed,
+span.rerun,
+.skipped .col-result,
+.xfailed .col-result,
+.rerun .col-result {
+  color: orange;
+}
+
+span.error,
+span.failed,
+span.xpassed,
+.error .col-result,
+.failed .col-result,
+.xpassed .col-result {
+  color: red;
+}
+
+.col-links__extra {
+  margin-right: 3px;
+}
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+#results-table {
+  border: 1px solid #e6e6e6;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+}
+#results-table th,
+#results-table td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+#results-table th {
+  font-weight: bold;
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+.logwrapper {
+  max-height: 230px;
+  overflow-y: scroll;
+  background-color: #e6e6e6;
+}
+.logwrapper.expanded {
+  max-height: none;
+}
+.logwrapper.expanded .logexpander:after {
+  content: "collapse [-]";
+}
+.logwrapper .logexpander {
+  z-index: 1;
+  position: sticky;
+  top: 10px;
+  width: max-content;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin: 10px 0 10px calc(100% - 80px);
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+.logwrapper .logexpander:after {
+  content: "expand [+]";
+}
+.logwrapper .logexpander:hover {
+  color: #000;
+  border-color: #000;
+}
+.logwrapper .log {
+  min-height: 40px;
+  position: relative;
+  top: -50px;
+  height: calc(100% + 50px);
+  border: 1px solid #e6e6e6;
+  color: black;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  padding-right: 80px;
+  white-space: pre-wrap;
+}
+
+div.media {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 240px;
+  margin: 0 5px;
+  overflow: hidden;
+  width: 320px;
+}
+
+.media-container {
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  align-items: center;
+  flex: 1 1;
+  overflow: hidden;
+  height: 200px;
+}
+
+.media-container--fullscreen {
+  grid-template-columns: 0px auto 0px;
+}
+
+.media-container__nav--right,
+.media-container__nav--left {
+  text-align: center;
+  cursor: pointer;
+}
+
+.media-container__viewport {
+  cursor: pointer;
+  text-align: center;
+  height: inherit;
+}
+.media-container__viewport img,
+.media-container__viewport video {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+
+.media__name,
+.media__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 25px;
+  align-items: center;
+}
+
+.collapsible td:not(.col-links) {
+  cursor: pointer;
+}
+.collapsible td:not(.col-links):hover::after {
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.col-result {
+  width: 130px;
+}
+.col-result:hover::after {
+  content: " (hide details)";
+}
+
+.col-result.collapsed:hover::after {
+  content: " (show details)";
+}
+
+#environment-header h2:hover::after {
+  content: " (hide details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#environment-header.collapsed h2:hover::after {
+  content: " (show details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+  cursor: pointer;
+}
+.sortable.desc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: -12.5px;
+  border: 10px solid #4caf50;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.sortable.asc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: 12.5px;
+  border: 10px solid #4caf50;
+  border-top: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.hidden, .summary__reload__button.hidden {
+  display: none;
+}
+
+.summary__data {
+  flex: 0 0 550px;
+}
+.summary__reload {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+}
+.summary__reload__button {
+  flex: 0 0 300px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  background-color: #4caf50;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.summary__reload__button:hover {
+  background-color: #46a049;
+}
+.summary__spacer {
+  flex: 0 0 550px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+}
+.filters button,
+.collapse button {
+  color: #999;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filters button:hover,
+.collapse button:hover {
+  color: #ccc;
+}
+
+.filter__label {
+  margin-right: 10px;
+}
+
+      </style>
+    
+  </head>
+  <body>
+    <h1 id="title">report.html</h1>
+    <p>Report generated on 05-Jul-2025 at 21:26:59 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+        v4.1.1</p>
+    <div id="environment-header">
+      <h2>Environment</h2>
+    </div>
+    <table id="environment"></table>
+    <!-- TEMPLATES -->
+      <template id="template_environment_row">
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </template>
+    <template id="template_results-table__body--empty">
+      <tbody class="results-table-row">
+        <tr id="not-found-message">
+          <td colspan="4">No results found. Check the filters.</th>
+        </tr>
+    </template>
+    <template id="template_results-table__tbody">
+      <tbody class="results-table-row">
+        <tr class="collapsible">
+        </tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media">
+              <div class="media-container">
+                  <div class="media-container__nav--left"><</div>
+                  <div class="media-container__viewport">
+                    <img src="" />
+                    <video controls>
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">></div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+    <!-- END TEMPLATES -->
+    <div class="summary">
+      <div class="summary__data">
+        <h2>Summary</h2>
+        <div class="additional-summary prefix">
+        </div>
+        <p class="run-count">7 tests took 00:00:04.</p>
+        <p class="filter">(Un)check the boxes to filter the results.</p>
+        <div class="summary__reload">
+          <div class="summary__reload__button hidden" onclick="location.reload()">
+            <div>There are still tests running. <br />Reload this page to get the latest results!</div>
+          </div>
+        </div>
+        <div class="summary__spacer"></div>
+        <div class="controls">
+          <div class="filters">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" />
+            <span class="failed">2 Failed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" />
+            <span class="passed">5 Passed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled/>
+            <span class="skipped">0 Skipped,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled/>
+            <span class="xfailed">0 Expected failures,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled/>
+            <span class="xpassed">0 Unexpected passes,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled/>
+            <span class="error">0 Errors,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled/>
+            <span class="rerun">0 Reruns</span>
+          </div>
+          <div class="collapse">
+            <button id="show_all_details">Show all details</button>&nbsp;/&nbsp;<button id="hide_all_details">Hide all details</button>
+          </div>
+        </div>
+      </div>
+      <div class="additional-summary summary">
+      </div>
+      <div class="additional-summary postfix">
+      </div>
+    </div>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable" data-column-type="result">Result</th>
+          <th class="sortable" data-column-type="testId">Test</th>
+          <th class="sortable" data-column-type="duration">Duration</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+  <footer>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.13.5&#34;, &#34;Platform&#34;: &#34;Windows-11-10.0.26100-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;8.4.1&#34;, &#34;pluggy&#34;: &#34;1.6.0&#34;}, &#34;Plugins&#34;: {&#34;allure-pytest&#34;: &#34;2.14.3&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;, &#34;yaml&#34;: &#34;1.2.1&#34;}, &#34;JAVA_HOME&#34;: &#34;C:\\Program Files\\Java\\jdk1.8.0_66&#34;}, &#34;tests&#34;: {&#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-doc]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-doc]&#34;, &#34;duration&#34;: &#34;746 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-doc]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;746 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_10987895-ca9b-4115-bb76-882c8e80be2g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;30833731-eadb-4aa7-bf4d-b3b2f6b8c8fc&amp;quot;}\n\n=== Response Details ===\nStatus Code: 200\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Transfer-Encoding: chunked\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:53 GMT\n  Vary: Accept-Encoding\n  Request-Id: aebd1f29-e11b-4b4d-8cfc-274edbd4d4b6\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: V8vwbgJYy_CNt46Yhq_7eurrP-gZhOrj3xw9Tw3D5ABVw5zH1DCTduRvNBmqeL3x67L2vXIXbVnbuiO_exDgESf5xffes7CuYF-xW3F5sXnI_KeWqmIK_2OH9bJq3RutlwPp14qOyPka28jgE_QHKY22hVZZRDsQxpO-bsIGZq-5jfslllmE1ocdQVvYi_mx72-aKeel2Wv9cLeitiTTTD3nCU3x7LEXkiMyonHnncqZUkB80gMxDHtJ6LbiTH3SErnSnKSXTfP2E3wARsvJT6iPiIvurXoOl8Zqy-_vGPW-IQ==\n  X-Request-Id: aebd1f29-e11b-4b4d-8cfc-274edbd4d4b6\n  X-Tt-Logid: 2025070521265210541CAC423702D9D987\n  server-timing: inner; dur=412, cdn-cache;desc=MISS,edge;dur=0,origin;dur=529\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d78d0bca3ed10427a171d9232e2e1451870166aafda9762a71cb979fc734b72c92f469b1e71263c8d500e22a854b3a2ffdc01c8b57d376acc0efad487c93738d7df68f076197e43a4bb1b7a830d4b4f1e\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-25070521265210541CAC423702D9D987-3DE1ADC169E52B87-00\n  X-Timestamp: 1751722013.166\n  Content-Encoding: gzip\n  Via: vcache9.cn3178[529,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71d17517220126588484e\nBody: {&amp;#x27;code&amp;#x27;: 0, &amp;#x27;data&amp;#x27;: {&amp;#x27;body&amp;#x27;: {&amp;#x27;content&amp;#x27;: &amp;#x27;{&amp;quot;file_key&amp;quot;:&amp;quot;file_v3_00nt_df8c3d5e-5918-4f94-b9c1-966f1b15ae4g&amp;quot;,&amp;quot;file_name&amp;quot;:&amp;quot;sample.doc&amp;quot;}&amp;#x27;}, &amp;#x27;chat_id&amp;#x27;: &amp;#x27;oc_ba313cd627d846e4cb8acc9020fb840d&amp;#x27;, &amp;#x27;create_time&amp;#x27;: &amp;#x27;1751722013143&amp;#x27;, &amp;#x27;deleted&amp;#x27;: False, &amp;#x27;message_id&amp;#x27;: &amp;#x27;om_x100b49a6cf1dfc9c0f2cced501844e9&amp;#x27;, &amp;#x27;msg_type&amp;#x27;: &amp;#x27;file&amp;#x27;, &amp;#x27;sender&amp;#x27;: {&amp;#x27;id&amp;#x27;: &amp;#x27;cli_a8d4099050b81013&amp;#x27;, &amp;#x27;id_type&amp;#x27;: &amp;#x27;app_id&amp;#x27;, &amp;#x27;sender_type&amp;#x27;: &amp;#x27;app&amp;#x27;, &amp;#x27;tenant_key&amp;#x27;: &amp;#x27;1b5b78543140175e&amp;#x27;}, &amp;#x27;update_time&amp;#x27;: &amp;#x27;1751722013143&amp;#x27;, &amp;#x27;updated&amp;#x27;: False}, &amp;#x27;msg&amp;#x27;: &amp;#x27;success&amp;#x27;}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-mp4]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-mp4]&#34;, &#34;duration&#34;: &#34;651 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Failed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-mp4]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;651 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;client = &amp;lt;tests.client.client.FeishuClient object at 0x0000016D4ED3FA10&amp;gt;\nprepared_test_case = {&amp;#x27;context&amp;#x27;: {&amp;#x27;access_token&amp;#x27;: &amp;#x27;t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;open_id&amp;#x27;: &amp;#x27;ou_d43b3eacf22b2f76b8672e6d95e1...ion&amp;#x27;: &amp;#x27;Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;Content-Type&amp;#x27;: &amp;#x27;application/json&amp;#x27;}, &amp;#x27;method&amp;#x27;: &amp;#x27;POST&amp;#x27;, ...}}\n\n    def test_file_messages(client,prepared_test_case):\n&amp;gt;       _generic_message_test(feishu_client,prepared_test_case)\n\ntests\\api\\message\\test_message.py:62: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nclient = &amp;lt;tests.client.client.FeishuClient object at 0x0000016D4ED3FA10&amp;gt;\nprepared_test_case = {&amp;#x27;context&amp;#x27;: {&amp;#x27;access_token&amp;#x27;: &amp;#x27;t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;open_id&amp;#x27;: &amp;#x27;ou_d43b3eacf22b2f76b8672e6d95e1...ion&amp;#x27;: &amp;#x27;Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;Content-Type&amp;#x27;: &amp;#x27;application/json&amp;#x27;}, &amp;#x27;method&amp;#x27;: &amp;#x27;POST&amp;#x27;, ...}}\n\n    def _generic_message_test(client, prepared_test_case):\n        &amp;quot;&amp;quot;&amp;quot;\u901a\u7528\u6d88\u606f\u53d1\u9001\u6d4b\u8bd5&amp;quot;&amp;quot;&amp;quot;\n        with allure.step(&amp;quot;Step 1: \u51c6\u5907\u6d4b\u8bd5\u7528\u4f8b&amp;quot;):\n            test_data = prepared_test_case\n            request_data = test_data[&amp;quot;request&amp;quot;]\n    \n        with allure.step(&amp;quot;Step 2: \u53d1\u9001\u8bf7\u6c42&amp;quot;):\n            # \u53d1\u9001\u8bf7\u6c42\n            response = client.request(\n                method=request_data[&amp;quot;method&amp;quot;],\n                endpoint=request_data[&amp;quot;endpoint&amp;quot;],\n                params=request_data.get(&amp;quot;query_params&amp;quot;),\n                headers=request_data.get(&amp;quot;headers&amp;quot;),\n                json=request_data.get(&amp;quot;body&amp;quot;)\n            )\n    \n        # \u5c06\u54cd\u5e94\u4fdd\u5b58\u5230\u6d4b\u8bd5\u4e0a\u4e0b\u6587\u4e2d\uff0c\u4f9bteardown\u4f7f\u7528\n        pytest.api_response = response\n    \n        with allure.step(&amp;quot;Step 3: \u9a8c\u8bc1\u54cd\u5e94&amp;quot;):\n            # \u9a8c\u8bc1\u54cd\u5e94\n            expected = test_data[&amp;quot;expected&amp;quot;]\n    \n            # 1. \u9a8c\u8bc1\u72b6\u6001\u7801\n&amp;gt;           assert response.status_code == expected[&amp;quot;status_code&amp;quot;], \\\n                f&amp;quot;\u72b6\u6001\u7801\u4e0d\u5339\u914d\uff0c\u671f\u671b {expected[&amp;#x27;status_code&amp;#x27;]}\uff0c\u5b9e\u9645 {response.status_code}&amp;quot;\nE           AssertionError: \u72b6\u6001\u7801\u4e0d\u5339\u914d\uff0c\u671f\u671b 200\uff0c\u5b9e\u9645 400\nE           assert 400 == 200\nE            +  where 400 = &amp;lt;Response [400]&amp;gt;.status_code\n\ntests\\api\\message\\test_message.py:88: AssertionError\n\n---------------------------- Captured stdout setup -----------------------------\n\u6587\u4ef6\u4e0a\u4f20\u5931\u8d25 tests/test_data/message/file/sample.mp4: HTTP\u9519\u8bef: 400\n\n----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 156\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: null}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;76c94870-9dca-4265-9d8d-81be0aea8fc9&amp;quot;}\n\n=== Response Details ===\nStatus Code: 400\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Content-Length: 378\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:53 GMT\n  Request-Id: 442a3eff-6fc9-418b-81cb-d5794dba6577\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: jbmNi7W9X9lOrdfyU4i66hI-cDnj_dyAyp_fCLnAQLM6I_Zgj0KovxRqwlOpy2P6lEtoNwz5eBS1-n3T_FGP5ftl3Fu_zkYtocTaastDx5yfgj5_agNTlQH7hRBWbKJP5rdmf0SkVFfPovppPTWzLXzGeSBuN7yeDvc7buq2eFyBI7Cpxdjbyj8IVhetBaVPpWuWheXtEbIo-9E-UD89jWkU-0BBqIn2BvcYHbZaCuqbvlRRVC7CaVXf4eL1nj2m8_15XAgbs4PlGu4S8j46tS2Fhcicn49YMdQctQanCnMHug==\n  X-Request-Id: 442a3eff-6fc9-418b-81cb-d5794dba6577\n  X-Tt-Logid: 20250705212653993902111AD91EBACDEA\n  server-timing: inner; dur=150, cdn-cache;desc=MISS,edge;dur=0,origin;dur=221\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dd095cf670cbd95d8cd84e56fb32555cf51a438cd2af56da43c4c17145749f4d99e79c519dcef1fddf28b6730ea255dd6911e882f9e318649c7639849de8f75703cfb7bfe00f8979b5c749377f0375a12\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-250705212653993902111AD91EBACDEA-3F91390176948C76-00\n  X-Timestamp: 1751722013.832\n  x-alicdn-da-ups-status: endOs,0,400\n  Via: vcache1.cn3178[221,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71517517220136284997e\nBody: {&amp;#x27;code&amp;#x27;: 230001, &amp;#x27;msg&amp;#x27;: &amp;#x27;Your request contains an invalid request parameter, ext=invalid message content. validate content fail.&amp;#x27;, &amp;#x27;error&amp;#x27;: {&amp;#x27;log_id&amp;#x27;: &amp;#x27;20250705212653993902111AD91EBACDEA&amp;#x27;, &amp;#x27;troubleshooter&amp;#x27;: &amp;#x27;\u6392\u67e5\u5efa\u8bae\u67e5\u770b(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&amp;amp;log_id=20250705212653993902111AD91EBACDEA&amp;amp;code=230001&amp;amp;method_id=6936075528891154460&amp;#x27;}}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-opus]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Failed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-opus]&#34;, &#34;duration&#34;: &#34;402 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Failed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-opus]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;402 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;client = &amp;lt;tests.client.client.FeishuClient object at 0x0000016D4ED3FA10&amp;gt;\nprepared_test_case = {&amp;#x27;context&amp;#x27;: {&amp;#x27;access_token&amp;#x27;: &amp;#x27;t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;open_id&amp;#x27;: &amp;#x27;ou_d43b3eacf22b2f76b8672e6d95e1...ion&amp;#x27;: &amp;#x27;Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;Content-Type&amp;#x27;: &amp;#x27;application/json&amp;#x27;}, &amp;#x27;method&amp;#x27;: &amp;#x27;POST&amp;#x27;, ...}}\n\n    def test_file_messages(client,prepared_test_case):\n&amp;gt;       _generic_message_test(feishu_client,prepared_test_case)\n\ntests\\api\\message\\test_message.py:62: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nclient = &amp;lt;tests.client.client.FeishuClient object at 0x0000016D4ED3FA10&amp;gt;\nprepared_test_case = {&amp;#x27;context&amp;#x27;: {&amp;#x27;access_token&amp;#x27;: &amp;#x27;t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;open_id&amp;#x27;: &amp;#x27;ou_d43b3eacf22b2f76b8672e6d95e1...ion&amp;#x27;: &amp;#x27;Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5&amp;#x27;, &amp;#x27;Content-Type&amp;#x27;: &amp;#x27;application/json&amp;#x27;}, &amp;#x27;method&amp;#x27;: &amp;#x27;POST&amp;#x27;, ...}}\n\n    def _generic_message_test(client, prepared_test_case):\n        &amp;quot;&amp;quot;&amp;quot;\u901a\u7528\u6d88\u606f\u53d1\u9001\u6d4b\u8bd5&amp;quot;&amp;quot;&amp;quot;\n        with allure.step(&amp;quot;Step 1: \u51c6\u5907\u6d4b\u8bd5\u7528\u4f8b&amp;quot;):\n            test_data = prepared_test_case\n            request_data = test_data[&amp;quot;request&amp;quot;]\n    \n        with allure.step(&amp;quot;Step 2: \u53d1\u9001\u8bf7\u6c42&amp;quot;):\n            # \u53d1\u9001\u8bf7\u6c42\n            response = client.request(\n                method=request_data[&amp;quot;method&amp;quot;],\n                endpoint=request_data[&amp;quot;endpoint&amp;quot;],\n                params=request_data.get(&amp;quot;query_params&amp;quot;),\n                headers=request_data.get(&amp;quot;headers&amp;quot;),\n                json=request_data.get(&amp;quot;body&amp;quot;)\n            )\n    \n        # \u5c06\u54cd\u5e94\u4fdd\u5b58\u5230\u6d4b\u8bd5\u4e0a\u4e0b\u6587\u4e2d\uff0c\u4f9bteardown\u4f7f\u7528\n        pytest.api_response = response\n    \n        with allure.step(&amp;quot;Step 3: \u9a8c\u8bc1\u54cd\u5e94&amp;quot;):\n            # \u9a8c\u8bc1\u54cd\u5e94\n            expected = test_data[&amp;quot;expected&amp;quot;]\n    \n            # 1. \u9a8c\u8bc1\u72b6\u6001\u7801\n&amp;gt;           assert response.status_code == expected[&amp;quot;status_code&amp;quot;], \\\n                f&amp;quot;\u72b6\u6001\u7801\u4e0d\u5339\u914d\uff0c\u671f\u671b {expected[&amp;#x27;status_code&amp;#x27;]}\uff0c\u5b9e\u9645 {response.status_code}&amp;quot;\nE           AssertionError: \u72b6\u6001\u7801\u4e0d\u5339\u914d\uff0c\u671f\u671b 200\uff0c\u5b9e\u9645 400\nE           assert 400 == 200\nE            +  where 400 = &amp;lt;Response [400]&amp;gt;.status_code\n\ntests\\api\\message\\test_message.py:88: AssertionError\n\n----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_c31e1489-0d8c-42a6-a6a3-7be4ee97f55g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;77cb3a61-c06a-4c11-86d3-14f65b831252&amp;quot;}\n\n=== Response Details ===\nStatus Code: 400\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Content-Length: 345\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:54 GMT\n  Request-Id: 85feee6f-f8ea-43b7-a2ed-4377e5e0d590\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: 608R9gC8gH7YDWGLjWaGNl3I_FurDcV1dS3zC-RjibxrIU-gPmOZNgmQQ2a6JBgCTXhVkM8a9PejhblLs1ZzKxrZ25Z6P2ivUYMnNE0wyK79M2l6JWrtclDGGe30OKU0IcBioVq_0VFUZAdgCbNoUOIsJUvLvtFWSpH20Pb05DS2qxFiDgsXppd5xigpQ_EZT9RYRlCiWBcZEuq3-ekVlqf27g15jP8hhmNMyrfStFqDbnoAsltKZEea2lz7RyGHSa8Cy4AWViTfl-umX1Sz1XbFXMpBY_Q_HvrSimnC89jlxA==\n  X-Request-Id: 85feee6f-f8ea-43b7-a2ed-4377e5e0d590\n  X-Tt-Logid: 202507052126546E4BC7B6254E48BFBA37\n  server-timing: inner; dur=155, cdn-cache;desc=MISS,edge;dur=0,origin;dur=230\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d9aa4e65cc147201619c78e7344f9570d12f9f5d4e13b1e46c75a3730eb36459c9968848e022224d2267223cb7c1e87864bce41328a260ceef87469ffb655ff500979b5bda0f4a316acf8e935c7642967\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-2507052126546E4BC7B6254E48BFBA37-0A393C4177801AB2-00\n  X-Timestamp: 1751722014.367\n  x-alicdn-da-ups-status: endOs,0,400\n  Via: vcache9.cn3178[230,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71d17517220141536326e\nBody: {&amp;#x27;code&amp;#x27;: 230055, &amp;#x27;msg&amp;#x27;: &amp;#x27;The type of file upload does not match the type of message being sent.&amp;#x27;, &amp;#x27;error&amp;#x27;: {&amp;#x27;log_id&amp;#x27;: &amp;#x27;202507052126546E4BC7B6254E48BFBA37&amp;#x27;, &amp;#x27;troubleshooter&amp;#x27;: &amp;#x27;\u6392\u67e5\u5efa\u8bae\u67e5\u770b(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&amp;amp;log_id=202507052126546E4BC7B6254E48BFBA37&amp;amp;code=230055&amp;amp;method_id=6936075528891154460&amp;#x27;}}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-pdf]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-pdf]&#34;, &#34;duration&#34;: &#34;530 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-pdf]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;530 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_0a90c91e-a3a3-4933-b2ac-a3e7406d794g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;61b09576-2fe3-4b95-bc17-ea257e6991c0&amp;quot;}\n\n=== Response Details ===\nStatus Code: 200\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Transfer-Encoding: chunked\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:54 GMT\n  Vary: Accept-Encoding\n  Request-Id: 4d432c5e-6e40-45d7-a87d-7c3401220226\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: pQZ4YeBhSmQOH9nVE0muY-UWdX2OTZi2tZGA2bdtKc1X_ch4mr45lhbj3irSaVE6TO2TrsJGnxA7jNunaa0UhhFOoWPYtZUCz1dBoBya2pUPe1oIwjwgx_dKqkw1I1K1TkJ3si7Kyl0UG4WjUzJnwV9x8w5eCz-YnlMnByxrQlZv1JaQvgh7HBw1iT535zcrJqsMRjbKhYkgrT1h3L_CtXon_1geq0fNz475jX08JNy8ati-dShfSPue0UOGimyCCCz7f38ctMnLDJarr8z7fR9q46HQ11OaFl1H578c4vq5\n  X-Request-Id: 4d432c5e-6e40-45d7-a87d-7c3401220226\n  X-Tt-Logid: 2025070521265440B18B4B20CC78DAE8E2\n  server-timing: inner; dur=390, cdn-cache;desc=MISS,edge;dur=0,origin;dur=432\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d727cba18658c9332e96eec34ce2554bcf5723d644903dce4eae77587b9d61e420f93114e9fb9cdb6c012fd8bc93960ce558c557a376b9c63f0ff0135ee06d321a114b74eb143b64ee4e9ee773e5f8bc2\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-25070521265440B18B4B20CC78DAE8E2-3ABC2C22193A1E9F-00\n  X-Timestamp: 1751722014.949\n  Content-Encoding: gzip\n  Via: vcache7.cn3178[432,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71b17517220145458018e\nBody: {&amp;#x27;code&amp;#x27;: 0, &amp;#x27;data&amp;#x27;: {&amp;#x27;body&amp;#x27;: {&amp;#x27;content&amp;#x27;: &amp;#x27;{&amp;quot;file_key&amp;quot;:&amp;quot;file_v3_00nt_293fbd9f-7329-4354-962a-efda2d3e8cfg&amp;quot;,&amp;quot;file_name&amp;quot;:&amp;quot;sample.pdf&amp;quot;}&amp;#x27;}, &amp;#x27;chat_id&amp;#x27;: &amp;#x27;oc_ba313cd627d846e4cb8acc9020fb840d&amp;#x27;, &amp;#x27;create_time&amp;#x27;: &amp;#x27;1751722014922&amp;#x27;, &amp;#x27;deleted&amp;#x27;: False, &amp;#x27;message_id&amp;#x27;: &amp;#x27;om_x100b49a6cf2134f80f1806dec2fac2c&amp;#x27;, &amp;#x27;msg_type&amp;#x27;: &amp;#x27;file&amp;#x27;, &amp;#x27;sender&amp;#x27;: {&amp;#x27;id&amp;#x27;: &amp;#x27;cli_a8d4099050b81013&amp;#x27;, &amp;#x27;id_type&amp;#x27;: &amp;#x27;app_id&amp;#x27;, &amp;#x27;sender_type&amp;#x27;: &amp;#x27;app&amp;#x27;, &amp;#x27;tenant_key&amp;#x27;: &amp;#x27;1b5b78543140175e&amp;#x27;}, &amp;#x27;update_time&amp;#x27;: &amp;#x27;1751722014922&amp;#x27;, &amp;#x27;updated&amp;#x27;: False}, &amp;#x27;msg&amp;#x27;: &amp;#x27;success&amp;#x27;}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-ppt]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-ppt]&#34;, &#34;duration&#34;: &#34;723 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-ppt]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;723 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_02123bb7-70e2-4370-9dba-a3b508aa704g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;341b7522-494b-4cc7-8fc3-972d98bfcb46&amp;quot;}\n\n=== Response Details ===\nStatus Code: 200\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Transfer-Encoding: chunked\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:55 GMT\n  Vary: Accept-Encoding\n  Request-Id: 9fba2bf2-5e3a-4990-ba3d-2c44b6dd0b62\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: Pccb-60YkxvkBjBObTjXZ5NPn7SZyn-caHblGnA1FrAytMyvl4BRkdrzx9GaskO5wFbpUqakcIUQSsUoAWemsVMPRmfMpXKYENkHcDBJf6HqFustOoHr_sBN7mE9MgFoKOil0zs-mSabRSZcYIydWIelToRFWhxOpMmq0zasjulNwqJuWrgf_FQuFZneVZ2IGf9bVUTVXfXhUar5cAQl0Zi8hM7gqSlHUx8DSxxzrH1n6YV061IXg09cReFK-26Ow0NZGppdKVBWPeQ41WhL5G8-lnf1JU01Bf2UOsRNicKKnw==\n  X-Request-Id: 9fba2bf2-5e3a-4990-ba3d-2c44b6dd0b62\n  X-Tt-Logid: 20250705212655B366589376CDAAD75E12\n  server-timing: inner; dur=424, cdn-cache;desc=MISS,edge;dur=0,origin;dur=527\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d46a61fd85e17b884755c2a80e9181b71965f1ffc1378a9c162350414bef3ec2b9d4d6ecd3f337538befad8da1f9ef352b3633acc32759f9f99a9bf48bf63870a0aa9dac189edbfe5fe0d6ab4b41880ff\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-250705212655B366589376CDAAD75E12-3401F69F2435A257-00\n  X-Timestamp: 1751722015.672\n  Content-Encoding: gzip\n  Via: vcache1.cn3178[527,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71517517220151703434e\nBody: {&amp;#x27;code&amp;#x27;: 0, &amp;#x27;data&amp;#x27;: {&amp;#x27;body&amp;#x27;: {&amp;#x27;content&amp;#x27;: &amp;#x27;{&amp;quot;file_key&amp;quot;:&amp;quot;file_v3_00nt_79a60245-977c-4dfe-a4cf-b723fbf67abg&amp;quot;,&amp;quot;file_name&amp;quot;:&amp;quot;sample.ppt&amp;quot;}&amp;#x27;}, &amp;#x27;chat_id&amp;#x27;: &amp;#x27;oc_ba313cd627d846e4cb8acc9020fb840d&amp;#x27;, &amp;#x27;create_time&amp;#x27;: &amp;#x27;1751722015641&amp;#x27;, &amp;#x27;deleted&amp;#x27;: False, &amp;#x27;message_id&amp;#x27;: &amp;#x27;om_x100b49a6cf35c4540f1c74f71bff9c3&amp;#x27;, &amp;#x27;msg_type&amp;#x27;: &amp;#x27;file&amp;#x27;, &amp;#x27;sender&amp;#x27;: {&amp;#x27;id&amp;#x27;: &amp;#x27;cli_a8d4099050b81013&amp;#x27;, &amp;#x27;id_type&amp;#x27;: &amp;#x27;app_id&amp;#x27;, &amp;#x27;sender_type&amp;#x27;: &amp;#x27;app&amp;#x27;, &amp;#x27;tenant_key&amp;#x27;: &amp;#x27;1b5b78543140175e&amp;#x27;}, &amp;#x27;update_time&amp;#x27;: &amp;#x27;1751722015641&amp;#x27;, &amp;#x27;updated&amp;#x27;: False}, &amp;#x27;msg&amp;#x27;: &amp;#x27;success&amp;#x27;}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-stream]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-stream]&#34;, &#34;duration&#34;: &#34;575 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-stream]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;575 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_292d61f8-b178-4052-8090-f5e70d41083g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;02847e2f-22d7-4db6-b6d6-c90d105380de&amp;quot;}\n\n=== Response Details ===\nStatus Code: 200\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Transfer-Encoding: chunked\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:56 GMT\n  Vary: Accept-Encoding\n  Request-Id: c89888cd-5244-430f-b4a5-dafcc8d744cf\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: IKVdX8EgfeDWa8dpXC86_dgD1lA4u-bYFoAo391W9hc-8Syr4IMyWRidd_FkNLQaxJgXjwf80scmmlgDIInoAj9GTqzMbfJKl_oGvzmHKX9C68R-QyCSDbYwUYMa3OPVOh_Aota7j_RiI_fjjOWPVdeP05mMgyQcMOOnBaH-dbM_QcN1yLjtkhD-0JZx37csjonclL0N9jRaFXGBE_d5RNZqsQmmeYOetcDNJtKQ4D-8He9rMEIlW8AP1rdCAYkpxQ73LLiTTJ2hW-chIClvAFN0Pa8CqMJxlj8Ln85oTFNEKA==\n  X-Request-Id: c89888cd-5244-430f-b4a5-dafcc8d744cf\n  X-Tt-Logid: 202507052126556ED1F163ACAAF4B4C393\n  server-timing: inner; dur=376, cdn-cache;desc=MISS,edge;dur=0,origin;dur=448\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d689462a8461e4afd3a113cd52ea8454dd524777671fba7c749bb19242928a3ad4ff828f0a69c89b2e55b581806af1efc811931a7328b262bf8fc9cee8053d493047ad8d8ce6608f90f57aa3cfefbff46\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-2507052126556ED1F163ACAAF4B4C393-089323E91FC93312-00\n  X-Timestamp: 1751722016.259\n  Content-Encoding: gzip\n  Via: vcache5.cn3178[448,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71917517220158306066e\nBody: {&amp;#x27;code&amp;#x27;: 0, &amp;#x27;data&amp;#x27;: {&amp;#x27;body&amp;#x27;: {&amp;#x27;content&amp;#x27;: &amp;#x27;{&amp;quot;file_key&amp;quot;:&amp;quot;file_v3_00nt_e5e54208-37eb-4f1f-b90f-b46d069239eg&amp;quot;,&amp;quot;file_name&amp;quot;:&amp;quot;sample.stream&amp;quot;}&amp;#x27;}, &amp;#x27;chat_id&amp;#x27;: &amp;#x27;oc_ba313cd627d846e4cb8acc9020fb840d&amp;#x27;, &amp;#x27;create_time&amp;#x27;: &amp;#x27;1751722016235&amp;#x27;, &amp;#x27;deleted&amp;#x27;: False, &amp;#x27;message_id&amp;#x27;: &amp;#x27;om_x100b49a6cccfa4e00ecc9c56560b10c&amp;#x27;, &amp;#x27;msg_type&amp;#x27;: &amp;#x27;file&amp;#x27;, &amp;#x27;sender&amp;#x27;: {&amp;#x27;id&amp;#x27;: &amp;#x27;cli_a8d4099050b81013&amp;#x27;, &amp;#x27;id_type&amp;#x27;: &amp;#x27;app_id&amp;#x27;, &amp;#x27;sender_type&amp;#x27;: &amp;#x27;app&amp;#x27;, &amp;#x27;tenant_key&amp;#x27;: &amp;#x27;1b5b78543140175e&amp;#x27;}, &amp;#x27;update_time&amp;#x27;: &amp;#x27;1751722016235&amp;#x27;, &amp;#x27;updated&amp;#x27;: False}, &amp;#x27;msg&amp;#x27;: &amp;#x27;success&amp;#x27;}\n&#34;}], &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-xls]&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-xls]&#34;, &#34;duration&#34;: &#34;581 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;tests/api/message/test_message.py::test_file_messages[positive_\u57fa\u7840\u6587\u4ef6\u6d88\u606f\u6d4b\u8bd5-xls]&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;581 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n\n=== Request Details ===\nMethod: POST\nURL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id\nHeaders:\n  User-Agent: python-requests/2.32.4\n  Accept-Encoding: gzip, deflate\n  Accept: */*\n  Connection: keep-alive\n  Content-Type: application/json\n  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5\n  Content-Length: 205\nBody:\n{&amp;quot;receive_id&amp;quot;: &amp;quot;ou_d43b3eacf22b2f76b8672e6d95e14641&amp;quot;, &amp;quot;msg_type&amp;quot;: &amp;quot;file&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;{\\&amp;quot;file_key\\&amp;quot;: \\&amp;quot;file_v3_00nt_083b1a80-e094-464c-b85a-26671e66199g\\&amp;quot;}&amp;quot;, &amp;quot;uuid&amp;quot;: &amp;quot;9811f270-9ffd-453b-8a1b-350dee82d4a2&amp;quot;}\n\n=== Response Details ===\nStatus Code: 200\nHeaders:\n  Server: Tengine\n  Content-Type: application/json; charset=utf-8\n  Transfer-Encoding: chunked\n  Connection: keep-alive\n  Date: Sat, 05 Jul 2025 13:26:56 GMT\n  Vary: Accept-Encoding\n  Request-Id: 8f87ed99-9784-4a99-9e87-5c72ef722d6b\n  Tt_stable: 1\n  X-Lgw-Dst-Svc: E6kZH3x6I-P6P2rc3zImzfdQDQ60yUJ8hUSqH6qtg2-cy7fPgENHqfw0UxJxU6eDC9SZKoqldQldJ-xhhCgNcKpqYhmErQV78KaSRAvpWB-IPzgw4mJwJ3BAOaHqwNSzWYY2HUzSKRqW8GBRs3zlv_MHmcxiByHsl4n8OxgCQyBlzuG8Ogr1sa8tOd8LRq4_8HNvyyQsjO_OmMqABRh_x5OZltQ8-9KQ_DReet_XijKXf0IeQ_K2FUWfSC1WwRBll6fCYis_UuP2DL7WOgdJ5pIiFT3Gqg8r9J8ZLtwdB3De\n  X-Request-Id: 8f87ed99-9784-4a99-9e87-5c72ef722d6b\n  X-Tt-Logid: 20250705212656283CD9EE08ECA4B96904\n  server-timing: inner; dur=383, cdn-cache;desc=MISS,edge;dur=0,origin;dur=456\n  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dd095cf670cbd95d8cd84e56fb32555cfcb9ffd163851d97e16f7acc3fddb4292fe84e2e3b6dd7db3ec1686d9f936fc6072322dc802a7aaeee2023e2361e0e05708aad1c2ff982282bdd1f87e66b72462\n  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn\n  x-tt-trace-id: 00-250705212656283CD9EE08ECA4B96904-29E66B704D4ABA42-00\n  X-Timestamp: 1751722016.855\n  Content-Encoding: gzip\n  Via: vcache1.cn3178[456,0]\n  Timing-Allow-Origin: *\n  EagleId: 7105b71517517220164178418e\nBody: {&amp;#x27;code&amp;#x27;: 0, &amp;#x27;data&amp;#x27;: {&amp;#x27;body&amp;#x27;: {&amp;#x27;content&amp;#x27;: &amp;#x27;{&amp;quot;file_key&amp;quot;:&amp;quot;file_v3_00nt_228aedcc-d607-4947-9891-04027eedcf2g&amp;quot;,&amp;quot;file_name&amp;quot;:&amp;quot;sample.xls&amp;quot;}&amp;#x27;}, &amp;#x27;chat_id&amp;#x27;: &amp;#x27;oc_ba313cd627d846e4cb8acc9020fb840d&amp;#x27;, &amp;#x27;create_time&amp;#x27;: &amp;#x27;1751722016828&amp;#x27;, &amp;#x27;deleted&amp;#x27;: False, &amp;#x27;message_id&amp;#x27;: &amp;#x27;om_x100b49a6ccc6c4840ec6207d8123148&amp;#x27;, &amp;#x27;msg_type&amp;#x27;: &amp;#x27;file&amp;#x27;, &amp;#x27;sender&amp;#x27;: {&amp;#x27;id&amp;#x27;: &amp;#x27;cli_a8d4099050b81013&amp;#x27;, &amp;#x27;id_type&amp;#x27;: &amp;#x27;app_id&amp;#x27;, &amp;#x27;sender_type&amp;#x27;: &amp;#x27;app&amp;#x27;, &amp;#x27;tenant_key&amp;#x27;: &amp;#x27;1b5b78543140175e&amp;#x27;}, &amp;#x27;update_time&amp;#x27;: &amp;#x27;1751722016828&amp;#x27;, &amp;#x27;updated&amp;#x27;: False}, &amp;#x27;msg&amp;#x27;: &amp;#x27;success&amp;#x27;}\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
+    <script>
+      (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
+
+class DataManager {
+    setManager(data) {
+        const collapsedCategories = [...getCollapsedCategory(data.renderCollapsed)]
+        const collapsedIds = []
+        const tests = Object.values(data.tests).flat().map((test, index) => {
+            const collapsed = collapsedCategories.includes(test.result.toLowerCase())
+            const id = `test_${index}`
+            if (collapsed) {
+                collapsedIds.push(id)
+            }
+            return {
+                ...test,
+                id,
+                collapsed,
+            }
+        })
+        const dataBlob = { ...data, tests }
+        this.data = { ...dataBlob }
+        this.renderData = { ...dataBlob }
+        setCollapsedIds(collapsedIds)
+    }
+
+    get allData() {
+        return { ...this.data }
+    }
+
+    resetRender() {
+        this.renderData = { ...this.data }
+    }
+
+    setRender(data) {
+        this.renderData.tests = [...data]
+    }
+
+    toggleCollapsedItem(id) {
+        this.renderData.tests = this.renderData.tests.map((test) =>
+            test.id === id ? { ...test, collapsed: !test.collapsed } : test,
+        )
+    }
+
+    set allCollapsed(collapsed) {
+        this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => (
+            { ...test, collapsed }
+        ))] }
+    }
+
+    get testSubset() {
+        return [...this.renderData.tests]
+    }
+
+    get environment() {
+        return this.renderData.environment
+    }
+
+    get initialSort() {
+        return this.data.initialSort
+    }
+}
+
+module.exports = {
+    manager: new DataManager(),
+}
+
+},{"./storage.js":8}],2:[function(require,module,exports){
+const mediaViewer = require('./mediaviewer.js')
+const templateEnvRow = document.getElementById('template_environment_row')
+const templateResult = document.getElementById('template_results-table__tbody')
+
+function htmlToElements(html) {
+    const temp = document.createElement('template')
+    temp.innerHTML = html
+    return temp.content.childNodes
+}
+
+const find = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return elem.querySelector(selector)
+}
+
+const findAll = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return [...elem.querySelectorAll(selector)]
+}
+
+const dom = {
+    getStaticRow: (key, value) => {
+        const envRow = templateEnvRow.content.cloneNode(true)
+        const isObj = typeof value === 'object' && value !== null
+        const values = isObj ? Object.keys(value).map((k) => `${k}: ${value[k]}`) : null
+
+        const valuesElement = htmlToElements(
+            values ? `<ul>${values.map((val) => `<li>${val}</li>`).join('')}<ul>` : `<div>${value}</div>`)[0]
+        const td = findAll('td', envRow)
+        td[0].textContent = key
+        td[1].appendChild(valuesElement)
+
+        return envRow
+    },
+    getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => {
+        const resultBody = templateResult.content.cloneNode(true)
+        resultBody.querySelector('tbody').classList.add(result.toLowerCase())
+        resultBody.querySelector('tbody').id = testId
+        resultBody.querySelector('.collapsible').dataset.id = id
+
+        resultsTableRow.forEach((html) => {
+            const t = document.createElement('template')
+            t.innerHTML = html
+            resultBody.querySelector('.collapsible').appendChild(t.content)
+        })
+
+        if (log) {
+            // Wrap lines starting with "E" with span.error to color those lines red
+            const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
+            resultBody.querySelector('.log').innerHTML = wrappedLog
+        } else {
+            resultBody.querySelector('.log').remove()
+        }
+
+        if (collapsed) {
+            resultBody.querySelector('.collapsible > td')?.classList.add('collapsed')
+            resultBody.querySelector('.extras-row').classList.add('hidden')
+        } else {
+            resultBody.querySelector('.collapsible > td')?.classList.remove('collapsed')
+        }
+
+        const media = []
+        extras?.forEach(({ name, format_type, content }) => {
+            if (['image', 'video'].includes(format_type)) {
+                media.push({ path: content, name, format_type })
+            }
+
+            if (format_type === 'html') {
+                resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', `<div>${content}</div>`)
+            }
+        })
+        mediaViewer.setup(resultBody, media)
+
+        // Add custom html from the pytest_html_results_table_html hook
+        tableHtml?.forEach((item) => {
+            resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
+        })
+
+        return resultBody
+    },
+}
+
+module.exports = {
+    dom,
+    htmlToElements,
+    find,
+    findAll,
+}
+
+},{"./mediaviewer.js":6}],3:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const storageModule = require('./storage.js')
+
+const getFilteredSubSet = (filter) =>
+    manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase()))
+
+const doInitFilter = () => {
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+}
+
+const doFilter = (type, show) => {
+    if (show) {
+        storageModule.showCategory(type)
+    } else {
+        storageModule.hideCategory(type)
+    }
+
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+
+    const sortColumn = storageModule.getSort()
+    doSort(sortColumn, true)
+}
+
+module.exports = {
+    doFilter,
+    doInitFilter,
+}
+
+},{"./datamanager.js":1,"./sort.js":7,"./storage.js":8}],4:[function(require,module,exports){
+const { redraw, bindEvents, renderStatic } = require('./main.js')
+const { doInitFilter } = require('./filter.js')
+const { doInitSort } = require('./sort.js')
+const { manager } = require('./datamanager.js')
+const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob)
+
+function init() {
+    manager.setManager(data)
+    doInitFilter()
+    doInitSort()
+    renderStatic()
+    redraw()
+    bindEvents()
+}
+
+init()
+
+},{"./datamanager.js":1,"./filter.js":3,"./main.js":5,"./sort.js":7}],5:[function(require,module,exports){
+const { dom, find, findAll } = require('./dom.js')
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const { doFilter } = require('./filter.js')
+const {
+    getVisible,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    getSortDirection,
+    possibleFilters,
+} = require('./storage.js')
+
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild)
+    }
+}
+
+const renderStatic = () => {
+    const renderEnvironmentTable = () => {
+        const environment = manager.environment
+        const rows = Object.keys(environment).map((key) => dom.getStaticRow(key, environment[key]))
+        const table = document.getElementById('environment')
+        removeChildren(table)
+        rows.forEach((row) => table.appendChild(row))
+    }
+    renderEnvironmentTable()
+}
+
+const addItemToggleListener = (elem) => {
+    elem.addEventListener('click', ({ target }) => {
+        const id = target.parentElement.dataset.id
+        manager.toggleCollapsedItem(id)
+
+        const collapsedIds = getCollapsedIds()
+        if (collapsedIds.includes(id)) {
+            const updated = collapsedIds.filter((item) => item !== id)
+            setCollapsedIds(updated)
+        } else {
+            collapsedIds.push(id)
+            setCollapsedIds(collapsedIds)
+        }
+        redraw()
+    })
+}
+
+const renderContent = (tests) => {
+    const sortAttr = getSort(manager.initialSort)
+    const sortAsc = JSON.parse(getSortDirection())
+    const rows = tests.map(dom.getResultTBody)
+    const table = document.getElementById('results-table')
+    const tableHeader = document.getElementById('results-table-head')
+
+    const newTable = document.createElement('table')
+    newTable.id = 'results-table'
+
+    // remove all sorting classes and set the relevant
+    findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
+    tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
+    newTable.appendChild(tableHeader)
+
+    if (!rows.length) {
+        const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true)
+        newTable.appendChild(emptyTable)
+    } else {
+        rows.forEach((row) => {
+            if (!!row) {
+                findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener)
+                find('.logexpander', row).addEventListener('click',
+                    (evt) => evt.target.parentNode.classList.toggle('expanded'),
+                )
+                newTable.appendChild(row)
+            }
+        })
+    }
+
+    table.replaceWith(newTable)
+}
+
+const renderDerived = () => {
+    const currentFilter = getVisible()
+    possibleFilters.forEach((result) => {
+        const input = document.querySelector(`input[data-test-result="${result}"]`)
+        input.checked = currentFilter.includes(result)
+    })
+}
+
+const bindEvents = () => {
+    const filterColumn = (evt) => {
+        const { target: element } = evt
+        const { testResult } = element.dataset
+
+        doFilter(testResult, element.checked)
+        const collapsedIds = getCollapsedIds()
+        const updated = manager.renderData.tests.map((test) => {
+            return {
+                ...test,
+                collapsed: collapsedIds.includes(test.id),
+            }
+        })
+        manager.setRender(updated)
+        redraw()
+    }
+
+    const header = document.getElementById('environment-header')
+    header.addEventListener('click', () => {
+        const table = document.getElementById('environment')
+        table.classList.toggle('hidden')
+        header.classList.toggle('collapsed')
+    })
+
+    findAll('input[name="filter_checkbox"]').forEach((elem) => {
+        elem.addEventListener('click', filterColumn)
+    })
+
+    findAll('.sortable').forEach((elem) => {
+        elem.addEventListener('click', (evt) => {
+            const { target: element } = evt
+            const { columnType } = element.dataset
+            doSort(columnType)
+            redraw()
+        })
+    })
+
+    document.getElementById('show_all_details').addEventListener('click', () => {
+        manager.allCollapsed = false
+        setCollapsedIds([])
+        redraw()
+    })
+    document.getElementById('hide_all_details').addEventListener('click', () => {
+        manager.allCollapsed = true
+        const allIds = manager.renderData.tests.map((test) => test.id)
+        setCollapsedIds(allIds)
+        redraw()
+    })
+}
+
+const redraw = () => {
+    const { testSubset } = manager
+
+    renderContent(testSubset)
+    renderDerived()
+}
+
+module.exports = {
+    redraw,
+    bindEvents,
+    renderStatic,
+}
+
+},{"./datamanager.js":1,"./dom.js":2,"./filter.js":3,"./sort.js":7,"./storage.js":8}],6:[function(require,module,exports){
+class MediaViewer {
+    constructor(assets) {
+        this.assets = assets
+        this.index = 0
+    }
+
+    nextActive() {
+        this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1
+        return [this.activeFile, this.index]
+    }
+
+    prevActive() {
+        this.index = this.index === 0 ? this.assets.length - 1 : this.index -1
+        return [this.activeFile, this.index]
+    }
+
+    get currentIndex() {
+        return this.index
+    }
+
+    get activeFile() {
+        return this.assets[this.index]
+    }
+}
+
+
+const setup = (resultBody, assets) => {
+    if (!assets.length) {
+        resultBody.querySelector('.media').classList.add('hidden')
+        return
+    }
+
+    const mediaViewer = new MediaViewer(assets)
+    const container = resultBody.querySelector('.media-container')
+    const leftArrow = resultBody.querySelector('.media-container__nav--left')
+    const rightArrow = resultBody.querySelector('.media-container__nav--right')
+    const mediaName = resultBody.querySelector('.media__name')
+    const counter = resultBody.querySelector('.media__counter')
+    const imageEl = resultBody.querySelector('img')
+    const sourceEl = resultBody.querySelector('source')
+    const videoEl = resultBody.querySelector('video')
+
+    const setImg = (media, index) => {
+        if (media?.format_type === 'image') {
+            imageEl.src = media.path
+
+            imageEl.classList.remove('hidden')
+            videoEl.classList.add('hidden')
+        } else if (media?.format_type === 'video') {
+            sourceEl.src = media.path
+
+            videoEl.classList.remove('hidden')
+            imageEl.classList.add('hidden')
+        }
+
+        mediaName.innerText = media?.name
+        counter.innerText = `${index + 1} / ${assets.length}`
+    }
+    setImg(mediaViewer.activeFile, mediaViewer.currentIndex)
+
+    const moveLeft = () => {
+        const [media, index] = mediaViewer.prevActive()
+        setImg(media, index)
+    }
+    const doRight = () => {
+        const [media, index] = mediaViewer.nextActive()
+        setImg(media, index)
+    }
+    const openImg = () => {
+        window.open(mediaViewer.activeFile.path, '_blank')
+    }
+    if (assets.length === 1) {
+        container.classList.add('media-container--fullscreen')
+    } else {
+        leftArrow.addEventListener('click', moveLeft)
+        rightArrow.addEventListener('click', doRight)
+    }
+    imageEl.addEventListener('click', openImg)
+}
+
+module.exports = {
+    setup,
+}
+
+},{}],7:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const storageModule = require('./storage.js')
+
+const genericSort = (list, key, ascending, customOrder) => {
+    let sorted
+    if (customOrder) {
+        sorted = list.sort((a, b) => {
+            const aValue = a.result.toLowerCase()
+            const bValue = b.result.toLowerCase()
+
+            const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
+            const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
+
+            // Compare the indices to determine the sort order
+            return aIndex - bIndex
+        })
+    } else {
+        sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1)
+    }
+
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const durationSort = (list, ascending) => {
+    const parseDuration = (duration) => {
+        if (duration.includes(':')) {
+            // If it's in the format "HH:mm:ss"
+            const [hours, minutes, seconds] = duration.split(':').map(Number)
+            return (hours * 3600 + minutes * 60 + seconds) * 1000
+        } else {
+            // If it's in the format "nnn ms"
+            return parseInt(duration)
+        }
+    }
+    const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration']))
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const doInitSort = () => {
+    const type = storageModule.getSort(manager.initialSort)
+    const ascending = storageModule.getSortDirection()
+    const list = manager.testSubset
+    const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed']
+
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    if (type?.toLowerCase() === 'original') {
+        manager.setRender(list)
+    } else {
+        let sortedList
+        switch (type) {
+        case 'duration':
+            sortedList = durationSort(list, ascending)
+            break
+        case 'result':
+            sortedList = genericSort(list, type, ascending, initialOrder)
+            break
+        default:
+            sortedList = genericSort(list, type, ascending)
+            break
+        }
+        manager.setRender(sortedList)
+    }
+}
+
+const doSort = (type, skipDirection) => {
+    const newSortType = storageModule.getSort(manager.initialSort) !== type
+    const currentAsc = storageModule.getSortDirection()
+    let ascending
+    if (skipDirection) {
+        ascending = currentAsc
+    } else {
+        ascending = newSortType ? false : !currentAsc
+    }
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    const list = manager.testSubset
+    const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending)
+    manager.setRender(sortedList)
+}
+
+module.exports = {
+    doInitSort,
+    doSort,
+}
+
+},{"./datamanager.js":1,"./storage.js":8}],8:[function(require,module,exports){
+const possibleFilters = [
+    'passed',
+    'skipped',
+    'failed',
+    'error',
+    'xfailed',
+    'xpassed',
+    'rerun',
+]
+
+const getVisible = () => {
+    const url = new URL(window.location.href)
+    const settings = new URLSearchParams(url.search).get('visible')
+    const lower = (item) => {
+        const lowerItem = item.toLowerCase()
+        if (possibleFilters.includes(lowerItem)) {
+            return lowerItem
+        }
+        return null
+    }
+    return settings === null ?
+        possibleFilters :
+        [...new Set(settings?.split(',').map(lower).filter((item) => item))]
+}
+
+const hideCategory = (categoryToHide) => {
+    const url = new URL(window.location.href)
+    const visibleParams = new URLSearchParams(url.search).get('visible')
+    const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters]
+    const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',')
+
+    url.searchParams.set('visible', settings)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const showCategory = (categoryToShow) => {
+    if (typeof window === 'undefined') {
+        return
+    }
+    const url = new URL(window.location.href)
+    const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) ||
+        [...possibleFilters]
+    const settings = [...new Set([categoryToShow, ...currentVisible])]
+    const noFilter = possibleFilters.length === settings.length || !settings.length
+
+    noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(','))
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getSort = (initialSort) => {
+    const url = new URL(window.location.href)
+    let sort = new URLSearchParams(url.search).get('sort')
+    if (!sort) {
+        sort = initialSort || 'result'
+    }
+    return sort
+}
+
+const setSort = (type) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', type)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getCollapsedCategory = (renderCollapsed) => {
+    let categories
+    if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        const collapsedItems = new URLSearchParams(url.search).get('collapsed')
+        switch (true) {
+        case !renderCollapsed && collapsedItems === null:
+            categories = ['passed']
+            break
+        case collapsedItems?.length === 0 || /^["']{2}$/.test(collapsedItems):
+            categories = []
+            break
+        case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed):
+            categories = [...possibleFilters]
+            break
+        default:
+            categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed
+            break
+        }
+    } else {
+        categories = []
+    }
+    return categories
+}
+
+const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false
+const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending)
+
+const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || []
+const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list))
+
+module.exports = {
+    getVisible,
+    hideCategory,
+    showCategory,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    setSort,
+    getSortDirection,
+    setSortDirection,
+    getCollapsedCategory,
+    possibleFilters,
+}
+
+},{}]},{},[4]);
+    </script>
+  </footer>
+</html>

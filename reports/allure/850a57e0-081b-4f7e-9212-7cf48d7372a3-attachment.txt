@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 508
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "post", "content": "{\"zh_cn\": {\"title\": \"\u6d4b\u8bd5\u5bcc\u6587\u672c\u6807\u9898\", \"content\": [[{\"tag\": \"text\", \"text\": \"\u7b2c\u4e00\u884c: \", \"style\": [\"bold\"]}, {\"tag\": \"a\", \"text\": \"\u98de\u4e66\u5b98\u7f51\", \"href\": \"https://www.feishu.cn\"}], [{\"tag\": \"text\", \"text\": \"\u8fd9\u662f\u4e00\u6bb5\u6d4b\u8bd5\u6587\u672c\"}], [{\"tag\": \"hr\"}]]}}", "uuid": "bdeb4d7c-b8f6-4cde-966b-06152f4a9757"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:24:21 GMT
+  Vary: Accept-Encoding
+  Request-Id: 766bcbfa-a03d-400c-87c8-2cf8fcd700ad
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: lWyX_Bm7P-rtZ6kr7Z6MEvFE61arz0iMzOe0LW-4oZhRyN_9rLjJVbx8TwGAswpV9qWME_-qB-g9zQLWnjlXCK-XRj3Ny0dlXXfbi-76BWEbudMlCKnLfUTYdaO7p77ehtM5breCdQL9JxS11kHR-Fzvhrv_KwF8ip541CCda-tYaUZ_amXtidmoTwAY26m-8VXy1kBmF0ZJe67ROWY91ozqMDvt88Jg-tGGR6VVzluckNEMC7FVpxqOG3jaEOvmbl4iTuUyQQ9SbqiAC_ARuxpg9l0l8puPsfllIo1GcY5avQ==
+  X-Request-Id: 766bcbfa-a03d-400c-87c8-2cf8fcd700ad
+  X-Tt-Logid: 202507052124217069922BB81F9FB8EAA1
+  server-timing: inner; dur=330, cdn-cache;desc=MISS,edge;dur=0,origin;dur=417
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dc1f224dea76077b044941a5876a52efbedd060030df16df1f539183e5c6550b1a2884a5da2217c41b9a76b20088fd6bd8e01ed8d5f7d37a3d6f0885047898c0a67dea92c2791fc07ed90801031157fbd
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507052124217069922BB81F9FB8EAA1-6E7CADA01C59FFB4-00
+  X-Timestamp: 1751721861.944
+  Content-Encoding: gzip
+  Via: ens-cache18.cn7993[417,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602617517218615497162e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":"测试富文本标题","content":[[{"tag":"text","text":"第一行: ","style":["bold"]},{"tag":"a","href":"https://www.feishu.cn","text":"飞书官网","style":[]}],[{"tag":"text","text":"这是一段测试文本","style":[]}],[{"tag":"hr"}]]}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751721861918', 'deleted': False, 'message_id': 'om_x100b49a636912cbc0f2422e5bdd42ee', 'msg_type': 'post', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751721861918', 'updated': False}, 'msg': 'success'}

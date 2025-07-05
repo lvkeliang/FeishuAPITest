@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1185
+Body:
+{"receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs", "msg_type": "text", "content": "{\"text\": \"\u95ee\u9898\u6982\u8ff0\uff1aJSON\u53cd\u659c\u6760\u8f6c\u4e49\u5f02\u5e38\\n\\n\u5728\u4f7f\u7528Jackson\u5904\u7406JSON\u6570\u636e\u65f6\uff0c\u53cd\u659c\u6760\u8f6c\u4e49\u5b57\u7b26\uff08\u5982\\\"\\\\n\\\"\u3001\\\"\\\\\\\"\\\"\uff09\u53ef\u80fd\u5bfc\u81f4\u5e8f\u5217\u5316\u6216\u53cd\u5e8f\u5217\u5316\u5931\u8d25\u3002\u8fd9\u79cd\u95ee\u9898\u901a\u5e38\u51fa\u73b0\u5728API\u4f20\u8f93\u4e2d\uff0c\u670d\u52a1\u7aef\u8fd4\u56de\u7684JSON\u5b57\u7b26\u4e32\u88ab\u989d\u5916\u6dfb\u52a0\u4e86\u8f6c\u659c\u6760\uff0c\u5ba2\u6237\u7aef\u89e3\u6790\u65f6\u65e0\u6cd5\u6b63\u786e\u8bc6\u522b\u3002\\n\\n\u4ee5\u4e0b\u662f\u5e38\u89c1\u573a\u666f\uff1a\\n\\n\u670d\u52a1\u7aef\u8fd4\u56de\u7684JSON\u5b57\u7b26\u4e32\u4e2d\u5305\u542b\u591a\u4f59\u7684\u8f6c\u4e49\u7b26\u3002\\n\u5ba2\u6237\u7aef\u89e3\u6790\u65f6\u56e0\u672a\u6b63\u786e\u5904\u7406\u8f6c\u4e49\u7b26\u800c\u629b\u51fa\u5f02\u5e38\u3002\\n\u53cc\u65b9\u7f16\u7801\u89c4\u8303\u4e0d\u4e00\u81f4\u5bfc\u81f4\u6570\u636e\u683c\u5f0f\u9519\u8bef\u3002\\n\"}", "uuid": "7f7f27aa-e612-48d0-8547-594fc2af722a"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 835
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:22:07 GMT
+  Request-Id: 291ef688-4072-4e6b-b828-4e9274c9ce40
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: bqQdb_J9SY1NNO9zS9TlVQ6UHSovd2MRTzzSQGvBrse7Ehl5YY-bkDHlyR-1uY6dhLI572JhKDUAnoma3P4mo2cnIiR-Noa2OM2Ls7GIBNRgpcTmcCJkbfy8ZsKLDLp585bbT4b7Ni2g4pywN5DTNrphwFsd4dUPAXstt5Q0gCtW3TT66Pt6wUxJX8wa7nIADlVKLuVgzbX6O-qqhm2JBA==
+  X-Request-Id: 291ef688-4072-4e6b-b828-4e9274c9ce40
+  X-Tt-Logid: 202507052022075D5754EADBFDBCB951A6
+  server-timing: inner; dur=90, cdn-cache;desc=MISS,edge;dur=0,origin;dur=178
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d30380894bf6b3b2f6d6f4e8c4c310458eabaca3021e2c3c090e747343750f724c974373436b982439356eeb118c6818216d5a178897a3bc451c4eb400b5443480e752f2c3066c1ca10c0493acfc40f35
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507052022075D5754EADBFDBCB951A6-4CD904BB76E0E32B-00
+  X-Timestamp: 1751718127.346
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache16.cn7993[178,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602417517181271891485e
+Body: {'code': 99992351, 'msg': 'The request you send is not a valid {open_id} or not exists, and the example value is {ou_da5****************dfe}. Invalid ids: [ou_7d8a6e6df7621556ce0d21922b676706ccs] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit', 'error': {'field_violations': [{'field': 'receive_id', 'value': 'ou_7d8a6e6df7621556ce0d21922b676706ccs', 'description': 'id not exist'}], 'message': 'Refer to the documentation to fix the error: https://open.feishu.cn/document/uAjLw4CM/ugTN1YjL4UTN24CO1UjN/trouble-shooting/how-to-obtain-openid', 'log_id': '202507052022075D5754EADBFDBCB951A6', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=202507052022075D5754EADBFDBCB951A6&code=99992351&method_id=6936075528891154460'}}

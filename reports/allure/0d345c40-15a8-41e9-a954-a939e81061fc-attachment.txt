@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 205
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "file", "content": "{\"file_key\": \"file_v3_00nt_85ad5988-4be1-49a4-a4e1-e89ed4260e4g\"}", "uuid": "81ab196e-81ba-409f-af34-e1a25157ed96"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:26:07 GMT
+  Vary: Accept-Encoding
+  Request-Id: b5662c9a-e6b6-47df-8ecd-0de0cd5d7a0c
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: e0jvUr9WhvKrhIfODRiR5U9295LFoaHzm7RfZXNLLLVZg69lYYv4Ja82fP5WppC5h17nkGSArLKXU78njNOENY16U-K-x_WrQWoXT6TuXAAfOFrik1JTY-53Lk5beAHwRpcSr3L7faDuv31ka-xII8YY9x3yzQOXN6mgTserjNx1Mt2bhzmJAPIRqY4EyVnFg1qPqLm35nzpfWn55hzH3k80yGQcPsd00WaYmlRLPN_0J8vc0numZRg5dO-USaZ-VaEe6I7X_lUyn8wcY7sin9vDimORyBd4NcbPr2x-rC10FA==
+  X-Request-Id: b5662c9a-e6b6-47df-8ecd-0de0cd5d7a0c
+  X-Tt-Logid: 20250705212606DF05CBAB76D225BBB7CC
+  server-timing: inner; dur=380, cdn-cache;desc=MISS,edge;dur=0,origin;dur=417
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14da26456ada2b52c1d5066d25fb898ec6267527604c752f0335635d815d83e1b373df6c54dd3f8a51266bc3ca2a772e48818681a0d672191bf0b60941f686053b98c80150b045f001e22530a25e4443736
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705212606DF05CBAB76D225BBB7CC-17BB0EBA0539BE79-00
+  X-Timestamp: 1751721967.105
+  Content-Encoding: gzip
+  Via: vcache10.cn3178[417,0]
+  Timing-Allow-Origin: *
+  EagleId: 7105b71e17517219667096350e
+Body: {'code': 0, 'data': {'body': {'content': '{"file_key":"file_v3_00nt_d7232392-816a-4613-ad8f-2c1d8a66d51g","file_name":"sample.doc"}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751721967083', 'deleted': False, 'message_id': 'om_x100b49a63022c8ec0f20acd4090b4dc', 'msg_type': 'file', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751721967083', 'updated': False}, 'msg': 'success'}

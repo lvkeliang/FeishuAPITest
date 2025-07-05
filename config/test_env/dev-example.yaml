@@ -1,0 +1,27 @@
+# 开发环境配置
+feishu:
+  base_url: "https://open.feishu.cn"
+  app_id: "your_app_id"
+  app_secret: "your_app_secret"
+  token_expire: 5400  # token过期时间(秒)
+
+# 测试账号
+test_accounts:
+  - name: "张麻子"
+    open_id: "your_open_id"
+    chat_id: "your_chat_id"
+#    email: "testuser@example.com"
+
+#  - name: "测试群组A"
+#    chat_id: "oc_xxxxx"
+
+# API特定配置
+apis:
+  message:
+    rate_limit: 5    # QPS限制
+    max_length: 150   # 最大长度(KB)
+    allowed_types:    # 允许的消息类型
+      - "text"
+      - "post"
+      - "image"
+      - "interactive"

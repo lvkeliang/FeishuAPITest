@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 156
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "file", "content": "{\"file_key\": null}", "uuid": "2c69460f-4fd7-4245-ac1e-b3af72c3eeb9"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 378
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:51:40 GMT
+  Request-Id: bcdda2ca-3c32-481a-88c3-d009fd1981b5
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: XEA3GbNqNhu891MZBiMuA2cbXJifBz5fZpfIEp7DsKJCCGcBp5E_QzuMYQCwmTSUiJwKrHy50n3uWF2sYIiG7z7acri8dIkL0D5SHxf9JGtBPm9ywtXulUUI-cveMhbsRHsQnmNfR2POx-Xqk1pm2oowCDRUgAe0kU0R014EFKU64_awtBUjUBvJms-IQjZGb8H9thqnkwC3hsbzdbHjkvY_vfPSioFvRfDIrFK3ERtSABG0TaVWz8GQj-u9R6flqf0q8lpALMX2Gssl2qadgPcEWx_FZryABOr3RpUqpliG4w==
+  X-Request-Id: bcdda2ca-3c32-481a-88c3-d009fd1981b5
+  X-Tt-Logid: 20250705205140A607BA2B0E080CD6E960
+  server-timing: inner; dur=148, cdn-cache;desc=MISS,edge;dur=0,origin;dur=188
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d0e9fde1b64f6d7c7109a57a2602c840228dd5bc59fd2d768935083e9f7bd8bf569be8c2f908db3dc09d610e6fb9c8cbe1dcd023437105e1bb3eb90f9e1cddbaba9e9490a67a539f4e83e5e4b339c2517
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705205140A607BA2B0E080CD6E960-49B25AAB818B6901-00
+  X-Timestamp: 1751719900.557
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache8.cn7993[188,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601c17517199003983154e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid message content. validate content fail.', 'error': {'log_id': '20250705205140A607BA2B0E080CD6E960', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250705205140A607BA2B0E080CD6E960&code=230001&method_id=6936075528891154460'}}

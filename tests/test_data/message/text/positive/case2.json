@@ -1,0 +1,71 @@
+{
+  "name": "基础文本消息测试",
+  "description": "测试发送基本文本消息",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "text",
+      "content_json": {
+        "text": "$text$"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "schema": "message_response_schema",
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "msg_type": "text",
+        "deleted": false,
+        "updated": false,
+        "sender.id_type": "app_id",
+        "body.content": {
+          "@contains": "test content json dumps2"
+        }
+      }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "load_text",
+      "save_to": "text",
+      "text_path": "tests\\test_data\\message\\interactive\\cards\\testtext.txt"
+    }
+  ],
+  "teardown": [
+    {
+      "action": "delete_message",
+      "params": {
+        "message_id": "$response.data.message_id$"
+      }
+    }
+  ]
+}

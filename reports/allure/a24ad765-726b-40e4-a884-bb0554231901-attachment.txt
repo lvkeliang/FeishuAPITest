@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1905
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\u6ec7\u6c60\uff0c\u4ea6\u79f0\u6606\u660e\u6e56\u3001\u6606\u660e\u6c60\u3001\u6ec7\u5357\u6cfd\u3001\u6ec7\u6d77\u3002\u5728\u4e91\u5357\u7701\u6606\u660e\u5e02\u897f\u5357\uff0c\u6709\u76d8\u9f99\u6c5f\u7b49\u6cb3\u6d41\u6ce8\u5165\uff0c\u6e56\u9762\u6d77\u62d41886\u7c73\uff0c\u9762\u79ef330\u5e73\u65b9\u5343\u7c73\uff0c\u4e91\u5357\u7701\u6700\u5927\u7684\u6de1\u6c34\u6e56\uff0c\u6709\u9ad8\u539f\u660e\u73e0\u4e4b\u79f0\u3002\u5e73\u5747\u6c34\u6df15\u7c73\uff0c\u6700\u6df111\u7c73\u3002\u6e56\u6c34\u5728\u897f\u5357\u6d77\u53e3\u6d29\u51fa\uff0c\u79f0\u87b3\u8782\u5ddd\uff0c\u4e3a\u957f\u6c5f\u4e0a\u6e38\u5e72\u6d41\u91d1\u6c99\u6c5f\u652f\u6d41\u666e\u6e21\u6cb3\u4e0a\u6e90\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\ud83c\udf1e\u66f4\u591a\u666f\u70b9\u4ecb\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E6%BB%87%E6%B1%A0/180932\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\u4eca\u65e5\u65c5\u6e38\u63a8\u8350(\u6d4b\u8bd5\u5361\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "f81433c2-4df6-4b90-8c94-34410a4a8c59"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:51:37 GMT
+  Vary: Accept-Encoding
+  Request-Id: feb01b15-3fe4-4293-97b5-7367e6904caf
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: oFqVvGEWOBN2EnEsPdo6-AHc6rvK2sV1vPLSRo5j_K4Cy_1dUkQ9ujBZfPbyi0v5dyYpWZO4y0Ok10cnUxQq1YRIOL-vsE7y4ugLo8BPNsdFaQuk_T9zOUI5DMlKN8bhTDq1hbKFQ6bLBwK3Piz752-gPRuxk3rqKA5mUTf0kFObX9HDZ5_0kfrLk6FYVrOX8NzScRwKxTp4GZm9PpAZ0NOXiLpQ6nPecaWlqj7VLJAjxSWJ-y_T4ND0UKPbL2NIDK0A7pIZxyz5fsvi21S1L7PK7E30nJl49esN_9IcKq8m
+  X-Request-Id: feb01b15-3fe4-4293-97b5-7367e6904caf
+  X-Tt-Logid: 2025070520513616B993921AEA55D7510C
+  server-timing: inner; dur=437, cdn-cache;desc=MISS,edge;dur=0,origin;dur=552
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d1c4f6dde1c4110b27a5788689075e12f447afc1d327bcbe0b553026ecfed609e5838f8197aa9f69032f332944af70971cd078e5b02bb94afd5fb04ab74e8b8cb565f7ea32d26abe54680c9fd2d8ef8ca
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070520513616B993921AEA55D7510C-781C67194C6B488E-00
+  X-Timestamp: 1751719897.053
+  Content-Encoding: gzip
+  Via: ens-cache14.cn7993[552,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602217517198965238401e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":"今日旅游推荐(测试卡片)","elements":[[{"tag":"img","image_key":"img_v3_02ad_e19fca1f-912a-450e-95de-3c229091b53g"},{"tag":"text","text":"请升级至最新版本客户端，以查看内容"},{"tag":"text","text":""}]]}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751719897024', 'deleted': False, 'message_id': 'om_x100b49a5b34180a00ecf48336beab95', 'msg_type': 'interactive', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751719897024', 'updated': False}, 'msg': 'success'}

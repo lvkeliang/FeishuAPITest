@@ -1,0 +1,35 @@
+
+=== Request Details ===
+Method: GET
+URL: https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=your_chat_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json; charset=utf-8
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 352
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:25:01 GMT
+  Request-Id: bdbb782b-a3b4-451d-a977-f6ad8377577d
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: iNsN8Pof2Vl5fa_9FA9CyGKwFCaQ8OQ8Ir7ME5uAaSYqLAly4ThNRozEP5eeQf_GGakWoJ0iSPZmK9-a-NyL23I94IT_BNlxYUWo4GdjdIAnpMdAMbPIhMma5HwrTpwtVKiRge5cHJdFb2Og-pDEdunuDjA1afelbkNOVbxXJNkncu8mHLwADrri4PPcLWBAtfZ33BOnnMdz5ctKdnEoLbgElB7MKUjLykEbTKm6ONIHapMJMHfDqubkJnXr7YbOdZCNAcTHP7Nn1egv9onXucMPrtV2LPPE5w9zc-I7w2HcbTr4Xk2N
+  X-Request-Id: bdbb782b-a3b4-451d-a977-f6ad8377577d
+  X-Tt-Logid: 202507052025011CCAF55CA23D28D8FEF9
+  server-timing: inner; dur=74, cdn-cache;desc=MISS,edge;dur=0,origin;dur=192
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d3fa76cf86d670516893b6ad46c9c32455f85fc806b2546bd4d6939fb505829f6c32d8f941193a2763cbac3e2ae41fd41c9ede590f57b9b8b1ab70181d1e10fd2e4c14f3c2d8737f2395da437fd2f77bf
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507052025011CCAF55CA23D28D8FEF9-429057464092A7FD-00
+  X-Timestamp: 1751718301.332
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: cache22.cn6934[192,0]
+  Timing-Allow-Origin: *
+  EagleId: 7a9c82aa17517183011656272e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid container_id.', 'error': {'log_id': '202507052025011CCAF55CA23D28D8FEF9', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=202507052025011CCAF55CA23D28D8FEF9&code=230001&method_id=6936075528891187228'}}

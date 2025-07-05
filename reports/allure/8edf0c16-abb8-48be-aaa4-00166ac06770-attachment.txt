@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 205
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "file", "content": "{\"file_key\": \"file_v3_00nt_684eee6a-fff2-4418-877a-1ca32be2ddcg\"}", "uuid": "e8416ae7-7bbf-4c4f-bedf-e36aebac949c"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 345
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:26:08 GMT
+  Request-Id: 04cec93a-86aa-47d3-9b5f-8ae627f5ebd8
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: tyaUB27aFtJZqgxUrrpenZYTnJZLU5SLcQTqywldHSZXDZ3Ob6spbHlyHXm64J7jBzvkGGrLXCGg6IJ9J1mi-uUWBwEdIrjX5qE5hxyJjotm6Cf6y7qLdpu24ERa0Bisawj5s23sTewCWq9HGPu67Y1m7Bmo_p3pbBTQStlPp91sIFY_uYJIoHuS6qiAKFD1Qe74QPf_h48a2W7WczkMbva2SQGLYhnZX4ZzLkG7fxSN5RRam_w9ZXc9DPl1XincGiW7mg8UQlE0GRhYmpbwd3ilxyRaWlg4pLPsWhVCkW6RWw==
+  X-Request-Id: 04cec93a-86aa-47d3-9b5f-8ae627f5ebd8
+  X-Tt-Logid: 202507052126075CD42E944432B9B84A28
+  server-timing: inner; dur=164, cdn-cache;desc=MISS,edge;dur=0,origin;dur=190
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dd095cf670cbd95d8cd84e56fb32555cf98fb7f3fe676646e8872edfd885d097da21065301b487e0cb03510bb6857dd6f84859f2bebc18fe4edf85f8ae1b519fd05e75363ed0b739a0edc34be42d34df1
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507052126075CD42E944432B9B84A28-53D29F9A25DE7C86-00
+  X-Timestamp: 1751721968.125
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: vcache1.cn3178[190,0]
+  Timing-Allow-Origin: *
+  EagleId: 7105b71517517219679523728e
+Body: {'code': 230055, 'msg': 'The type of file upload does not match the type of message being sent.', 'error': {'log_id': '202507052126075CD42E944432B9B84A28', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=202507052126075CD42E944432B9B84A28&code=230055&method_id=6936075528891154460'}}

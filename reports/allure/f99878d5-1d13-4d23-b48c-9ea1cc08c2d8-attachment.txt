@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1510
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\u897f\u6e56\uff0c\u4f4d\u4e8e\u4e2d\u56fd\u6d59\u6c5f\u7701\u676d\u5dde\u5e02\u897f\u6e56\u533a\u9f99\u4e95\u8def1\u53f7\uff0c\u676d\u5dde\u5e02\u533a\u897f\u90e8\uff0c\u6c47\u6c34\u9762\u79ef\u4e3a21.22\u5e73\u65b9\u5343\u7c73\uff0c\u6e56\u9762\u9762\u79ef\u4e3a6.38\u5e73\u65b9\u5343\u7c73\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\ud83c\udf1e\u66f4\u591a\u666f\u70b9\u4ecb\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\u4eca\u65e5\u65c5\u6e38\u63a8\u8350(\u6d4b\u8bd5\u5361\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "a0c4b36e-7cd3-494c-b460-1797bd7c3303"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:24:23 GMT
+  Vary: Accept-Encoding
+  Request-Id: 0937e681-530d-4de8-8201-2ccfa6e1dccc
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: MvdhDzZlutkJO18jCi7p1q8NfZtL-PFIu1ObZ-ewm3uR82Uxyrpb6kU6aAOIoOGi8883AMFmpBZV34sK6CQnC2XrazZZlHV0OkCbZNX4z7LbX_l0_RipHhJfXoyyGNCWd4iP6Or-5AMsRAsTkSzCcZUjwFwClrl-RtvMiOpALQBOhXT3kHk3dZsyuoEEPanGmf840nugrz8omzTZBc1QMLdtBFOOhywuibrN_i34l2RObqJLV7RiSMm17RaAF1o2qForhI9-ATi8ccH0KHmeN1LUUEYVhJ7-JZyMjhmnzLvcDQ==
+  X-Request-Id: 0937e681-530d-4de8-8201-2ccfa6e1dccc
+  X-Tt-Logid: 20250705212423091AD9F864E45AB8B336
+  server-timing: inner; dur=454, cdn-cache;desc=MISS,edge;dur=0,origin;dur=541
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14dc7b81504e138425a4f703e60d128d82e2b58727662a4bf86f389e8e9f14d56ee507154f76f5a0fda77c71bb2c9115ef6dae5cfdbf5d36a0bac3c71e93cb2a1b48f69891fd430f0540fbb49366ab726c2
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705212423091AD9F864E45AB8B336-7AB16DD53B8D2A3B-00
+  X-Timestamp: 1751721863.769
+  Content-Encoding: gzip
+  Via: ens-cache19.cn7993[541,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602717517218632508462e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":"今日旅游推荐(测试卡片)","elements":[[{"tag":"img","image_key":"img_v3_02ad_e19fca1f-912a-450e-95de-3c229091b53g"},{"tag":"text","text":"请升级至最新版本客户端，以查看内容"},{"tag":"text","text":""}]]}'}, 'chat_id': 'oc_ba313cd627d846e4cb8acc9020fb840d', 'create_time': '1751721863739', 'deleted': False, 'message_id': 'om_x100b49a636bac5a80f16a1413d93c25', 'msg_type': 'interactive', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751721863739', 'updated': False}, 'msg': 'success'}

@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 1908
+Body:
+{"receive_id": "ou_7d8a6e6df7621556ce0d21922b676706ccs", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\u6ec7\u6c60\uff0c\u4ea6\u79f0\u6606\u660e\u6e56\u3001\u6606\u660e\u6c60\u3001\u6ec7\u5357\u6cfd\u3001\u6ec7\u6d77\u3002\u5728\u4e91\u5357\u7701\u6606\u660e\u5e02\u897f\u5357\uff0c\u6709\u76d8\u9f99\u6c5f\u7b49\u6cb3\u6d41\u6ce8\u5165\uff0c\u6e56\u9762\u6d77\u62d41886\u7c73\uff0c\u9762\u79ef330\u5e73\u65b9\u5343\u7c73\uff0c\u4e91\u5357\u7701\u6700\u5927\u7684\u6de1\u6c34\u6e56\uff0c\u6709\u9ad8\u539f\u660e\u73e0\u4e4b\u79f0\u3002\u5e73\u5747\u6c34\u6df15\u7c73\uff0c\u6700\u6df111\u7c73\u3002\u6e56\u6c34\u5728\u897f\u5357\u6d77\u53e3\u6d29\u51fa\uff0c\u79f0\u87b3\u8782\u5ddd\uff0c\u4e3a\u957f\u6c5f\u4e0a\u6e38\u5e72\u6d41\u91d1\u6c99\u6c5f\u652f\u6d41\u666e\u6e21\u6cb3\u4e0a\u6e90\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\ud83c\udf1e\u66f4\u591a\u666f\u70b9\u4ecb\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E6%BB%87%E6%B1%A0/180932\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\u4eca\u65e5\u65c5\u6e38\u63a8\u8350(\u6d4b\u8bd5\u5361\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "6765dec5-f50c-4a79-a079-4d61ed404838"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 835
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 12:25:03 GMT
+  Request-Id: 1353282e-4c70-4aaf-aa59-8670714191d8
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: In4_F1OSIIf8jhPpYpQDSLBgd3d1RSTK7MMPqnDNZCP1MKOGXZh3j0AAY5hjus3ucd09HiIdpk13uNeOBDEVyq2nE1S1LCdLM30AoUm5bgGbJnwqam4nNk3AaGA6Pm8gRA-TX4ufSJPhYHsgKVl2bJ6S4LquNLrX1ikns_ekAFQkfwQT67PP0DAuCRdVm_vPX5NWbEdq6vnTqIftRUkdfQ==
+  X-Request-Id: 1353282e-4c70-4aaf-aa59-8670714191d8
+  X-Tt-Logid: 20250705202503EAB3760BF150D0B5F63C
+  server-timing: inner; dur=86, cdn-cache;desc=MISS,edge;dur=0,origin;dur=183
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d57bb8fe4aae32c34d56aec76b88637d30dc7f7a55ff14a9ff43bfc4ed6609e164eab7997ea3334399c6cdf791339294107ad0d92c7bb3edd117148b5beadea2324b6810357b53561aaff75f0e28b93bf
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705202503EAB3760BF150D0B5F63C-1E2472EA3A43E1BF-00
+  X-Timestamp: 1751718303.462
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: cache21.cn6934[183,0]
+  Timing-Allow-Origin: *
+  EagleId: 7a9c82a917517183033051393e
+Body: {'code': 99992351, 'msg': 'The request you send is not a valid {open_id} or not exists, and the example value is {ou_da5****************dfe}. Invalid ids: [ou_7d8a6e6df7621556ce0d21922b676706ccs] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit', 'error': {'field_violations': [{'field': 'receive_id', 'value': 'ou_7d8a6e6df7621556ce0d21922b676706ccs', 'description': 'id not exist'}], 'message': 'Refer to the documentation to fix the error: https://open.feishu.cn/document/uAjLw4CM/ugTN1YjL4UTN24CO1UjN/trouble-shooting/how-to-obtain-openid', 'log_id': '20250705202503EAB3760BF150D0B5F63C', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250705202503EAB3760BF150D0B5F63C&code=99992351&method_id=6936075528891154460'}}

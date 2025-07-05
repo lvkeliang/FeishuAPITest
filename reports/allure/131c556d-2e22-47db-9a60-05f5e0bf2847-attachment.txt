@@ -1,0 +1,35 @@
+
+=== Request Details ===
+Method: GET
+URL: https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=invalid_chat_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json; charset=utf-8
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 352
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:24:19 GMT
+  Request-Id: 683b71b5-67db-43a9-ac5d-81e472f8c9c3
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: UUjrIDYlKtmr6tQ9RUlZ-zlrYAIG6PPGiu-qCKsvkv2KKkD3dEyU7m_i4y1oi6nc7fOtIROx0OQNo3i9iCJzbylVbdUc6GcaM6XgcGBzB449eg6HqgK1azP1FBtHaThvlYyU1Wqmvm4nkgLEznf-xUxVQZVyAsWQa2FdADTi6emFDn4H38rmpScoWyL5TTpizAyIuU1LUopaXRqISipXEEiWoTDrgqwxQyMkCGK9YHURpZCZDWy67qGQpYvilMUNlj4it_RvlVtGw8MPOWhfE7WCmG8zPA3_lC3IUD0LvrCgzjmaS6sg
+  X-Request-Id: 683b71b5-67db-43a9-ac5d-81e472f8c9c3
+  X-Tt-Logid: 2025070521241941865AB3D492F6B90FB6
+  server-timing: inner; dur=73, cdn-cache;desc=MISS,edge;dur=0,origin;dur=159
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d3fe5922e51d37443f3589fcd0e275fdf683b1823575c232e8ffe138241d6b18861a235514c77861c5659508f900c4dab0466a6875edddc582fc871e9a41ffae116c95d3e0e1288ea4dc4102df5ebf21d
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070521241941865AB3D492F6B90FB6-2B0394C02D96C119-00
+  X-Timestamp: 1751721859.905
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache17.cn7993[159,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602517517218597703630e
+Body: {'code': 230001, 'msg': 'Your request contains an invalid request parameter, ext=invalid container_id.', 'error': {'log_id': '2025070521241941865AB3D492F6B90FB6', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070521241941865AB3D492F6B90FB6&code=230001&method_id=6936075528891187228'}}

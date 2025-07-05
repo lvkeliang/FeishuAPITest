@@ -1,0 +1,38 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10475jtDD46FY64TKRIUEUFPVLVAXRM7XTOM6P5
+  Content-Length: 170
+Body:
+{"receive_id": "ou_d43b3eacf22b2f76b8672e6d95e14641", "msg_type": "text", "content": {"text": "test content json dumps1"}, "uuid": "51b248e1-f5ac-44f0-98a3-9f5cf71b9ddf"}
+
+=== Response Details ===
+Status Code: 400
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 414
+  Connection: keep-alive
+  Date: Sat, 05 Jul 2025 13:24:21 GMT
+  Request-Id: e82ee14c-425f-4ab4-866e-db50ef174cd0
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: GRYJDN_tC5D2n8X7Naaz10MJ0d-V3By8gFcXWVtDPc1UWUBH9q6FzA6Z3RfRDvcfIm5uvJsSeI-9EU6pLz4ti0yQw-dZmpL4gweohl2sFgpoFEJ8Hdrtru2hGX-VfhrAQEwqzmUMwKcUdgp1bCnbt2n_YMCHZcvJMI3NdRzlM94077TxKI54osku_VBCPgkT1Cz99Mm-yCNuxVXA_U3-AZ_h812hiZE1F0F9vWnZ2esr7e9lc6RJhWnrTAM3LIUCgUG8HqkyKSafhFzcz8euvmLavwEsFKZVP9fPL5OmLHPQdA==
+  X-Request-Id: e82ee14c-425f-4ab4-866e-db50ef174cd0
+  X-Tt-Logid: 20250705212421D18E53B99594B8D7562E
+  server-timing: inner; dur=82, cdn-cache;desc=MISS,edge;dur=0,origin;dur=184
+  x-tt-trace-host: 0111a509835d10dec1afa4043a5b76d14d12af385ef0a6f0dcadb49bcf39421ce57e0790a30026bf07bcf22971e4f002fc11e1953c593e135f8e54ad661cd8e5755227f4aad227b3703b4e9fcbefa37097dd3ed45407e638f321c341b7cff3048a
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250705212421D18E53B99594B8D7562E-73072BD8576CD41E-00
+  X-Timestamp: 1751721861.346
+  x-alicdn-da-ups-status: endOs,0,400
+  Via: ens-cache2.cn7993[184,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601617517218611851971e
+Body: {'code': 9499, 'msg': 'Invalid parameter type in json: content. Invalid parameter value: {"text":"test content json dumps1"}. Please check and modify accordingly.', 'error': {'log_id': '20250705212421D18E53B99594B8D7562E', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250705212421D18E53B99594B8D7562E&code=9499&method_id=6936075528891154460'}}
