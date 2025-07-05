@@ -6,6 +6,15 @@ from tests.test_data.case_loader import test_case_loader
 from tests.utils.config_loader import config
 
 
+# 装饰器标识msg_type
+def case_msg_type(msg_type):
+    def decorator(func):
+        func._msg_type = msg_type  # 附加属性
+        return func
+
+    return decorator
+
+
 @pytest.fixture(scope="module")
 def client():
     """共享的Feishu客户端fixture"""
@@ -44,22 +53,27 @@ def prepared_test_case(request):
 
 
 # 具体消息类型的测试
+@case_msg_type("text")
 def test_text_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
+@case_msg_type("image")
 def test_image_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
+@case_msg_type("post")
 def test_post_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
+@case_msg_type("interactive")
 def test_interactive_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
+# @case_msg_type("file")
 # def test_file_messages(client, prepared_test_case):
 #     _generic_message_test(feishu_client, prepared_test_case)
 
@@ -71,7 +85,7 @@ def _generic_message_test(client, prepared_test_case, receiver_info):
         test_data = prepared_test_case
         request_data = test_data["request"]
 
-        # --- 关键修改：动态注入参数 ---
+        # --- 动态注入参数 ---
         # 1. 注入 receive_id_type 到查询参数
         query_params = request_data.get("query_params", {})
         query_params["receive_id_type"] = receive_id_type  # 覆盖或新增

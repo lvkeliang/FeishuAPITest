@@ -7,20 +7,10 @@ from tests.test_data.case_loader import test_case_loader
 from tests.utils.config_loader import config
 
 
-def extract_msg_type_from_test_name(test_name):
-    """从测试函数名中提取消息类型"""
-    # 示例：test_text_messages -> "text"
-    # 示例：test_image_send -> "image"
-    parts = test_name.split('_')
-    if len(parts) >= 2 and parts[0] == "test":
-        return parts[1]  # 取test后的第一个单词
-    return None
-
-
 def pytest_generate_tests(metafunc):
     if "prepared_test_case" in metafunc.fixturenames:
         # 从测试函数名提取msg_type
-        msg_type = extract_msg_type_from_test_name(metafunc.definition.name)
+        msg_type = getattr(metafunc.function, "_msg_type", None)
 
         if not msg_type:
             pytest.skip(f"Cannot determine msg_type from test name: {metafunc.definition.name}")
