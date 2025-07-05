@@ -1,6 +1,6 @@
 {
-    "name": "基础卡片消息测试",
-    "description": "测试发送卡片消息",
+    "name": "基础卡片消息测试3",
+    "description": "测试发送卡片消息3",
     "category": "positive",
     "request": {
         "method": "POST",
@@ -53,9 +53,9 @@
             "save_to": "random_uuid"
         },
         {
-            "action": "load_text",
+            "action": "load_and_dump_json",
             "save_to": "json_card",
-            "text_path": "tests\\test_data\\message\\interactive\\cards\\test_card1.json"
+            "json_path": "tests\\test_data\\message\\interactive\\cards\\test_card2.json"
         }
     ],
     "teardown": [

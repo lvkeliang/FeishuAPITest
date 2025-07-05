@@ -109,9 +109,6 @@ class TestCaseLoader:
             elif action_type == "load_and_dump_json":
                 json_file_path = Path(action["json_path"])
                 context[action["save_to"]] = json.dumps(json.loads(json_file_path.read_text(encoding='utf-8')), ensure_ascii=False)
-                print(json.loads(json_file_path.read_text(encoding='utf-8')))
-                print()
-                print(json.dumps(json.loads(json_file_path.read_text(encoding='utf-8')), ensure_ascii=False))
 
             elif action_type == "load_text":
                 file_path = Path(action["text_path"])
@@ -144,9 +141,9 @@ class TestCaseLoader:
     def replace_variables(self, data: Any, context: Dict[str, Any]) -> Any:
         """
         三阶段变量处理：
-        1. 识别需要JSON编码的字段（不修改内容）
+        1. 识别需要JSON转义的字段（不修改内容）
         2. 执行深层变量替换
-        3. 对标记字段进行JSON编码
+        3. 对标记字段进行JSON转义
         """
         # 第一阶段：标记需要JSON编码的字段
         needs_encode, marked_data = self._mark_encode_fields(data)
@@ -154,11 +151,11 @@ class TestCaseLoader:
         # 第二阶段：深度变量替换
         replaced_data = self._deep_replace_variables(marked_data, context)
 
-        # 第三阶段：执行JSON编码
+        # 第三阶段：执行JSON转义
         return self._apply_json_encoding(replaced_data, needs_encode)
 
     def _mark_encode_fields(self, data: Any) -> tuple[set, Any]:
-        """递归标记需要JSON编码的字段路径"""
+        """递归标记需要JSON转义的字段路径"""
         if isinstance(data, dict):
             needs_encode = set()
             marked_data = {}
@@ -183,7 +180,7 @@ class TestCaseLoader:
         return set(), data
 
     def _deep_replace_variables(self, data: Any, context: Dict[str, Any]) -> Any:
-        """纯变量替换（不处理JSON编码）"""
+        """纯变量替换（不处理JSON转义）"""
         if isinstance(data, dict):
             return {k: self._deep_replace_variables(v, context) for k, v in data.items()}
         elif isinstance(data, list):
@@ -193,7 +190,7 @@ class TestCaseLoader:
         return data
 
     def _apply_json_encoding(self, data: Any, needs_encode: set, current_path: str = "") -> Any:
-        """根据标记执行JSON编码"""
+        """根据标记执行JSON转义"""
         if isinstance(data, dict):
             result = {}
             for k, v in data.items():
@@ -222,7 +219,7 @@ class TestCaseLoader:
         return data
 
     def _process_string_variables(self, text: str, context: Dict[str, Any]) -> str:
-        """处理字符串中的变量（保留原有逻辑）"""
+        """处理字符串中的变量"""
         if text.startswith("$") and text.endswith("$"):
             return self._replace_explicit_variable(text[1:-1], context)
         return self._replace_embedded_variables(text, context)

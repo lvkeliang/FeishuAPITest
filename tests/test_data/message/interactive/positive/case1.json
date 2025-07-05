@@ -35,7 +35,7 @@
                     "elements": [
                         {
                             "tag": "markdown",
-                            "content": "西湖，位于中国浙江省杭州市西湖区龙井路1号，杭州市区西部，汇水面积为21.22平方千米，湖面面积为6.38平方千米。",
+                            "content": "滇池，亦称昆明湖、昆明池、滇南泽、滇海。在云南省昆明市西南，有盘龙江等河流注入，湖面海拔1886米，面积330平方千米，云南省最大的淡水湖，有高原明珠之称。平均水深5米，最深11米。湖水在西南海口洩出，称螳螂川，为长江上游干流金沙江支流普渡河上源。",
                             "text_align": "left",
                             "text_size": "normal_v2",
                             "margin": "0px 0px 0px 0px"
@@ -52,7 +52,7 @@
                             "behaviors": [
                                 {
                                     "type": "open_url",
-                                    "default_url": "https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821",
+                                    "default_url": "https://baike.baidu.com/item/%E6%BB%87%E6%B1%A0/180932",
                                     "pc_url": "",
                                     "ios_url": "",
                                     "android_url": ""
