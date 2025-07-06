@@ -8,6 +8,7 @@
     "query_params": {
       "receive_id_type": "open_id"
     },
+    
     "headers": {
       "Content-Type": "application/json",
       "Authorization": "Bearer $access_token$"
