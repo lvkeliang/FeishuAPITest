@@ -39,7 +39,7 @@
     { "action": "get_tenant_access_token", "save_to": "access_token" },
     { "action": "get_open_id", "save_to": "open_id" },
     { "action": "generate_uuid", "save_to": "random_uuid" },
-    { "action": "upload_file", "save_to": "uploaded_file_key", "file_path": "tests/test_data/message/file/sample.pdf", "file_type": "pdf" }
+    { "action": "upload_file", "save_to": "uploaded_file_key", "file_path": "tests/test_data/message/file/file/sample.pdf", "file_type": "pdf" }
   ],
   "teardown": [
     { "action": "delete_message", "params": { "message_id": "$response.data.message_id$" } }

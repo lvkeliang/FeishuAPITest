@@ -57,7 +57,7 @@
         {
             "action": "upload_image",
             "save_to": "uploaded_image_key",
-            "image_path": "F:\\pictures\\png\\417.png",
+            "image_path": "tests/test_data/message/image/image/image2.jpg",
             "image_type": "message"
         }
     ],

@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
-
+import magic
 from requests_toolbelt import MultipartEncoder
-
+from mimetypes import guess_type
 import requests
 from typing import Dict, Any, Optional, Union
+
+from tests.utils.media import get_media_duration
 from tests.utils.config_loader import config
 
 
@@ -149,6 +151,97 @@ class FeishuClient:
 
         response.raise_for_status()
         return response.json()["data"]["image_key"]
+
+    def upload_file(
+            self,
+            file_path: Union[str, Path],
+            file_type: str,
+            file_name: Optional[str] = None,
+            duration: Optional[int] = None
+    ) -> str:
+        """
+        直接使用 requests 上传文件到飞书服务器
+
+        参数:
+            file_path: 文件路径
+            file_type: 文件类型 (opus|mp4|pdf|doc|xls|ppt|stream)
+            file_name: 自定义文件名 (默认使用原文件名)
+            duration: 文件时长(毫秒)，视频/音频文件使用
+
+        返回:
+            上传成功后的 file_key
+
+        异常:
+            FeishuRequestError: 上传失败时抛出
+            FileNotFoundError: 文件不存在时抛出
+        """
+        file_path = Path(file_path)
+        if not file_path.exists():
+            raise FileNotFoundError(f"File not found: {file_path}")
+
+        # 自动检测 MIME 类型
+        mime = self._detect_mime_type(file_path)
+
+        # 准备表单数据
+        form_data = {
+            'file_type': (None, file_type),  # 使用元组格式，None 表示无文件名
+            'file_name': (None, file_name or file_path.name),
+            'file': (file_path.name, open(file_path, 'rb'), mime)
+        }
+
+        # 处理时长参数
+        if file_type in ('mp4', 'opus'):
+            if duration is None:
+                try:
+                    duration = get_media_duration(file_path)
+                except Exception as e:
+                    print(f"Warning: Could not detect media duration: {e}")
+
+            if duration is not None:
+                form_data['duration'] = (None, str(duration))
+
+        # 直接使用 requests 发送请求
+        response = requests.post(
+            url=f"{self.base_url}/open-apis/im/v1/files",
+            headers={
+                "Authorization": f"Bearer {self.tenant_access_token}",
+            },
+            files=form_data,
+            timeout=self.timeout
+        )
+
+        # 处理响应
+        response.raise_for_status()
+        response_data = response.json()
+        if response_data.get('code') != 0:
+            raise FeishuRequestError(
+                f"Upload file failed: {response_data.get('msg')} "
+                f"(code: {response_data.get('code')})"
+            )
+
+        return response_data['data']['file_key']
+
+    def _detect_mime_type(self, file_path: Path) -> str:
+        """
+        自动检测文件的 MIME 类型
+
+        参数:
+            file_path: 文件路径
+
+        返回:
+            检测到的 MIME 类型，如 'application/pdf'
+        """
+        try:
+            # 使用 python-magic 检测
+            mime = magic.from_file(str(file_path), mime=True)
+            if mime != 'application/octet-stream':
+                return mime
+
+            # 回退到 mimetypes 猜测
+            guessed_type, _ = guess_type(file_path.name)
+            return guessed_type or 'application/octet-stream'
+        except:
+            return 'application/octet-stream'
 
     def request(
             self,

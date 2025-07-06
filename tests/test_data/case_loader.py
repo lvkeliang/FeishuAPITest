@@ -117,6 +117,12 @@ class TestCaseLoader:
             elif action_type == "get_chat_id":
                 context[action["save_to"]] = config.get_test_account(0)["chat_id"]
 
+            elif action_type == "upload_file":
+                context[action["save_to"]] = feishu_client.upload_file(
+                    file_path=action["file_path"],
+                    file_type=action["file_type"]
+                )
+
 
             # 可以添加更多setup操作
 

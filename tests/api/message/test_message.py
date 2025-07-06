@@ -73,9 +73,19 @@ def test_interactive_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
-# @case_msg_type("file")
-# def test_file_messages(client, prepared_test_case):
-#     _generic_message_test(feishu_client, prepared_test_case)
+@case_msg_type("file")
+def test_file_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
+
+@case_msg_type("audio")
+def test_audio_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
+
+@case_msg_type("media")
+def test_media_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
 
 def _generic_message_test(client, prepared_test_case, receiver_info):

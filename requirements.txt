@@ -13,3 +13,6 @@ allure-pytest>=2.9
 jsonschema~=4.24.0
 pydantic~=2.11.7
 attrs~=25.3.0
+python-magic-bin
+python-magic~=0.4.27
+ffmpeg-python

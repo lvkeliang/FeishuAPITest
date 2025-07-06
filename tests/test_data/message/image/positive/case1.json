@@ -58,7 +58,7 @@
         {
             "action": "upload_image",
             "save_to": "uploaded_image_key",
-            "image_path": "F:\\pictures\\mountainschool2.jpg",
+            "image_path": "tests/test_data/message/image/image/image1.png",
             "image_type": "message"
         }
     ],
