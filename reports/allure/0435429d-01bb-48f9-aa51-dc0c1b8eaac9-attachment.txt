@@ -1,0 +1,62 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.3
+  Accept-Encoding: gzip, deflate, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10476nI7OP6U2GQ22MJJFT434BGTDNDANABWR4F
+  Content-Length: 508
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "post", "content": "{\"zh_cn\": {\"title\": \"\u6d4b\u8bd5\u5bcc\u6587\u672c\u6807\u9898\", \"content\": [[{\"tag\": \"text\", \"text\": \"\u7b2c\u4e00\u884c: \", \"style\": [\"bold\"]}, {\"tag\": \"a\", \"text\": \"\u98de\u4e66\u5b98\u7f51\", \"href\": \"https://www.feishu.cn\"}], [{\"tag\": \"text\", \"text\": \"\u8fd9\u662f\u4e00\u6bb5\u6d4b\u8bd5\u6587\u672c\"}], [{\"tag\": \"hr\"}]]}}", "uuid": "1daeb24c-49e7-4bfc-b25f-b7c4e27efca6"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sun, 06 Jul 2025 15:49:12 GMT
+  Vary: Accept-Encoding
+  Request-Id: 395ed4a0-62db-40b7-94fe-49a8d84a43fd
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: fqHhT_mLG-yDCx_7AuzQERmo3R_acTQEL6qN26IQ91eA8hV2M9U-OyyhKtesKm6ZAMK9NuhxB3M1D5WQLGV1-4tPjhOrONUWjVzOQMKy-uAv5pYn-3KGF29WuSv4e1z7OVzeFOBLuGDJqod7cVoeJtKq8lRnvnDfUyk-J7XI0B_bJf05lT-w33XAqGATN0m5b-gxQk02tKPVepmMPeIdNJvjA4vCNlUcRiE95cE7Y4VkOwc79Ft2TJ1E7zgpvtscD6By2KI-e8gaBc1m5LZP2Xxhzk4mJ093dk-emjy0QLkQ
+  X-Request-Id: 395ed4a0-62db-40b7-94fe-49a8d84a43fd
+  X-Tt-Logid: 20250706234911CA908CAA428B76F3D90D
+  server-timing: inner; dur=353, cdn-cache;desc=MISS,edge;dur=0,origin;dur=423
+  x-tt-trace-host: 011f829403e65a2e9502b78000de3cd8e87b6a6f3fe4d07b6d33f8ee3358f89ce3981ece62b8dd693491d719b5efbd49ab5a3cf34e9037b41078b7d48865f7a20c8c074ec34a5ad23c0d06abfb994b91faac434c22480b2d66c9af4d14c5c70376
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250706234911CA908CAA428B76F3D90D-0FFAAC55205ACE4E-00
+  X-Timestamp: 1751816952.312
+  Content-Encoding: gzip
+  Via: ens-cache1.cn8505[423,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3720717518169519102531e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":"测试富文本标题","content":[[{"tag":"text","text":"第一行: ","style":["bold"]},{"tag":"a","href":"https://www.feishu.cn","text":"飞书官网","style":[]}],[{"tag":"text","text":"这是一段测试文本","style":[]}],[{"tag":"hr"}]]}'}, 'chat_id': 'oc_03d5f6df895c0a8f83f902d6ad58770a', 'create_time': '1751816952267', 'deleted': False, 'message_id': 'om_x100b499de14f04980f4b1f7ce8630c5', 'msg_type': 'post', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751816952267', 'updated': False}, 'msg': 'success'}
+✓ 状态码验证: 期望 200, 实际 200
+✓ 开始验证响应头，共 1 个
+  - Content-Type: 期望 'application/json', 实际 'application/json; charset=utf-8'
+  ✓ Content-Type 验证通过（部分匹配）
+  ⚠️  message_response_schema Schema验证失败: Schema文件缺失: Schema文件不存在: /Users/taoj/Desktop/FeishuAPITest-main/tests/schemas/message_response.json，跳过验证
+✓ 开始验证响应体，共 3 个字段
+  - code: 期望 '0', 实际 '0'
+    ✓ code 精确匹配验证通过
+  - msg: 期望 'success', 实际 'success'
+    ✓ msg 精确匹配验证通过
+  - 验证对象字段: data
+  - data.msg_type: 期望 'text', 实际 'post'
+    ❌ data.msg_type 精确匹配失败: 期望 'text' (<class 'str'>), 实际 'post' (<class 'str'>)
+      (非核心字段，继续验证其他字段)
+  - data.deleted: 期望 'False', 实际 'False'
+    ✓ data.deleted 精确匹配验证通过
+  - data.updated: 期望 'False', 实际 'False'
+    ✓ data.updated 精确匹配验证通过
+  - data.sender.id_type: 期望 'app_id', 实际 'app_id'
+    ✓ data.sender.id_type 精确匹配验证通过
+  - 验证嵌套对象字段: data.body.content
+    ❌ data.body.content 包含验证失败: 'test content' 在 '{"title":"测试富文本标题","content":[[{"tag":"text","text":"第一行: ","style":["bold"]},{"tag":"a","href":"https://www.feishu.cn","text":"飞书官网","style":[]}],[{"tag":"text","text":"这是一段测试文本","style":[]}],[{"tag":"hr"}]]}' 中未找到
+      (包含验证失败，继续验证其他字段)

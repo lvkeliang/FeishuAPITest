@@ -1,0 +1,60 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.3
+  Accept-Encoding: gzip, deflate, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10476nI7OP6U2GQ22MJJFT434BGTDNDANABWR4F
+  Content-Length: 176
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "text", "content": "{\"text\": \"test content json dumps1\"}", "uuid": "649c932c-8ca4-45cf-ada1-c3fbc45ac72d"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sun, 06 Jul 2025 15:49:11 GMT
+  Vary: Accept-Encoding
+  Request-Id: d26659ce-a32f-4d96-98ea-de1e58b6ce25
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: Ca7UJlj6cP-qWhgXv0iHnl80tYapnN_FD_DeVldhmnEhtFydsZ7cStmUCWchAUhHLUx3yR0RAp84RiZtAN1LqjOk3nqNjfoYg69Rz0TN_T3Toxo5jJUUA5KvKHjjoccqNx0T-6ap6QG03NKXIFlYZbIpuRo6cw5y9mw3S_qJkj06u64y4hknl-YbHbz7bZhjvyz1jtihAANFUtn1drpM5QGUvwvFug0Q0h79QX2xDM9zrzN3Cki1tjFgvQdhHfHDk6waIIZ3i4DF_rm5DxQxaUI9QKFI1z2_bohZIT3A3hBRxQ==
+  X-Request-Id: d26659ce-a32f-4d96-98ea-de1e58b6ce25
+  X-Tt-Logid: 20250706234911F3F62D9BAE677A22EB9A
+  server-timing: inner; dur=371, cdn-cache;desc=MISS,edge;dur=0,origin;dur=505
+  x-tt-trace-host: 011f829403e65a2e9502b78000de3cd8e8f9230efb8ec098cb1fb5fca511d48391b1256b46681e623f681bf6e361448c54945067d3ab98b49313958735f0b72fe41e75c96dfe5a235940536cc1bdf01f6dd1945b9108a88caee6f17031282ba99c
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250706234911F3F62D9BAE677A22EB9A-33E78A8511C375F7-00
+  X-Timestamp: 1751816951.801
+  Content-Encoding: gzip
+  Via: cache8.cn6934[505,0]
+  Timing-Allow-Origin: *
+  EagleId: 7a9c829c17518169513224652e
+Body: {'code': 0, 'data': {'body': {'content': '{"text":"test content json dumps1"}'}, 'chat_id': 'oc_03d5f6df895c0a8f83f902d6ad58770a', 'create_time': '1751816951757', 'deleted': False, 'message_id': 'om_x100b499de1b788b80f3f8340c59a1b6', 'msg_type': 'text', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751816951757', 'updated': False}, 'msg': 'success'}
+✓ 状态码验证: 期望 200, 实际 200
+✓ 开始验证响应头，共 1 个
+  - Content-Type: 期望 'application/json; charset=utf-8', 实际 'application/json; charset=utf-8'
+  ✓ Content-Type 验证通过（部分匹配）
+  ⚠️  message_response_schema Schema验证失败: Schema文件缺失: Schema文件不存在: /Users/taoj/Desktop/FeishuAPITest-main/tests/schemas/message_response.json，跳过验证
+✓ 开始验证响应体，共 3 个字段
+  - code: 期望 '0', 实际 '0'
+    ✓ code 精确匹配验证通过
+  - msg: 期望 'success', 实际 'success'
+    ✓ msg 精确匹配验证通过
+  - 验证对象字段: data
+  - data.msg_type: 期望 'text', 实际 'text'
+    ✓ data.msg_type 精确匹配验证通过
+  - data.deleted: 期望 'False', 实际 'False'
+    ✓ data.deleted 精确匹配验证通过
+  - data.updated: 期望 'False', 实际 'False'
+    ✓ data.updated 精确匹配验证通过
+  - data.sender.id_type: 期望 'app_id', 实际 'app_id'
+    ✓ data.sender.id_type 精确匹配验证通过
+  - 验证嵌套对象字段: data.body.content
+    ✓ data.body.content 包含验证通过: 'test content json dumps1' 在 '{"text":"test content json dumps1"}' 中找到

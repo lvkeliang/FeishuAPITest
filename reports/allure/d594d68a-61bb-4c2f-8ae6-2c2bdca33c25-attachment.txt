@@ -1,0 +1,62 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.3
+  Accept-Encoding: gzip, deflate, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10476nI7OP6U2GQ22MJJFT434BGTDNDANABWR4F
+  Content-Length: 1510
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\u897f\u6e56\uff0c\u4f4d\u4e8e\u4e2d\u56fd\u6d59\u6c5f\u7701\u676d\u5dde\u5e02\u897f\u6e56\u533a\u9f99\u4e95\u8def1\u53f7\uff0c\u676d\u5dde\u5e02\u533a\u897f\u90e8\uff0c\u6c47\u6c34\u9762\u79ef\u4e3a21.22\u5e73\u65b9\u5343\u7c73\uff0c\u6e56\u9762\u9762\u79ef\u4e3a6.38\u5e73\u65b9\u5343\u7c73\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\ud83c\udf1e\u66f4\u591a\u666f\u70b9\u4ecb\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\u4eca\u65e5\u65c5\u6e38\u63a8\u8350(\u6d4b\u8bd5\u5361\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "4852fbb7-9cac-4288-8f9b-812739d99226"}
+
+=== Response Details ===
+Status Code: 200
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Date: Sun, 06 Jul 2025 15:49:12 GMT
+  Vary: Accept-Encoding
+  Request-Id: 8c909920-e2af-4694-92b6-92e75295ad3e
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: LxY99SDTOAcQStV-yp1QDRQmA_HoFx0L72YS35TDXcazr2uzT4ltIMh_oni8D7HAQiha3IcQLcduJPTqNjDOau-JofEfZBREHykHZos7a_EeWzbA9lduSiwpsDP7it8iFj8DHRQJliEXLDj8sNRVgOt-C9-LjN9NBv9lcZBajERTmcmYsLjipgMPiIgnsuCIuLlk6S1Rscn8bK89eZ1l_r07AElpjpKTeYKysDMMk3655QT4u2wsYYgLkfrN3f3UC6qkh7XYdiu-EMe1omyeRWDKkJzm0IFAFiUoObw_jDPvHA==
+  X-Request-Id: 8c909920-e2af-4694-92b6-92e75295ad3e
+  X-Tt-Logid: 20250706234912D21F76CE8F65D7F334F1
+  server-timing: inner; dur=495, cdn-cache;desc=MISS,edge;dur=0,origin;dur=563
+  x-tt-trace-host: 011f829403e65a2e9502b78000de3cd8e87b6a6f3fe4d07b6d33f8ee3358f89ce3a4827bf7d4a500de57d6c23be3fab3850aa109c487fe849159c87a3d9580fad7673285b9c9cc7f58cdd6090e10a7e8746be3fa7072f88be1d3feab8dcd414dfc
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250706234912D21F76CE8F65D7F334F1-3B7BED2069EB9046-00
+  X-Timestamp: 1751816952.963
+  Content-Encoding: gzip
+  Via: ens-cache1.cn8505[563,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3720717518169524193343e
+Body: {'code': 0, 'data': {'body': {'content': '{"title":"今日旅游推荐(测试卡片)","elements":[[{"tag":"img","image_key":"img_v3_02ad_e19fca1f-912a-450e-95de-3c229091b53g"},{"tag":"text","text":"请升级至最新版本客户端，以查看内容"},{"tag":"text","text":""}]]}'}, 'chat_id': 'oc_03d5f6df895c0a8f83f902d6ad58770a', 'create_time': '1751816952916', 'deleted': False, 'message_id': 'om_x100b499de14464a40f4f9cdfd2ac6ea', 'msg_type': 'interactive', 'sender': {'id': 'cli_a8d4099050b81013', 'id_type': 'app_id', 'sender_type': 'app', 'tenant_key': '1b5b78543140175e'}, 'update_time': '1751816952916', 'updated': False}, 'msg': 'success'}
+✓ 状态码验证: 期望 200, 实际 200
+✓ 开始验证响应头，共 1 个
+  - Content-Type: 期望 'application/json', 实际 'application/json; charset=utf-8'
+  ✓ Content-Type 验证通过（部分匹配）
+  ⚠️  message_response_schema Schema验证失败: Schema文件缺失: Schema文件不存在: /Users/taoj/Desktop/FeishuAPITest-main/tests/schemas/message_response.json，跳过验证
+✓ 开始验证响应体，共 3 个字段
+  - code: 期望 '0', 实际 '0'
+    ✓ code 精确匹配验证通过
+  - msg: 期望 'success', 实际 'success'
+    ✓ msg 精确匹配验证通过
+  - 验证对象字段: data
+  - data.msg_type: 期望 'text', 实际 'interactive'
+    ❌ data.msg_type 精确匹配失败: 期望 'text' (<class 'str'>), 实际 'interactive' (<class 'str'>)
+      (非核心字段，继续验证其他字段)
+  - data.deleted: 期望 'False', 实际 'False'
+    ✓ data.deleted 精确匹配验证通过
+  - data.updated: 期望 'False', 实际 'False'
+    ✓ data.updated 精确匹配验证通过
+  - data.sender.id_type: 期望 'app_id', 实际 'app_id'
+    ✓ data.sender.id_type 精确匹配验证通过
+  - 验证嵌套对象字段: data.body.content
+    ❌ data.body.content 包含验证失败: 'test content' 在 '{"title":"今日旅游推荐(测试卡片)","elements":[[{"tag":"img","image_key":"img_v3_02ad_e19fca1f-912a-450e-95de-3c229091b53g"},{"tag":"text","text":"请升级至最新版本客户端，以查看内容"},{"tag":"text","text":""}]]}' 中未找到
+      (包含验证失败，继续验证其他字段)

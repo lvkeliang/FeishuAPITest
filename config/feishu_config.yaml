@@ -1,0 +1,24 @@
+# 基础配置
+base:
+  api_version: v1
+  default_env: dev  # 默认使用dev环境
+
+# 日志配置
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_path: logs/feishu_api_test.log
+
+# 测试报告配置
+report:
+  allure:
+    output_dir: reports/allure
+  html:
+    output_dir: reports/html
+    report_name: feishu_test_report.html
+
+# 测试策略
+testing:
+  retry_times: 3
+  retry_interval: 1
+  timeout: 10
