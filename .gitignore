@@ -1,3 +1,19 @@
 .DS_Store
 .DS_Store
 *.DS_Store
+
+# IDE (PyCharm/IntelliJ) files
+.idea/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyi
+
+# Local test environment configs
+/config/test_env/dev.yaml
+
+# Test reports
+/reports/html/report.html
