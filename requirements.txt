@@ -16,3 +16,4 @@ attrs~=25.3.0
 python-magic-bin
 python-magic~=0.4.27
 ffmpeg-python
+lark_oapi

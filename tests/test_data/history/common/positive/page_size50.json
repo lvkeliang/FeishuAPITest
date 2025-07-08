@@ -1,13 +1,14 @@
 {
-    "name": "获取单聊历史消息_默认参数",
-    "description": "测试获取单聊历史消息的基本功能，使用默认参数",
+    "name": "获取分页历史消息_page_size边界测试50",
+    "description": "获取分页历史消息_page_size边界测试",
     "category": "positive",
     "request": {
         "method": "GET",
         "endpoint": "/open-apis/im/v1/messages",
         "query_params": {
             "container_id_type": "chat",
-            "container_id": "$chat_id$"
+            "container_id": "$chat_id$",
+            "page_size": 50
         },
         "headers": {
             "Content-Type": "application/json; charset=utf-8",

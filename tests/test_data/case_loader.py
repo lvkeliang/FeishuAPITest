@@ -1,5 +1,6 @@
 import json
 import re
+import time
 import uuid
 from pathlib import Path
 from typing import Dict, List, Optional, Any
@@ -7,6 +8,8 @@ import pytest
 from pydantic import BaseModel, validator
 from tests.client.client import feishu_client
 from tests.utils.config_loader import config
+
+from datetime import datetime, timedelta
 
 
 class RequestModel(BaseModel):
@@ -117,11 +120,50 @@ class TestCaseLoader:
             elif action_type == "get_chat_id":
                 context[action["save_to"]] = config.get_test_account(0)["chat_id"]
 
+            elif action_type == "get_thread_id":
+                context[action["save_to"]] = config.get_test_thread(0)["thread_id"]
+
             elif action_type == "upload_file":
                 context[action["save_to"]] = feishu_client.upload_file(
                     file_path=action["file_path"],
                     file_type=action["file_type"]
                 )
+
+            # 时间戳操作
+            elif action_type == "get_timestamp":
+                """获取时间戳（秒级）"""
+                base_time = time.time()
+
+                # 处理偏移参数（全部可选）
+                offset_seconds = action.get("offset_seconds", 0)
+                offset_minutes = action.get("offset_minutes", 0)
+                offset_hours = action.get("offset_hours", 0)
+                offset_days = action.get("offset_days", 0)
+                offset_weeks = action.get("offset_weeks", 0)
+                offset_months = action.get("offset_months", 0)
+                offset_years = action.get("offset_years", 0)
+
+                # 计算总偏移秒数
+                total_offset = (
+                        offset_seconds +
+                        offset_minutes * 60 +
+                        offset_hours * 3600 +
+                        offset_days * 86400 +
+                        offset_weeks * 604800
+                )
+
+                # 处理月和年（近似值）
+                if offset_months != 0 or offset_years != 0:
+                    dt = datetime.now()
+                    if offset_months:
+                        dt = dt + timedelta(days=30 * offset_months)
+                    if offset_years:
+                        dt = dt + timedelta(days=365 * offset_years)
+                    result = str(int(dt.timestamp()))
+                else:
+                    result = str(int(base_time + total_offset))
+
+                context[action["save_to"]] = result
 
 
             # 可以添加更多setup操作

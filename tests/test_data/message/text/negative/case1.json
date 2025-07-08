@@ -28,17 +28,10 @@
     },
     "schema": "message_response_schema",
     "body": {
-      "code": 0,
-      "msg": "success",
-      "data": {
-        "msg_type": "text",
-        "deleted": false,
-        "updated": false,
-        "sender.id_type": "app_id",
-        "body.content": {
-          "@contains": "test content json dumps1"
+      "code": 9499,
+      "msg": {
+          "@not_empty@": true
         }
-      }
     }
   },
   "setup": [

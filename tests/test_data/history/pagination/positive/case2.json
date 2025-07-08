@@ -1,0 +1,49 @@
+{
+  "name": "获取分页历史消息_默认参数",
+  "description": "测试获取分页历史消息的基本功能，使用默认参数",
+  "category": "positive",
+  "request": {
+    "method": "GET",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "container_id_type": "chat",
+      "container_id": "$chat_id$",
+      "sort_type": "ByCreateTimeAsc",
+      "start_time": "$target_time$",
+      "page_size": 7
+    },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Bearer $tenant_access_token$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "has_more": "@exists",
+        "items": "@exists"
+      }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "tenant_access_token"
+    },
+    {
+      "action": "get_chat_id",
+      "save_to": "chat_id"
+    },
+    {
+      "action": "get_timestamp",
+      "save_to": "target_time",
+      "offset_days": -1
+    }
+  ]
+}

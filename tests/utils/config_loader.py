@@ -67,16 +67,16 @@ class ConfigLoader:
 
     def get_test_group(self, identifier: str | int) -> Dict[str, str]:
         """获取测试群组信息
-        可以通过账号名称(name)或索引位置(index)获取
+        可以通过群组名称(name)或索引位置(index)获取
 
         Args:
-            identifier: 可以是账号名称(str)或索引位置(int)
+            identifier: 可以是群组名称(str)或索引位置(int)
 
         Returns:
             账号信息的字典
 
         Raises:
-            ValueError: 当找不到对应账号或索引超出范围时
+            ValueError: 当找不到对应群组或索引超出范围时
         """
         accounts = self._env_config["test_groups"]
 
@@ -84,15 +84,46 @@ class ConfigLoader:
             # 通过索引获取
             if 0 <= identifier < len(accounts):
                 return accounts[identifier]
-            raise ValueError(f"Test account index {identifier} out of range (0-{len(accounts) - 1})")
+            raise ValueError(f"Test group index {identifier} out of range (0-{len(accounts) - 1})")
         elif isinstance(identifier, str):
             # 通过名称获取
             for account in accounts:
                 if account["name"] == identifier:
                     return account
-            raise ValueError(f"Test account '{identifier}' not found")
+            raise ValueError(f"Test group '{identifier}' not found")
         else:
             raise TypeError("Identifier must be either int (index) or str (name)")
+
+    def get_test_thread(self, identifier: str | int) -> Dict[str, str]:
+        """获取测试话题信息
+        可以通过话题名称(name)或索引位置(index)获取
+
+        Args:
+            identifier: 可以是话题名称(str)或索引位置(int)
+
+        Returns:
+            账号信息的字典
+
+        Raises:
+            ValueError: 当找不到对应话题或索引超出范围时
+        """
+        accounts = self._env_config["test_threads"]
+
+        if isinstance(identifier, int):
+            # 通过索引获取
+            if 0 <= identifier < len(accounts):
+                return accounts[identifier]
+            raise ValueError(f"Test thread index {identifier} out of range (0-{len(accounts) - 1})")
+        elif isinstance(identifier, str):
+            # 通过名称获取
+            for account in accounts:
+                if account["name"] == identifier:
+                    return account
+            raise ValueError(f"Test thread '{identifier}' not found")
+        else:
+            raise TypeError("Identifier must be either int (index) or str (name)")
+
+
 
 
 # 全局配置访问点

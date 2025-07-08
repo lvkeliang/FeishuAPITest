@@ -1,5 +1,5 @@
 {
-  "name": "基础文本消息测试",
+  "name": "基础文本消息测试case0",
   "description": "测试发送基本文本消息",
   "category": "positive",
   "request": {

@@ -9,7 +9,7 @@ from tests.utils.config_loader import config
 
 def pytest_generate_tests(metafunc):
     if "prepared_test_case" in metafunc.fixturenames:
-        # 从测试函数名提取msg_type
+        # 从测试函数提取msg_type
         msg_type = getattr(metafunc.function, "_msg_type", None)
 
         if not msg_type:
