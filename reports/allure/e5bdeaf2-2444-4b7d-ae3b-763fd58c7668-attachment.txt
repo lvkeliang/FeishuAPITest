@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 176
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "text", "content": "{\"text\": \"test content json dumps1\"}", "uuid": "46d97e00-cdbb-4acb-aaec-f981c4916d99"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:40 GMT
+  Request-Id: 0d6f49a0-f6b5-465f-9086-fea03f2a3a42
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: 1HiTV4PDFLZsNRU_NVzsCC4Mv2Lrn7a_E9BQ3liEHbOxusYEsWm-Gq1IqrU-R69xDMX9H0TNtvwUTc6S4Wy5nnxVXfaREBsKdW_x9KQv_SxRa_VbYTKkymMWKfB26OcQNd3MeWP34eEqVw_qkSD1CjATO9AxOCvTurXnXRKn3JV3SA82G5U23eiThysTMc8aAgPJE-HDBxX5XKNtlvQNvQ==
+  X-Request-Id: 0d6f49a0-f6b5-465f-9086-fea03f2a3a42
+  X-Tt-Logid: 20250709141740C9139E55A286092EC28C
+  server-timing: inner; dur=89, cdn-cache;desc=MISS,edge;dur=0,origin;dur=173
+  x-tt-trace-host: 01763bfe622f32a5179b5658f9431cfe783f5f4c95903050cdac39ac30c3d9817102402482f65e4989a35458ee6fc05b89e6e5c872e1ccad62fae274e6fc8d80a0d54fb7750821427c05e5b80de233f71d985fddf981aa5c452add230fe0aae7e9
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141740C9139E55A286092EC28C-2273A04415656200-00
+  X-Timestamp: 1752041860.200
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache6.cn7993[173,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138601a17520418600471434e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141740C9139E55A286092EC28C', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141740C9139E55A286092EC28C&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

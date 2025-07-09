@@ -1,0 +1,40 @@
+Unknown setup action: load_and_dump_json
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 154
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "interactive", "content": "$json_card$", "uuid": "43787493-61cd-4a38-852f-f9108faa6ab6"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:57 GMT
+  Request-Id: 6276f7fa-a609-432f-be2c-a3a1ef34a0e4
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: eawAVse2bWzLKFfY4xdK2Hc28cr1-hS5tADpzpOkOxLNNTqTdyzjUX_c0TvBe1oz2yqIN5KkFvcHX04jkV7BLMjDNRIOSDHGJrmw39AobZFJ35OCX7Kj4ps5BD7QOBjU-Wt4NX3OGvp8xjxmWXo6DV4VbWflvoMfbJSQBwCA_fREzvzCMkIcBJz25kkfXdzew7OvUV0M_SuMu8ruJPqF7w==
+  X-Request-Id: 6276f7fa-a609-432f-be2c-a3a1ef34a0e4
+  X-Tt-Logid: 202507091417578B293C97CA46FB949CE0
+  server-timing: inner; dur=50, cdn-cache;desc=MISS,edge;dur=0,origin;dur=88
+  x-tt-trace-host: 0141b229a08cc1fd4c88ba46a2130359bbe1af3f5b11f6d68c21276df896064c9017990cd65426f054051a85ea2d72c3cba4a30698fc82055f9c5b41558793ad55a8e587ec46d5d67fdc0e5d413057e0683d3dd837fce9b0b20f5b1bd795153443
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-2507091417578B293C97CA46FB949CE0-05FBC3746FE30823-00
+  X-Timestamp: 1752041877.264
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: vcache4.cn3178[88,0]
+  Timing-Allow-Origin: *
+  EagleId: 7105b71817520418771985100e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=202507091417578B293C97CA46FB949CE0&code=99991403&method_id=6936075528891154460', 'log_id': '202507091417578B293C97CA46FB949CE0'}}
+✓ 状态码验证: 期望 200, 实际 429

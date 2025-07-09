@@ -1,0 +1,40 @@
+Failed to upload image from /Users/taoj/Desktop/FeishuAPITestnew-main/tests/test_data/message/image/image/image1.png: 429 Client Error: Too Many Requests for url: https://open.feishu.cn/open-apis/im/v1/images
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 588
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "post", "content": "{\"zh_cn\": {\"title\": \"\\u6d4b\\u8bd5\\u5bcc\\u6587\\u672c2\\u6807\\u9898\", \"content\": [[{\"tag\": \"text\", \"text\": \"\\u7b2c\\u4e00\\u884c: \", \"style\": [\"bold\"]}, {\"tag\": \"a\", \"text\": \"\\u98de\\u4e66\\u5b98\\u7f51\", \"href\": \"https://www.feishu.cn\"}], [{\"tag\": \"text\", \"text\": \"\\u8fd9\\u662f\\u4e00\\u6bb5\\u6d4b\\u8bd5\\u6587\\u672c\"}], [{\"tag\": \"hr\"}], [{\"tag\": \"img\", \"image_key\": \"fake_image_key\"}]]}}", "uuid": "585de422-cb8a-4eaf-87de-023f2f47fda9"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:51 GMT
+  Request-Id: e3d1fe60-85d8-426e-b635-52a426a6b374
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: UDVR5fa9BK0GYlwuUrWAJ6NRvxufqUxGLxYutxO1vxw0soVptB6tmVn8LuLC-U2yDfeH7FxekHNSTX1U1VTs-DQsysPU9Cr-ryKgs5NKG1OFdafYDKhgWY7dg8Q4sj3o5rsfFiH-xRSHjJx6C-MtLrxcKQN08Vvgt7dQ1kpzuSVQ3RtVBOIYxWR2IvtZP4j7LUEAF3wDGkl9SEI1P18EgA==
+  X-Request-Id: e3d1fe60-85d8-426e-b635-52a426a6b374
+  X-Tt-Logid: 2025070914175157A52643653DBB8E01F2
+  server-timing: inner; dur=45, cdn-cache;desc=MISS,edge;dur=0,origin;dur=150
+  x-tt-trace-host: 01ff69b9705efa8c45d80b0df066fe078df2ac4f3a99529eb6ae7d0222d9056b5a72c2b57028fd1b8097863aebd9da493a69a8810ff488ee00c5e7fd7f136e35215394703da904ed4a502ac11b21837c6e31eb6206b3052916e81938d8d380dcfe
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070914175157A52643653DBB8E01F2-3322D00C65E79D21-00
+  X-Timestamp: 1752041871.629
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache25.cn8505[150,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3721f17520418714971277e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '2025070914175157A52643653DBB8E01F2', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070914175157A52643653DBB8E01F2&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

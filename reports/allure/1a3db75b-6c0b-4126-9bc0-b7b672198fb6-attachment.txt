@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 176
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "text", "content": "{\"text\": \"test content json dumps1\"}", "uuid": "afec4095-d962-411e-b947-810d894388e1"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:41 GMT
+  Request-Id: 7d9ee248-1041-4db5-90bf-b9b0aefc4e1c
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: _gBjwBBT_PBt-TL0CpQ4vxuCrnIAA0z1_i8882axSDb7383QBBbYkWyl72vQtr1F4PscRZXQqnLO4Mx_ZuOJ-oxRNjhC0OIASmWFkEns99fZFfvVEbo7gfAZsA_jsijhT440T9kIKCT_9cTyNLb7iStUlg4XbC0B6aK5bfgWTZVXG4beoeFz0hdc_NjgT60zHxH7BGbbHrwRLMM_TYAxEg==
+  X-Request-Id: 7d9ee248-1041-4db5-90bf-b9b0aefc4e1c
+  X-Tt-Logid: 2025070914174140BBA2FCE2C04687433F
+  server-timing: inner; dur=47, cdn-cache;desc=MISS,edge;dur=0,origin;dur=177
+  x-tt-trace-host: 01763bfe622f32a5179b5658f9431cfe78b80ed2d449441c83d82fcdc1aa7e453a33c858b05e5ee7a319974961ea4578710720d10c8ad0e7c652e81b9c747e9aa6d19fd251fd99c66a42776bde060d116ac7577592bdb387126d86f358a6883fdb
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-25070914174140BBA2FCE2C04687433F-67B2D9AF52436B3A-00
+  X-Timestamp: 1752041861.190
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache16.cn7993[177,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602417520418610417290e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '2025070914174140BBA2FCE2C04687433F', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=2025070914174140BBA2FCE2C04687433F&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

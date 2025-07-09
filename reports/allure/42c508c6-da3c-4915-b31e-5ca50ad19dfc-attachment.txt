@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 1337
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "text", "content": "{\"text\": \"\\u95ee\\u9898\\u6982\\u8ff0\\uff1aJSON\\u53cd\\u659c\\u6760\\u8f6c\\u4e49\\u5f02\\u5e38\\n\\n\\u5728\\u4f7f\\u7528Jackson\\u5904\\u7406JSON\\u6570\\u636e\\u65f6\\uff0c\\u53cd\\u659c\\u6760\\u8f6c\\u4e49\\u5b57\\u7b26\\uff08\\u5982\\\"\\\\n\\\"\\u3001\\\"\\\\\\\"\\\"\\uff09\\u53ef\\u80fd\\u5bfc\\u81f4\\u5e8f\\u5217\\u5316\\u6216\\u53cd\\u5e8f\\u5217\\u5316\\u5931\\u8d25\\u3002\\u8fd9\\u79cd\\u95ee\\u9898\\u901a\\u5e38\\u51fa\\u73b0\\u5728API\\u4f20\\u8f93\\u4e2d\\uff0c\\u670d\\u52a1\\u7aef\\u8fd4\\u56de\\u7684JSON\\u5b57\\u7b26\\u4e32\\u88ab\\u989d\\u5916\\u6dfb\\u52a0\\u4e86\\u8f6c\\u659c\\u6760\\uff0c\\u5ba2\\u6237\\u7aef\\u89e3\\u6790\\u65f6\\u65e0\\u6cd5\\u6b63\\u786e\\u8bc6\\u522b\\u3002\\n\\n\\u4ee5\\u4e0b\\u662f\\u5e38\\u89c1\\u573a\\u666f\\uff1a\\n\\n\\u670d\\u52a1\\u7aef\\u8fd4\\u56de\\u7684JSON\\u5b57\\u7b26\\u4e32\\u4e2d\\u5305\\u542b\\u591a\\u4f59\\u7684\\u8f6c\\u4e49\\u7b26\\u3002\\n\\u5ba2\\u6237\\u7aef\\u89e3\\u6790\\u65f6\\u56e0\\u672a\\u6b63\\u786e\\u5904\\u7406\\u8f6c\\u4e49\\u7b26\\u800c\\u629b\\u51fa\\u5f02\\u5e38\\u3002\\n\\u53cc\\u65b9\\u7f16\\u7801\\u89c4\\u8303\\u4e0d\\u4e00\\u81f4\\u5bfc\\u81f4\\u6570\\u636e\\u683c\\u5f0f\\u9519\\u8bef\\u3002\"}", "uuid": "3053cc23-0d37-4560-93ae-7fbbb0a1f636"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:42 GMT
+  Request-Id: df87a5be-5f08-4d59-be6a-23596beec504
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: Yb9p7lqUSuea1FKfu9Bs7Msf74UPpE0ap6K5DhT2FSMScMoDmDutg6hABWO2Dd8Tj8vjaW_nhJIOJzeC-c-L9TWVfyNFM3y9UC1dcLz-4glDw_dnz9oeEkm9zjxv0m-e3_p5whYzBJ-S8t5AqHOuFQyqLVk5rzBzsX8LoCuro1jj75nWmufa4pF49SxVYH4n6deHLF44YN1dvimSfrw=
+  X-Request-Id: df87a5be-5f08-4d59-be6a-23596beec504
+  X-Tt-Logid: 20250709141742E06F0F384A043B307ED2
+  server-timing: inner; dur=96, cdn-cache;desc=MISS,edge;dur=0,origin;dur=173
+  x-tt-trace-host: 01ff69b9705efa8c45d80b0df066fe078dfcfd80efca7d2abc7c033f8c6f724779dc853010f49fa65592fcaae43411b111b176cb8410c0736aa649531843204aef462337b843f02da440885d358492d6b9ee6489b87ee43b126fc5216210be34b0
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141742E06F0F384A043B307ED2-3C8A34F91CA2F20F-00
+  X-Timestamp: 1752041862.637
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache7.cn8505[173,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3720d17520418624794960e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141742E06F0F384A043B307ED2', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141742E06F0F384A043B307ED2&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

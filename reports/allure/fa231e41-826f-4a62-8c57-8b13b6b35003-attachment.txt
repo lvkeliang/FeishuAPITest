@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 530
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "post", "content": "{\"zh_cn\": {\"title\": \"\\u6d4b\\u8bd5\\u5bcc\\u6587\\u672c\\u6807\\u9898\", \"content\": [[{\"tag\": \"text\", \"text\": \"\\u7b2c\\u4e00\\u884c: \", \"style\": [\"bold\"]}, {\"tag\": \"a\", \"text\": \"\\u98de\\u4e66\\u5b98\\u7f51\", \"href\": \"https://www.feishu.cn\"}], [{\"tag\": \"text\", \"text\": \"\\u8fd9\\u662f\\u4e00\\u6bb5\\u6d4b\\u8bd5\\u6587\\u672c\"}], [{\"tag\": \"hr\"}]]}}", "uuid": "e7b9453b-0c66-445e-91c9-63898f5e40ad"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:52 GMT
+  Request-Id: 6d0dc484-3c3b-4f0f-9b1a-96e8a0001a4a
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: aJFi_E4M2sKW7i1Dmzxf6nE1TaAAs5bVhN7RC50jvj5iPujzORFbQR-qu1ZtuGLOUeO2kUhfkQbOqaFeh1tVa3gr4ii_30Dfs2or7t4Zbm8GPhXw-b6m0Kz3gq-aud2GqzvUCHjKF66n6twGCM7xzUDa2aFAIS7EFQkEKTlLpz2GDRSjESTwEt8vUqimQf37HK4SJaU8lwq5uXrI0im5UQ==
+  X-Request-Id: 6d0dc484-3c3b-4f0f-9b1a-96e8a0001a4a
+  X-Tt-Logid: 20250709141752AE708E515F92CD914A12
+  server-timing: inner; dur=40, cdn-cache;desc=MISS,edge;dur=0,origin;dur=171
+  x-tt-trace-host: 01763bfe622f32a5179b5658f9431cfe78dcc77572cf0cf296f2e427f694d8574a7026aec32c8c80588c80f93d45736663d79ffbd8387731a8ec917af25a5465d80795727897f8eb35e95d89d95ba826c1038b0534d5e8db707fac9c218767e3a2
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141752AE708E515F92CD914A12-3EF5EC9635528B2D-00
+  X-Timestamp: 1752041872.047
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache15.cn7993[171,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602317520418719016555e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141752AE708E515F92CD914A12', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141752AE708E515F92CD914A12&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

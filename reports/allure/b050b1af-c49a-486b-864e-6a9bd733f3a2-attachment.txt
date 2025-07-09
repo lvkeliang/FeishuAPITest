@@ -1,0 +1,40 @@
+Failed to upload image from /Users/taoj/Desktop/FeishuAPITestnew-main/tests/test_data/message/image/image/image1.png: 429 Client Error: Too Many Requests for url: https://open.feishu.cn/open-apis/im/v1/images
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 172
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "image", "content": "{\"image_key\": \"fake_image_key\"}", "uuid": "adeaafff-e9d9-4f8f-9306-f2d01845c2bf"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:49 GMT
+  Request-Id: b3acadd6-77a2-4430-84e1-4ec4b900698d
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: 8K-ZC24556HO3MLNabPRFb7c6eSnBP-YTobPxNBsUlhipa1NheUiR-gx4JQ8CY0JeUAQsRU1SsDWPTAvxh02PYFtm7NrrphwO87uoc2LKAHVqJUMmMuAl0oLthnfiGHtwtGQIhbdkThkVLlN-tw7JApPyuvjxakUF39VKBJyUWEDwh_sAe8HLg76WHPizz0R-kqPzpZN8Dms8UEzA9j3
+  X-Request-Id: b3acadd6-77a2-4430-84e1-4ec4b900698d
+  X-Tt-Logid: 20250709141748CAE319565D4FC62E2009
+  server-timing: inner; dur=82, cdn-cache;desc=MISS,edge;dur=0,origin;dur=154
+  x-tt-trace-host: 01ff69b9705efa8c45d80b0df066fe078dfea34685d2a1a6067497e6eb39384fc00db86ab90947865a06c84953766392e654eed22a521279cc7da6ddc27167f850314f85a5822e29ab7cde26669f226899b373746fec03304c03f365618fa1127e
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141748CAE319565D4FC62E2009-269257200B206E62-00
+  X-Timestamp: 1752041869.009
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache13.cn8505[154,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3721317520418688704000e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141748CAE319565D4FC62E2009', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141748CAE319565D4FC62E2009&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

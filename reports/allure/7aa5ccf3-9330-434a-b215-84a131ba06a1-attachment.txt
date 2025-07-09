@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 253
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "interactive", "content": "{\"type\": \"template\", \"data\": {\"template_id\": \"AAqI8MeXJcWEG\", \"template_version_name\": \"1.0.0\"}}", "uuid": "02e990eb-6e2a-491e-83e8-d300fa40cd63"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:17:56 GMT
+  Request-Id: 3f8817ea-71a5-48d7-b26f-8e5fcfeab9ec
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: WV7hkjMHe7dGAjNCFSdMI9qqPUL1YRStm-rUqHZPO6WjuaMutuyldWpqNT-iKS8Y8LpX_MmwYMkxkZT3b9uZgKxZ_T6xLWtuW6ytVEClfbka0YbaNjRn9L2PFXW5Rz2Mo8S0RdJDqKIQMnj9XhHtENsjFKGt5NOSuyCBBcDdKEobpnHRo7mUrgaY1c-NEKlj1Z4KfVF5GjVlMOr-jVmcEQ==
+  X-Request-Id: 3f8817ea-71a5-48d7-b26f-8e5fcfeab9ec
+  X-Tt-Logid: 20250709141756ADF85B9BE7240E299B68
+  server-timing: inner; dur=50, cdn-cache;desc=MISS,edge;dur=0,origin;dur=78
+  x-tt-trace-host: 01ff69b9705efa8c45d80b0df066fe078d22897676611b15224e366c47ad4be5d9f4a9743a174aeebb043f0d1bf76a442d4b5c2f0b1d421112a38bf626a09ac794a32fd9b0381f1b2d0f6c9187a7fd9a3b3d45c99c0d90e90d821c6cba9432a5dd
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141756ADF85B9BE7240E299B68-474D00496FD03F90-00
+  X-Timestamp: 1752041876.458
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache2.cn8505[78,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3720817520418763982335e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141756ADF85B9BE7240E299B68', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141756ADF85B9BE7240E299B68&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

@@ -1,0 +1,41 @@
+Failed to upload file from /Users/taoj/Desktop/FeishuAPITestnew-main/tests/test_data/message/media/media/sample1.mp4: 429 Client Error: Too Many Requests for url: https://open.feishu.cn/open-apis/im/v1/files
+Failed to upload image from /Users/taoj/Desktop/FeishuAPITestnew-main/tests/test_data/message/media/media/cover1.jpg: 429 Client Error: Too Many Requests for url: https://open.feishu.cn/open-apis/im/v1/images
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 205
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "media", "content": "{\"file_key\": \"fake_file_key\", \"image_key\": \"fake_image_key\"}", "uuid": "62e0a172-8e29-4e93-aa8a-b9b517c2d509"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:19:22 GMT
+  Request-Id: 8db1074f-54c4-4321-8d9e-bb0f47dee09a
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: 9VeqkNr0W-RzqOBCZuoowZXFttbNDr2W0xddGBtpTVyU2JOkYJuV94VTdVyGqOcwWJ-2r0hMkQ1Ba4EU9Z-dwlmY8raS158XH_7KMjHkDMVPCpyDDLN2Nfjjv2q8WLioNWjAkeBou1KV1H-9I2qa2wF0F4-jOpfWR8yE7OtTBPbdpKxM66CZUaYnozDU3SDDioPYo6Pi-kGXd_L5Z5THFA==
+  X-Request-Id: 8db1074f-54c4-4321-8d9e-bb0f47dee09a
+  X-Tt-Logid: 20250709141922A73EF8940C14192E8D5D
+  server-timing: inner; dur=55, cdn-cache;desc=MISS,edge;dur=0,origin;dur=139
+  x-tt-trace-host: 01763bfe622f32a5179b5658f9431cfe78749e357f347162e0d91fd42895fba42b63493453a4d5bc100de8bcae649f3e69e76c2030e48777f0fe681887dab52a9019440456c7e3d1cf808bd2a2e75a06c55f038087971b30c4c144f6566b98e7a6
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141922A73EF8940C14192E8D5D-4B6BB89B717FA099-00
+  X-Timestamp: 1752041962.170
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache17.cn7993[139,0]
+  Timing-Allow-Origin: *
+  EagleId: 0138602517520419620531306e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141922A73EF8940C14192E8D5D', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141922A73EF8940C14192E8D5D&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429

@@ -1,0 +1,39 @@
+
+=== Request Details ===
+Method: POST
+URL: https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
+Headers:
+  User-Agent: python-requests/2.32.4
+  Accept-Encoding: gzip, deflate, br, zstd
+  Accept: */*
+  Connection: keep-alive
+  Content-Type: application/json
+  Authorization: Bearer t-g10479ehAJUH3Z4YPOHEDJ6PTRT7Z4AWZBAXB4WB
+  Content-Length: 2037
+Body:
+{"receive_id": "ou_d02a396023f166c2ba8a36b92184f5ba", "msg_type": "interactive", "content": "{\"schema\": \"2.0\", \"config\": {\"update_multi\": true, \"style\": {\"text_size\": {\"normal_v2\": {\"default\": \"normal\", \"pc\": \"normal\", \"mobile\": \"heading\"}}}}, \"body\": {\"direction\": \"vertical\", \"padding\": \"12px 12px 12px 12px\", \"elements\": [{\"tag\": \"markdown\", \"content\": \"\\u6ec7\\u6c60\\uff0c\\u4ea6\\u79f0\\u6606\\u660e\\u6e56\\u3001\\u6606\\u660e\\u6c60\\u3001\\u6ec7\\u5357\\u6cfd\\u3001\\u6ec7\\u6d77\\u3002\\u5728\\u4e91\\u5357\\u7701\\u6606\\u660e\\u5e02\\u897f\\u5357\\uff0c\\u6709\\u76d8\\u9f99\\u6c5f\\u7b49\\u6cb3\\u6d41\\u6ce8\\u5165\\uff0c\\u6e56\\u9762\\u6d77\\u62d41886\\u7c73\\uff0c\\u9762\\u79ef330\\u5e73\\u65b9\\u5343\\u7c73\\uff0c\\u4e91\\u5357\\u7701\\u6700\\u5927\\u7684\\u6de1\\u6c34\\u6e56\\uff0c\\u6709\\u9ad8\\u539f\\u660e\\u73e0\\u4e4b\\u79f0\\u3002\\u5e73\\u5747\\u6c34\\u6df15\\u7c73\\uff0c\\u6700\\u6df111\\u7c73\\u3002\\u6e56\\u6c34\\u5728\\u897f\\u5357\\u6d77\\u53e3\\u6d29\\u51fa\\uff0c\\u79f0\\u87b3\\u8782\\u5ddd\\uff0c\\u4e3a\\u957f\\u6c5f\\u4e0a\\u6e38\\u5e72\\u6d41\\u91d1\\u6c99\\u6c5f\\u652f\\u6d41\\u666e\\u6e21\\u6cb3\\u4e0a\\u6e90\\u3002\", \"text_align\": \"left\", \"text_size\": \"normal_v2\", \"margin\": \"0px 0px 0px 0px\"}, {\"tag\": \"button\", \"text\": {\"tag\": \"plain_text\", \"content\": \"\\ud83c\\udf1e\\u66f4\\u591a\\u666f\\u70b9\\u4ecb\\u7ecd\"}, \"type\": \"default\", \"width\": \"default\", \"size\": \"medium\", \"behaviors\": [{\"type\": \"open_url\", \"default_url\": \"https://baike.baidu.com/item/%E6%BB%87%E6%B1%A0/180932\", \"pc_url\": \"\", \"ios_url\": \"\", \"android_url\": \"\"}], \"margin\": \"0px 0px 0px 0px\"}]}, \"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"\\u4eca\\u65e5\\u65c5\\u6e38\\u63a8\\u8350(\\u6d4b\\u8bd5\\u5361\\u7247)\"}, \"subtitle\": {\"tag\": \"plain_text\", \"content\": \"\"}, \"template\": \"blue\", \"padding\": \"12px 12px 12px 12px\"}}", "uuid": "f5148be8-eedf-4855-9d81-fdc1d67dcb44"}
+
+=== Response Details ===
+Status Code: 429
+Headers:
+  Server: Tengine
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 324
+  Connection: keep-alive
+  Date: Wed, 09 Jul 2025 06:18:01 GMT
+  Request-Id: 6f6371e1-3d40-40fd-b298-79b9588a24f4
+  Tt_stable: 1
+  X-Lgw-Dst-Svc: y-7XCSi5YUEy_JYpAm8MZM8fhD28KAzihSCAx5JEzNbInkHJ8qqRSUIO8er4FI7nbt5rYCddQD72xfVDKZBSD9qDyMt5N9ElIxwKGj1Qd36wjaR55LEtGK0tThnUhaa6k1xK6GJOcsZwO-TDBYifTTy1C7mG68QHdvlzrnLe9uhNJFY8ISd0nCxaMeL6yXdebBuJMfiBo0ieXKJztRXfJg==
+  X-Request-Id: 6f6371e1-3d40-40fd-b298-79b9588a24f4
+  X-Tt-Logid: 20250709141801A9FFABBDF08E699428C5
+  server-timing: inner; dur=41, cdn-cache;desc=MISS,edge;dur=0,origin;dur=154
+  x-tt-trace-host: 01ff69b9705efa8c45d80b0df066fe078d8824ec4380b5ed1daf06a8de5b076adb907063f9a265ddd20434a3ea3d1e201ff9ec2e2faca417f81ad39b3c33d55996bd7e48f14f8c50a1723568fd117b03e71ab42ec5f1f8abdff8222fbc86c4ea9d
+  x-tt-trace-tag: id=03;cdn-cache=miss;type=dyn
+  x-tt-trace-id: 00-250709141801A9FFABBDF08E699428C5-05AF88AA5E383863-00
+  X-Timestamp: 1752041881.412
+  x-alicdn-da-ups-status: endOs,0,429
+  Via: ens-cache8.cn8505[154,0]
+  Timing-Allow-Origin: *
+  EagleId: 7dd3720e17520418812806759e
+Body: {'code': 99991403, 'msg': "This month's API call quota has been exceeded", 'error': {'log_id': '20250709141801A9FFABBDF08E699428C5', 'troubleshooter': '排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20250709141801A9FFABBDF08E699428C5&code=99991403&method_id=6936075528891154460'}}
+✓ 状态码验证: 期望 200, 实际 429
