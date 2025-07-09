@@ -9,8 +9,7 @@
       "container_id_type": "chat",
       "container_id": "$chat_id$",
       "sort_type": "ByCreateTimeAsc",
-      "start_time": "$target_time$",
-      "page_size": 7
+      "start_time": "$target_time$"
     },
     "headers": {
       "Content-Type": "application/json; charset=utf-8",

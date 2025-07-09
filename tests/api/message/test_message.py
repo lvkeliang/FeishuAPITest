@@ -106,7 +106,8 @@ def _generic_message_test(client, prepared_test_case, receiver_info):
         # --- 动态注入参数 ---
         # 1. 注入 receive_id_type 到查询参数
         query_params = request_data.get("query_params", {})
-        query_params["receive_id_type"] = receive_id_type  # 覆盖或新增
+        if test_data["original_case"].category == "positive":
+            query_params["receive_id_type"] = receive_id_type  # 覆盖或新增
 
         # 2. 注入 receive_id 到请求体
         request_body = request_data.get("body", {})
