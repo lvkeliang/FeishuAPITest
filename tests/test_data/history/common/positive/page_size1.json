@@ -24,8 +24,10 @@
             "code": 0,
             "msg": "success",
             "data": {
-                "has_more": "@exists",
-                "items": "@exists"
+                "@has_key": "has_more",
+                "items": {
+                "@not_empty": true
+            }
             }
         }
     },

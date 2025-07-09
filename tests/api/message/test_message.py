@@ -132,18 +132,18 @@ def _generic_message_test(client, prepared_test_case, receiver_info):
         # 1. 验证状态码
         ResponseValidator.validate_status_code(response, expected["status_code"])
 
-        # # 2. 验证响应头
-        # if expected.get("headers"):
-        #     ResponseValidator.validate_headers(response, expected["headers"])
-        #
-        # # 3. 验证响应体Schema
-        # if expected.get("schema"):
-        #     ResponseValidator.validate_schema(response, expected["schema"])
-        #
-        # # 4. 验证响应体具体字段
-        # if expected.get("body"):
-        #     # 判断是否为错误响应（反向用例）
-        #     if test_data["original_case"].category == "negative" or response.status_code >= 400:
-        #         ResponseValidator.validate_error_response(response, expected["body"])
-        #     else:
-        #         ResponseValidator.validate_body(response, expected["body"])
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])

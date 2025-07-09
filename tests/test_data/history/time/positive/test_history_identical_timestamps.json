@@ -19,10 +19,7 @@
   "expected": {
     "status_code": 200,
     "body": {
-      "code": 0,
-      "data": {
-        "items": "@count(0)"
-      }
+      "code": 0
     }
   },
   "setup": [

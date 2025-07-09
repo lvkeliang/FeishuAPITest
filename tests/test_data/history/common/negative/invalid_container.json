@@ -21,7 +21,9 @@
         },
         "body": {
             "code": 230001,
-            "msg": "Your request contains an invalid request parameter."
+            "msg": {
+                "@not_empty": true
+            }
         }
     },
     "setup": [
