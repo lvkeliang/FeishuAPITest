@@ -167,6 +167,13 @@ class TestCaseLoader:
 
 
             # 可以添加更多setup操作
+            # 获取群名片ID
+            elif action_type == "get_share_chat_id":
+                context[action["save_to"]] = config.get_test_account(0)["share_chat"]
+
+            # 获取分享用户ID
+            elif action_type == "get_share_user_id":
+                context[action["save_to"]] = config.get_test_account(0)["share_user"]
 
             # 将结果保存到指定变量
             if "save_to" in action:

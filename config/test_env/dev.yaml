@@ -1,24 +1,27 @@
 # 开发环境配置
 feishu:
   base_url: "https://open.feishu.cn"
-  app_id: "your_app_id"
-  app_secret: "your_app_secret"
+  app_id: "cli_a8e744bced3c5013"
+  app_secret: "2T1tCaupIwIZ5Zdq5UqUnhuG4FIDGOMq"
   token_expire: 5400  # token过期时间(秒)
 
 # 测试账号
 test_accounts:
-  - name: "张麻子"
-    open_id: "your_open_id"
+  - name: "abcc"
+    open_id: "ou_b8d11da5ca9f9ec855a8d683f0dbd530"
     # 该chat_id标识机器人与用户的对话
     chat_id: "your_chat_id"
-    union_id: "your_union_id:"
-    user_id : "your_user_id"
+    union_id: "on_e782f57cba833ec9276f3da6774f8327"
+    user_id: "65727ggg"
     email: "your_email"
+    mobile: "your_mobile"
+    share_chat: "oc_fa1f93e580b97b69ab16b46c043ab63d"
+    share_user: "ou_55546e311af4f251a6d51cfe5ffabd69"
 
 test_groups:
-  - name: "chat_id测试群组"
+  - name: "测试群组"
     # 该chat_id标识群组对话
-    chat_id: "your_chat_id"
+    chat_id: "oc_0666af060005191ba9c55bb29fbec650"
 
 # API特定配置
 apis:

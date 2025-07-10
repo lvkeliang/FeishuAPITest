@@ -1,0 +1,67 @@
+{
+    "name": "基础发送表情包测试",
+    "description": "测试机器人向指定用户发送表情包",
+    "category": "positive",
+    "request": {
+        "method": "POST",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "receive_id_type": "open_id"
+        },
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $access_token$"
+        },
+        "body": {
+            "receive_id": "$open_id$",
+            "msg_type": "sticker",
+            "content": {
+                "__needs_json_encode": true,
+                "file_key": "v3_00o1_dd7696ba-6d49-4bfb-a45b-71f500a9b2cg"
+            },
+            "uuid": "$random_uuid$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "schema": "message_response_schema",
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "msg_type": "text",
+                "deleted": false,
+                "updated": false,
+                "sender.id_type": "app_id",
+                "body.content": {
+                    "@contains": "test content"
+                }
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "access_token"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id"
+        },
+        {
+            "action": "generate_uuid",
+            "save_to": "random_uuid"
+        }
+    ],
+    "teardown": [
+        {
+            "action": "delete_message",
+            "params": {
+                "message_id": "$response.data.message_id$"
+            }
+        }
+    ]
+}

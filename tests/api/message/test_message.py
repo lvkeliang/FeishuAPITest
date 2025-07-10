@@ -95,6 +95,26 @@ def test_audio_messages(client, prepared_test_case, receiver_info):
 def test_media_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_msg_type("sticker")
+def test_sticker_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_msg_type("share_chat")
+def test_share_chat_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_msg_type("share_user")
+def test_share_user_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_msg_type("system")
+def test_system_messages(client, prepared_test_case, receiver_info):
+    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
 
 def _generic_message_test(client, prepared_test_case, receiver_info):
     receive_id_type, receive_id = receiver_info
