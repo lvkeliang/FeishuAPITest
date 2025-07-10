@@ -23,8 +23,12 @@
             "code": 0,
             "msg": "success",
             "data": {
-                "has_more": "@exists",
-                "items": "@exists"
+                "has_more": {
+                "@not_empty": true
+            },
+                "items": {
+                "@not_empty": true
+            }
             }
         }
     },

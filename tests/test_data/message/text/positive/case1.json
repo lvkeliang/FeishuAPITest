@@ -37,7 +37,7 @@
         "updated": false,
         "sender.id_type": "app_id",
         "body.content": {
-          "@contains": "test content json dumps1"
+          "@contains": "wwwww"
         }
       }
     }

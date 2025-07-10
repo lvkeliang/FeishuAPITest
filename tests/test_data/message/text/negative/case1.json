@@ -28,9 +28,11 @@
     },
     "schema": "message_response_schema",
     "body": {
-      "code": 9499,
+      "code": {
+        "@not_equal": 0
+      },
       "msg": {
-          "@not_empty@": true
+          "@not_empty": true
         }
     }
   },

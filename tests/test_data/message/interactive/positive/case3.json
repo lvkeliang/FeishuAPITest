@@ -29,12 +29,12 @@
             "code": 0,
             "msg": "success",
             "data": {
-                "msg_type": "text",
+                "msg_type": "interactive",
                 "deleted": false,
                 "updated": false,
                 "sender.id_type": "app_id",
                 "body.content": {
-                    "@contains": "test content"
+                    "@contains": "title"
                 }
             }
         }

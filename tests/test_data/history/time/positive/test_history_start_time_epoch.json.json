@@ -21,7 +21,9 @@
     "body": {
       "code": 0,
       "data": {
-        "items": "@exists"
+        "items": {
+                "@not_empty": true
+            }
       }
     }
   },

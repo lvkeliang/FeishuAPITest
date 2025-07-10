@@ -23,6 +23,10 @@ test_groups:
     # 该chat_id标识群组对话
     chat_id: "oc_0666af060005191ba9c55bb29fbec650"
 
+test_threads:
+  - name: "测试话题"
+    thread_id: "your_thread_id"
+
 # API特定配置
 apis:
   message:

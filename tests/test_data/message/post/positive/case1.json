@@ -18,7 +18,7 @@
       "content": {
             "__needs_json_encode": true,
             "zh_cn": {
-                "title": "测试富文本标题",
+                "title": "测试富文本1标题",
                 "content": [
                     [
                         {"tag": "text", "text": "第一行: ", "style": ["bold"]},
@@ -42,12 +42,12 @@
       "code": 0,
       "msg": "success",
       "data": {
-        "msg_type": "text",
+        "msg_type": "post",
         "deleted": false,
         "updated": false,
         "sender.id_type": "app_id",
         "body.content": {
-          "@contains": "test content"
+          "@contains": "测试富文本1标题"
         }
       }
     }

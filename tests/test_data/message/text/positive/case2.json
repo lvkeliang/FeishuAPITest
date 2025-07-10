@@ -36,7 +36,7 @@
         "updated": false,
         "sender.id_type": "app_id",
         "body.content": {
-          "@contains": "test content json dumps2"
+          "@contains": "JSON反斜杠转义异常"
         }
       }
     }
@@ -57,7 +57,7 @@
     {
       "action": "load_text",
       "save_to": "text",
-      "text_path": "tests\\test_data\\message\\interactive\\cards\\testtext.txt"
+      "text_path": "tests\\test_data\\message\\text\\text\\testtext.txt"
     }
   ],
   "teardown": [
