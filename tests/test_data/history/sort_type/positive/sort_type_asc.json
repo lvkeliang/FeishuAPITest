@@ -1,7 +1,7 @@
 {
-  "name": "获取分页历史消息_默认参数",
-  "description": "测试获取分页历史消息的基本功能，使用默认参数",
-  "category": "positive",
+  "name": "获取历史消息_sort_type空值",
+  "description": "测试sort_type参数为空字符串时的处理",
+  "category": "negative",
   "request": {
     "method": "GET",
     "endpoint": "/open-apis/im/v1/messages",
@@ -9,7 +9,6 @@
       "container_id_type": "chat",
       "container_id": "$chat_id$",
       "sort_type": "ByCreateTimeAsc",
-      "start_time": "$target_time$",
       "page_size": 5
     },
     "headers": {
@@ -41,11 +40,6 @@
     {
       "action": "get_chat_id",
       "save_to": "chat_id"
-    },
-    {
-      "action": "get_timestamp",
-      "save_to": "target_time",
-      "offset_days": -5
     }
   ]
 }

@@ -120,6 +120,15 @@ class TestCaseLoader:
             elif action_type == "get_chat_id":
                 context[action["save_to"]] = config.get_test_account(0)["chat_id"]
 
+            elif action_type == "get_union_id":
+                context[action["save_to"]] = config.get_test_account(0)["union_id"]
+
+            elif action_type == "get_user_id":
+                context[action["save_to"]] = config.get_test_account(0)["user_id"]
+
+            elif action_type == "get_group_chat_id":
+                context[action["save_to"]] = config.get_test_group(0)["chat_id"]
+
             elif action_type == "get_thread_id":
                 context[action["save_to"]] = config.get_test_thread(0)["thread_id"]
 

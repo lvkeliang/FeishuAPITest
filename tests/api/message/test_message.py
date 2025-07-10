@@ -95,25 +95,68 @@ def test_audio_messages(client, prepared_test_case, receiver_info):
 def test_media_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
+
 # @pytest.mark.skip(reason="正在开发其他的测试")
 @case_msg_type("sticker")
 def test_sticker_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+
 
 # @pytest.mark.skip(reason="正在开发其他的测试")
 @case_msg_type("share_chat")
 def test_share_chat_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
+
 # @pytest.mark.skip(reason="正在开发其他的测试")
 @case_msg_type("share_user")
 def test_share_user_messages(client, prepared_test_case, receiver_info):
     _generic_message_test(feishu_client, prepared_test_case, receiver_info)
 
+
 # @pytest.mark.skip(reason="正在开发其他的测试")
 @case_msg_type("system")
-def test_system_messages(client, prepared_test_case, receiver_info):
-    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+def test_system_messages(client, prepared_test_case):
+
+    """通用消息发送测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
+
+    with allure.step("Step 2: 发送请求"):
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=request_data["query_params"],  # 使用修改后的查询参数
+            headers=request_data.get("headers"),
+            json=request_data["body"]  # 使用修改后的请求体
+        )
+
+    # 将响应保存到测试上下文中，供teardown使用
+    pytest.api_response = response
+
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
+
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
 
 
 def _generic_message_test(client, prepared_test_case, receiver_info):

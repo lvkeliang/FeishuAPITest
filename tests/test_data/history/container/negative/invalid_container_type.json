@@ -1,14 +1,13 @@
 {
-    "name": "获取分页历史消息_page_size边界测试50",
-    "description": "获取分页历史消息_page_size边界测试",
-    "category": "positive",
+    "name": "获取历史消息_无效容器类型",
+    "description": "测试使用无效容器类型获取历史消息",
+    "category": "negative",
     "request": {
         "method": "GET",
         "endpoint": "/open-apis/im/v1/messages",
         "query_params": {
-            "container_id_type": "chat",
-            "container_id": "$chat_id$",
-            "page_size": 50
+            "container_id_type": "invalid_container_type",
+            "container_id": "$chat_id$"
         },
         "headers": {
             "Content-Type": "application/json; charset=utf-8",
@@ -16,20 +15,18 @@
         }
     },
     "expected": {
-        "status_code": 200,
+        "status_code": 400,
         "headers": {
             "Content-Type": "application/json"
         },
         "body": {
-            "code": 0,
-            "msg": "success",
-            "data": {
-                "@has_key": "has_more",
-                "items": {
-                "@not_empty": true
-            }
-            }
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
         }
+    }
     },
     "setup": [
         {

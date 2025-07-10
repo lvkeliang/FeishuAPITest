@@ -1,19 +1,19 @@
 {
-    "name": "基础系统消息测试",
-    "description": "测试发送基础系统消息",
+    "name": "基础系统消息测试_user_id",
+    "description": "测试通过user_id发送基础系统消息",
     "category": "positive",
     "request": {
         "method": "POST",
         "endpoint": "/open-apis/im/v1/messages",
         "query_params": {
-            "receive_id_type": "open_id"
+            "receive_id_type": "user_id"
         },
         "headers": {
             "Content-Type": "application/json",
             "Authorization": "Bearer $access_token$"
         },
         "body": {
-            "receive_id": "$open_id$",
+            "receive_id": "$user_id$",
             "msg_type": "system",
             "content": {
                 "__needs_json_encode": true,
@@ -60,8 +60,8 @@
             "save_to": "access_token"
         },
         {
-            "action": "get_open_id",
-            "save_to": "open_id"
+            "action": "get_user_id",
+            "save_to": "user_id"
         },
         {
             "action": "generate_uuid",

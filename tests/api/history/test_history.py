@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from typing import Dict, Any
@@ -54,21 +56,11 @@ def prepared_test_case(request):
 
 # 具体消息类型的测试
 # @pytest.mark.skip(reason="正在开发其他的测试")
-@case_test_type("common")
-def test_history(client, prepared_test_case, container_info):
-    container_id_type, container_id = container_info
-    """通用历史消息测试"""
+@case_test_type("container")
+def test_history_container(client, prepared_test_case):
     with allure.step("Step 1: 准备测试用例"):
         test_data = prepared_test_case
         request_data = test_data["request"]
-
-        # --- 动态注入参数 ---
-        # 1. 注入 container_id_type 到查询参数
-        query_params = request_data.get("query_params", {})
-        query_params["container_id_type"] = container_id_type  # 覆盖或新增
-
-        if test_data["original_case"].category == "positive":
-            query_params["container_id"] = container_id  # 覆盖或新增
 
     with allure.step("Step 2: 发送请求"):
         # 发送请求
@@ -83,28 +75,28 @@ def test_history(client, prepared_test_case, container_info):
         # 将响应保存到测试上下文中，供teardown使用
         pytest.api_response = response
 
-        with allure.step("Step 3: 验证响应"):
-            # 验证响应
-            expected = test_data["expected"]
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
 
-            # 1. 验证状态码
-            ResponseValidator.validate_status_code(response, expected["status_code"])
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
 
-            # 2. 验证响应头
-            if expected.get("headers"):
-                ResponseValidator.validate_headers(response, expected["headers"])
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
 
-            # 3. 验证响应体Schema
-            if expected.get("schema"):
-                ResponseValidator.validate_schema(response, expected["schema"])
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
 
-            # 4. 验证响应体具体字段
-            if expected.get("body"):
-                # 判断是否为错误响应（反向用例）
-                if test_data["original_case"].category == "negative" or response.status_code >= 400:
-                    ResponseValidator.validate_error_response(response, expected["body"])
-                else:
-                    ResponseValidator.validate_body(response, expected["body"])
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
 
 
 # 话题目前不支持通过strart_time和end_time来查询，当container_id_type为thread_id时，接口会无视strart_time和end_time这两个参数正常返回
@@ -121,9 +113,214 @@ def test_history_time(client, prepared_test_case, container_info):
         # 1. 注入 container_id_type 到查询参数
         query_params = request_data.get("query_params", {})
         query_params["container_id_type"] = container_id_type  # 覆盖或新增
+        query_params["container_id"] = container_id  # 覆盖或新增
 
-        if test_data["original_case"].category == "positive":
-            query_params["container_id"] = container_id  # 覆盖或新增
+    with allure.step("Step 2: 发送请求"):
+        original_sort = query_params.get("sort_type", "ByCreateTimeAsc")
+        # 发送请求
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=request_data.get("query_params"),
+            headers=request_data.get("headers"),
+            json=request_data.get("body")
+        )
+
+        # 将响应保存到测试上下文中，供teardown使用
+        pytest.api_response = response
+
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
+
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
+
+    # 话题目前不支持通过strart_time和end_time来查询，当container_id_type为thread_id时，接口会无视strart_time和end_time这两个参数正常返回
+    if test_data["original_case"].category == "positive" and container_id_type != "thread":
+        with allure.step("Step 4: 验证消息时间范围"):
+            data = response.json().get("data", {})
+
+            # 获取请求中的时间范围（未设置则使用默认值）
+            start_time = int(query_params.get("start_time", "0"))
+            end_time = int(query_params.get("end_time", str(int(time.time()))))
+
+            # 记录用于断言的时间范围
+            pytest.time_range = (start_time, end_time)
+
+            if data.get("items"):
+                for msg in data["items"]:
+                    create_time = int(msg["create_time"]) // 1000  # 转换为秒级时间戳
+
+                    # 验证消息时间在指定范围内
+                    assert start_time <= create_time <= end_time, (
+                        f"消息 {msg['message_id']} 创建时间 {create_time} "
+                        f"超出范围 [{start_time}, {end_time}]"
+                    )
+
+                    # # 额外打印调试信息
+                    # print(f"消息ID: {msg['message_id']} | "
+                    #       f"创建时间: {datetime.fromtimestamp(create_time)} | "
+                    #       f"类型: {msg['msg_type']}")
+
+
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_test_type("page_size")
+def test_history_page_size(client, prepared_test_case, container_info):
+    container_id_type, container_id = container_info
+    """通用历史消息测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
+
+        # --- 动态注入参数 ---
+        # 1. 注入 container_id_type 到查询参数
+        query_params = request_data.get("query_params", {})
+        query_params["container_id_type"] = container_id_type  # 覆盖或新增
+        query_params["container_id"] = container_id  # 覆盖或新增
+
+    with allure.step("Step 2: 发送请求"):
+        original_sort = query_params.get("sort_type", "ByCreateTimeAsc")
+        # 发送请求
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=request_data.get("query_params"),
+            headers=request_data.get("headers"),
+            json=request_data.get("body")
+        )
+
+        # 将响应保存到测试上下文中，供teardown使用
+        pytest.api_response = response
+
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
+
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
+
+    if test_data["original_case"].category == "positive":
+        with allure.step("Step 4: 验证分页数据数量方式"):
+            original_page_size = int(query_params.get("page_size", 20))
+            data1 = response.json()["data"]
+            # 验证数据条数
+            assert data1["has_more"] is True, "应有更多数据"
+            assert "page_token" in data1, "缺少分页令牌"
+            assert len(data1["items"]) == original_page_size, f"预期返回{original_page_size}条数据"
+
+
+# @pytest.mark.skip(reason="正在开发其他的测试")
+@case_test_type("sort_type")
+def test_history_sort_type(client, prepared_test_case, container_info):
+    container_id_type, container_id = container_info
+    """通用历史消息测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
+
+        # --- 动态注入参数 ---
+        # 1. 注入 container_id_type 到查询参数
+        query_params = request_data.get("query_params", {})
+        query_params["container_id_type"] = container_id_type  # 覆盖或新增
+        query_params["container_id"] = container_id  # 覆盖或新增
+
+    with allure.step("Step 2: 发送请求"):
+        original_sort = query_params.get("sort_type", "ByCreateTimeAsc")
+        # 发送请求
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=request_data.get("query_params"),
+            headers=request_data.get("headers"),
+            json=request_data.get("body")
+        )
+
+        # 将响应保存到测试上下文中，供teardown使用
+        pytest.api_response = response
+
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
+
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
+
+    if test_data["original_case"].category == "positive":
+        with allure.step("Step 4: 验证排序方式"):
+            # 验证排序方式
+            data = response.json()["data"]
+
+            # 验证实际排序方式仍为原始排序
+            first_item_create_time = data["items"][0]["create_time"]
+            last_item_create_time = data["items"][-1]["create_time"]
+
+            if original_sort == "ByCreateTimeAsc":
+                assert first_item_create_time < last_item_create_time, "应保持升序排列"
+            else:
+                assert first_item_create_time > last_item_create_time, "应保持降序排列"
+
+
+def _generic_history_test(client, prepared_test_case, container_info):
+    container_id_type, container_id = container_info
+    """通用历史消息测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
+
+        # --- 动态注入参数 ---
+        # 1. 注入 container_id_type 到查询参数
+        query_params = request_data.get("query_params", {})
+        query_params["container_id_type"] = container_id_type  # 覆盖或新增
+        query_params["container_id"] = container_id  # 覆盖或新增
 
     with allure.step("Step 2: 发送请求"):
         # 发送请求
@@ -138,28 +335,28 @@ def test_history_time(client, prepared_test_case, container_info):
         # 将响应保存到测试上下文中，供teardown使用
         pytest.api_response = response
 
-        with allure.step("Step 3: 验证响应"):
-            # 验证响应
-            expected = test_data["expected"]
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
 
-            # 1. 验证状态码
-            ResponseValidator.validate_status_code(response, expected["status_code"])
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
 
-            # 2. 验证响应头
-            if expected.get("headers"):
-                ResponseValidator.validate_headers(response, expected["headers"])
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
 
-            # 3. 验证响应体Schema
-            if expected.get("schema"):
-                ResponseValidator.validate_schema(response, expected["schema"])
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
 
-            # 4. 验证响应体具体字段
-            if expected.get("body"):
-                # 判断是否为错误响应（反向用例）
-                if test_data["original_case"].category == "negative" or response.status_code >= 400:
-                    ResponseValidator.validate_error_response(response, expected["body"])
-                else:
-                    ResponseValidator.validate_body(response, expected["body"])
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
 
 
 # @pytest.mark.skip(reason="正在开发其他的测试")
@@ -251,7 +448,6 @@ def test_history_pagination(client, prepared_test_case, container_info):
         if not data3["has_more"]:
             assert len(data3["items"]) <= modified_page_size, f"预期返回{modified_page_size}条数据"
 
-
     with allure.step("Step 5: 正常分页验证连续性"):
         valid_params = query_params.copy()
         valid_params["page_token"] = data1["page_token"]
@@ -279,3 +475,26 @@ def test_history_pagination(client, prepared_test_case, container_info):
         # 末页验证
         if not data4["has_more"]:
             assert len(data4["items"]) <= original_page_size
+
+    with allure.step("Step 6: 验证非法page_token"):
+        invalid_params = query_params.copy()
+        invalid_params["page_token"] = "invalid_page_token"
+
+        print("\n测试非法page_token参数:")
+        print(f"原始token: {data1['page_token']}")
+        print(f"使用非法token: {invalid_params['page_token']}")
+
+        response5 = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=invalid_params,
+            headers=request_data.get("headers")
+        )
+
+        # 处理其他可能的错误响应
+        error_data = response5.json()
+        print(f"错误响应: {error_data}")
+
+        assert response5.status_code == 400, "预期400状态码"
+        assert error_data.get("code") == 230001, "预期参数错误码"
+        assert "page_token" in error_data.get("msg", "").lower()

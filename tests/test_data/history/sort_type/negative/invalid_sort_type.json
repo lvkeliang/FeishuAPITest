@@ -1,15 +1,14 @@
 {
-  "name": "获取分页历史消息_默认参数",
-  "description": "测试获取分页历史消息的基本功能，使用默认参数",
-  "category": "positive",
+  "name": "获取历史消息_sort_type非法值",
+  "description": "测试sort_type传入非法枚举值时的处理",
+  "category": "negative",
   "request": {
     "method": "GET",
     "endpoint": "/open-apis/im/v1/messages",
     "query_params": {
       "container_id_type": "chat",
       "container_id": "$chat_id$",
-      "sort_type": "ByCreateTimeAsc",
-      "start_time": "$target_time$",
+      "sort_type": "InvalidSortType",
       "page_size": 5
     },
     "headers": {
@@ -18,20 +17,18 @@
     }
   },
   "expected": {
-    "status_code": 200,
+    "status_code": 400,
     "headers": {
       "Content-Type": "application/json"
     },
     "body": {
-            "code": 0,
-            "msg": "success",
-            "data": {
-                "@has_key": "has_more",
-                "items": {
-                "@not_empty": true
-            }
-            }
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
         }
+    }
   },
   "setup": [
     {
@@ -41,11 +38,6 @@
     {
       "action": "get_chat_id",
       "save_to": "chat_id"
-    },
-    {
-      "action": "get_timestamp",
-      "save_to": "target_time",
-      "offset_days": -5
     }
   ]
 }

@@ -1,0 +1,48 @@
+{
+  "name": "时间范围_未来时间",
+  "description": "验证系统对超过当前时间的查询返回空结果",
+  "category": "positive",
+  "request": {
+    "method": "GET",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "container_id_type": "chat",
+      "container_id": "$group_chat_id$",
+      "start_time": "invalid start time",
+      "end_time": "$future_end$"
+    },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Bearer $tenant_access_token$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "tenant_access_token"
+    },
+    {
+      "action": "get_chat_id",
+      "save_to": "group_chat_id",
+      "args": {
+        "type": "group"
+      }
+    },
+    {
+      "action": "get_timestamp",
+      "save_to": "future_end",
+      "offset_days": 2
+    }
+  ]
+}
