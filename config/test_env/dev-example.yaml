@@ -20,6 +20,10 @@ test_groups:
     # 该chat_id标识群组对话
     chat_id: "your_chat_id"
 
+test_threads:
+  - name: "测试话题"
+    thread_id: "your_thread_id"
+
 # API特定配置
 apis:
   message:
