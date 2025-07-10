@@ -3,6 +3,7 @@ import pytest
 from typing import Dict, Any
 from tests.client.client import feishu_client
 from tests.test_data.case_loader import test_case_loader
+from tests.utils.response_validator import ResponseValidator
 
 
 # 装饰器标识container_id_type
@@ -79,45 +80,31 @@ def test_history(client, prepared_test_case, container_info):
             json=request_data.get("body")
         )
 
-    # 将响应保存到测试上下文中，供teardown使用
-    pytest.api_response = response
+        # 将响应保存到测试上下文中，供teardown使用
+        pytest.api_response = response
 
-    with allure.step("Step 3: 验证响应"):
-        # 验证响应
-        expected = test_data["expected"]
+        with allure.step("Step 3: 验证响应"):
+            # 验证响应
+            expected = test_data["expected"]
 
-        # 1. 验证状态码
-        assert response.status_code == expected["status_code"], \
-            f"状态码不匹配，期望 {expected['status_code']}，实际 {response.status_code}"
+            # 1. 验证状态码
+            ResponseValidator.validate_status_code(response, expected["status_code"])
 
-        # 2. 验证响应头
-        # if expected.get("headers"):
-        #     for header, value in expected["headers"].items():
-        #         assert header in response.headers, f"缺少响应头 {header}"
-        #         assert response.headers[header] == value, \
-        #             f"响应头 {header} 不匹配，期望 {value}，实际 {response.headers[header]}"
+            # 2. 验证响应头
+            if expected.get("headers"):
+                ResponseValidator.validate_headers(response, expected["headers"])
 
-        # 3. 验证响应体
-        # response_json = response.json()
+            # 3. 验证响应体Schema
+            if expected.get("schema"):
+                ResponseValidator.validate_schema(response, expected["schema"])
 
-        # 3.1 验证schema
-        # if expected.get("schema"):
-        #     validate_schema(response_json, expected["schema"])
-
-        # 3.2 验证具体字段
-        # if expected.get("body"):
-        #     for field_path, expected_value in expected["body"].items():
-        #         if field_path.startswith("@") and field_path.endswith("@"):
-        #             # 特殊验证指令
-        #             directive = field_path[1:-1]
-        #             if directive == "contains":
-        #                 assert expected_value in str(response_json), \
-        #                     f"响应中未找到预期内容: {expected_value}"
-        #         else:
-        #             # 普通字段验证
-        #             actual_value = _get_nested_value(response_json, field_path)
-        #             assert actual_value == expected_value, \
-        #                 f"字段 {field_path} 不匹配，期望 {expected_value}，实际 {actual_value}"
+            # 4. 验证响应体具体字段
+            if expected.get("body"):
+                # 判断是否为错误响应（反向用例）
+                if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                    ResponseValidator.validate_error_response(response, expected["body"])
+                else:
+                    ResponseValidator.validate_body(response, expected["body"])
 
 
 # 话题目前不支持通过strart_time和end_time来查询，当container_id_type为thread_id时，接口会无视strart_time和end_time这两个参数正常返回
@@ -148,18 +135,34 @@ def test_history_time(client, prepared_test_case, container_info):
             json=request_data.get("body")
         )
 
-    # 将响应保存到测试上下文中，供teardown使用
-    pytest.api_response = response
+        # 将响应保存到测试上下文中，供teardown使用
+        pytest.api_response = response
 
-    with allure.step("Step 3: 验证响应"):
-        # 验证响应
-        expected = test_data["expected"]
+        with allure.step("Step 3: 验证响应"):
+            # 验证响应
+            expected = test_data["expected"]
 
-        # 1. 验证状态码
-        assert response.status_code == expected["status_code"], \
-            f"状态码不匹配，期望 {expected['status_code']}，实际 {response.status_code}"
+            # 1. 验证状态码
+            ResponseValidator.validate_status_code(response, expected["status_code"])
+
+            # 2. 验证响应头
+            if expected.get("headers"):
+                ResponseValidator.validate_headers(response, expected["headers"])
+
+            # 3. 验证响应体Schema
+            if expected.get("schema"):
+                ResponseValidator.validate_schema(response, expected["schema"])
+
+            # 4. 验证响应体具体字段
+            if expected.get("body"):
+                # 判断是否为错误响应（反向用例）
+                if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                    ResponseValidator.validate_error_response(response, expected["body"])
+                else:
+                    ResponseValidator.validate_body(response, expected["body"])
 
 
+# @pytest.mark.skip(reason="正在开发其他的测试")
 @case_test_type("pagination")
 def test_history_pagination(client, prepared_test_case, container_info):
     container_id_type, container_id = container_info
@@ -276,19 +279,3 @@ def test_history_pagination(client, prepared_test_case, container_info):
         # 末页验证
         if not data4["has_more"]:
             assert len(data4["items"]) <= original_page_size
-
-
-
-# def history_pagination(client):
-#     # 5. 异常分页测试（无效token）
-#     with pytest.raises(APIError) as exc:
-#         client.get(
-#             "/open-apis/im/v1/messages",
-#             params={
-#                 "container_id_type": "chat",
-#                 "container_id": chat_id,
-#                 "page_token": "invalid_token_xxx"
-#             },
-#             headers={"Authorization": f"Bearer {token}"}
-#         )
-#     assert exc.value.code == 230001, "预期分页令牌错误"
