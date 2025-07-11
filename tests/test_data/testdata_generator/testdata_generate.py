@@ -140,12 +140,12 @@ def call_doubao_api(prompt):
     调用豆包API生成测试数据
     """
     headers = {
-        "Authorization": f"Bearer {API_KEY}",
+        "Authorization": f"Bearer {DOUBAO_API_KEY}",
         "Content-Type": "application/json"
     }
 
     payload = {
-        "model": MODEL,
+        "model": DOUBAO_MODEL,
         "messages": [
             {
                 "role": "user",
