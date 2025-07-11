@@ -1,0 +1,69 @@
+{
+  "name": "富文本嵌套结构测试",
+  "description": "测试 post 消息中 quote 嵌套 quote 的行为",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "嵌套结构测试",
+          "content": [
+            [
+              {
+                "tag": "quote",
+                "content": [
+                  [
+                    {
+                      "tag": "text",
+                      "text": "外层"
+                    },
+                    {
+                      "tag": "quote",
+                      "content": [
+                        [
+                          {
+                            "tag": "text",
+                            "text": "内层"
+                          }
+                        ]
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

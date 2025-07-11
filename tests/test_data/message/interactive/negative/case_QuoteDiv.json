@@ -1,0 +1,51 @@
+{
+  "name": "异常_多层嵌套 div",
+  "description": "div 组件中嵌套另一个 div，测试嵌套限制",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content_json": {
+        "type": "message",
+        "elements": [
+          {
+            "tag": "div",
+            "elements": [
+              {
+                "tag": "div",
+                "elements": [
+                  {
+                    "tag": "plain_text",
+                    "content": "嵌套 div 内容"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  }
+}

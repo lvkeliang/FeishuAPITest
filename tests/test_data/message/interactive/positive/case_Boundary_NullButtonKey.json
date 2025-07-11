@@ -1,0 +1,51 @@
+{
+  "name": "button 缺少 key 测试",
+  "description": "构造缺 key 字段的 button，验证接口校验",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "schema": "2.0",
+        "elements": [
+          {
+            "tag": "button",
+            "text": {
+              "tag": "plain_text",
+              "content": "无 key 按钮"
+            },
+            "type": "default"
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

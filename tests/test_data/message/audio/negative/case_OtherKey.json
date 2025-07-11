@@ -1,0 +1,55 @@
+{
+  "name": "他人上传的 file_key",
+  "description": "使用非本人上传的音频文件 key，验证是否拒绝发送",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "audio",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$others_file_key$"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    } 
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "get_other_user_file_key",
+      "file_type": "opus",
+      "save_to": "others_file_key"
+    }
+  ]
+}

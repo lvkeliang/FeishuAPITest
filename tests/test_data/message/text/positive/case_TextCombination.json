@@ -1,0 +1,56 @@
+{
+  "name": "多段文本元素组合测试",
+  "description": "发送包含多个连续 text 元素的消息，验证 UI 渲染多个文本段落",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "多段文本元素组合测试",
+          "content": [
+            [
+              { "tag": "text", "text": "第一段文本。" }
+            ],
+            [
+              { "tag": "text", "text": "第二段文本。" }
+            ],
+            [
+              { "tag": "text", "text": "第三段文本。" }
+            ]
+          ]
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "msg_type": "post",
+        "deleted": false,
+        "updated": false,
+        "body.content.zh_cn.content": "@contains text"
+      }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

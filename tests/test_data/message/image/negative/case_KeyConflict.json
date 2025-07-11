@@ -1,0 +1,41 @@
+{
+  "name": "多 image_key 字段冲突测试",
+  "description": "发送图片消息时，content 中重复包含多个 image_key 字段，验证唯一性校验",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": { "receive_id_type": "open_id" },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "image",
+      "content": {
+        "__needs_json_encode": true,
+        "image_key": "$uploaded_image_key$",
+        "image_key": "another_image_key"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" },
+    { "action": "upload_image", "save_to": "uploaded_image_key", "image_path": "tests/test_data/message/image/image/image1.png", "image_type": "message" }
+  ]
+}

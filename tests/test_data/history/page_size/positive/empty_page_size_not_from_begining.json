@@ -1,0 +1,49 @@
+{
+    "name": "不从头开始获取分页历史消息_page_size空值测试",
+    "description": "不从头开始获取分页历史消息_page_size空值测试",
+    "category": "positive",
+    "request": {
+        "method": "GET",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "container_id_type": "chat",
+            "container_id": "$chat_id$",
+            "start_time": "$start_time$"
+        },
+        "headers": {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Bearer $tenant_access_token$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "@has_key": "has_more",
+                "items": {
+                "@not_empty": true
+            }
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "tenant_access_token"
+        },
+        {
+            "action": "get_chat_id",
+            "save_to": "chat_id"
+        },
+    {
+      "action": "get_timestamp",
+      "save_to": "start_time",
+      "offset_days": -1
+    }
+    ]
+}

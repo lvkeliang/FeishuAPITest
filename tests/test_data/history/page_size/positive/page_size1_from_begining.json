@@ -1,0 +1,44 @@
+{
+    "name": "从头开始获取分页历史消息_page_size边界测试1",
+    "description": "从头开始获取分页历史消息_page_size边界测试",
+    "category": "positive",
+    "request": {
+        "method": "GET",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "container_id_type": "chat",
+            "container_id": "$chat_id$",
+            "page_size": 1
+        },
+        "headers": {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Bearer $tenant_access_token$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "@has_key": "has_more",
+                "items": {
+                "@not_empty": true
+            }
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "tenant_access_token"
+        },
+        {
+            "action": "get_chat_id",
+            "save_to": "chat_id"
+        }
+    ]
+}

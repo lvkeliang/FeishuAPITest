@@ -1,0 +1,62 @@
+{
+  "name": "UI_按钮样式展示",
+  "description": "展示 primary、default、danger 三种按钮",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content_json": {
+        "type": "message",
+        "elements": [
+          {
+            "tag": "action",
+            "actions": [
+              {
+                "tag": "button",
+                "text": {
+                  "tag": "plain_text",
+                  "content": "主按钮"
+                },
+                "type": "primary"
+              },
+              {
+                "tag": "button",
+                "text": {
+                  "tag": "plain_text",
+                  "content": "默认按钮"
+                },
+                "type": "default"
+              },
+              {
+                "tag": "button",
+                "text": {
+                  "tag": "plain_text",
+                  "content": "危险按钮"
+                },
+                "type": "danger"
+              }
+            ]
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "code": 0,
+      "msg": "success"
+    }
+  }
+}

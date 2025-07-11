@@ -1,0 +1,79 @@
+{
+    "name": "基础系统消息测试_user_id",
+    "description": "测试通过user_id发送基础系统消息",
+    "category": "positive",
+    "request": {
+        "method": "POST",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "receive_id_type": "user_id"
+        },
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $access_token$"
+        },
+        "body": {
+            "receive_id": "$user_id$",
+            "msg_type": "system",
+            "content": {
+                "__needs_json_encode": true,
+                "type": "divider",
+                "params": {
+                    "divider_text": {
+                        "text": "~~晚上好~~",
+                        "i18n_text": {
+                            "zh_CN": "~~晚上好~~",
+                            "en_US": "~~Good Night~~"
+                        }
+                    }
+                },
+                "options": {
+                    "need_rollup": true
+                }
+            },
+            "uuid": "$random_uuid$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "schema": "message_response_schema",
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "msg_type": "text",
+                "deleted": false,
+                "updated": false,
+                "sender.id_type": "app_id",
+                "body.content": {
+                    "@contains": "test content"
+                }
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "access_token"
+        },
+        {
+            "action": "get_user_id",
+            "save_to": "user_id"
+        },
+        {
+            "action": "generate_uuid",
+            "save_to": "random_uuid"
+        }
+    ],
+    "teardown": [
+        {
+            "action": "delete_message",
+            "params": {
+                "message_id": "$response.data.message_id$"
+            }
+        }
+    ]
+}

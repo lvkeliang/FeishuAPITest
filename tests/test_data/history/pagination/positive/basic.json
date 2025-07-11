@@ -9,6 +9,7 @@
       "container_id_type": "chat",
       "container_id": "$chat_id$",
       "sort_type": "ByCreateTimeAsc",
+      "start_time": "$target_time$",
       "page_size": 5
     },
     "headers": {
@@ -40,6 +41,11 @@
     {
       "action": "get_chat_id",
       "save_to": "chat_id"
+    },
+    {
+      "action": "get_timestamp",
+      "save_to": "target_time",
+      "offset_days": -5
     }
   ]
 }

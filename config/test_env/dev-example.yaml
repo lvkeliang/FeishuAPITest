@@ -1,0 +1,42 @@
+# 开发环境配置
+feishu:
+  base_url: "https://open.feishu.cn"
+  app_id: "your_app_id"
+  app_secret: "your_app_secret"
+  token_expire: 5400  # token过期时间(秒)
+
+# 测试账号
+test_accounts:
+  - name: "张麻子"
+    open_id: "your_open_id"
+    # 该chat_id标识机器人与用户的对话
+    chat_id: "your_chat_id"
+    union_id: "your_union_id"
+    user_id : "your_user_id"
+    email: "your_email"
+    mobile: "your_mobile"
+    # 分享的群聊
+    share_chat: "your_group_chat_id"
+    # 分享的用户
+    share_user: "your_open_id"
+
+test_groups:
+  - name: "测试群组"
+    # 该chat_id标识群组对话
+    chat_id: "your_group_chat_id"
+
+test_threads:
+  - name: "测试话题"
+    # 该chat_id标识群组对话
+    thread_id: "your_thread_id"
+
+# API特定配置
+apis:
+  message:
+    rate_limit: 5    # QPS限制
+    max_length: 150   # 最大长度(KB)
+    allowed_types:    # 允许的消息类型
+      - "text"
+      - "post"
+      - "image"
+      - "interactive"

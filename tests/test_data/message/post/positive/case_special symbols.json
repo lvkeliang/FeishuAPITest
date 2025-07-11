@@ -1,0 +1,93 @@
+{
+  "name": "富文本特殊字符测试",
+  "description": "测试富文本消息中包含特殊符号和转义字符（如@#￥%&*🐱‍🏍）",
+  "category": "positive",
+  "parameters": [
+    {
+      "receive_id_type": "open_id",
+      "receive_id": "$open_id$",
+      "id_setup": {
+        "action": "get_open_id",
+        "save_to": "open_id"
+      }
+    }
+  ],
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "{{receive_id_type}}"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "{{receive_id}}",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "特殊字符测试",
+          "content": [
+            [
+              {
+                "tag": "text",
+                "text": "测试包含特殊字符：@#￥%&*🐱‍🏍 ~!^`|\\{}[]<>\"'；："
+              }
+            ],
+            [
+              {
+                "tag": "text",
+                "text": "转义测试：\"双引号\"、\\反斜杠、\n换行、\t制表符"
+              }
+            ]
+          ]
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "schema": "message_response_schema",
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "msg_type": "post",
+        "deleted": false,
+        "updated": false,
+        "sender.id_type": "app_id",
+        "body.content": {
+          "@contains": "特殊字符"
+        }
+      }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    }
+  ],
+  "teardown": [
+    {
+      "action": "delete_message",
+      "params": {
+        "message_id": "$response.data.message_id$"
+      }
+    }
+  ]
+}

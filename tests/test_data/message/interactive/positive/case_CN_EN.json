@@ -1,0 +1,78 @@
+{
+  "name": "卡片消息多语言展示",
+  "description": "设置 zh_cn 和 en_us，实现语言优先级切换",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "schema": "2.0",
+        "default_i18n_lang": "zh_cn",
+        "i18n": {
+          "zh_cn": {
+            "header": {
+              "title": {
+                "tag": "plain_text",
+                "content": "中文标题"
+              }
+            },
+            "elements": [
+              {
+                "tag": "div",
+                "text": {
+                  "tag": "plain_text",
+                  "content": "这是一条中文内容。"
+                }
+              }
+            ]
+          },
+          "en_us": {
+            "header": {
+              "title": {
+                "tag": "plain_text",
+                "content": "English Title"
+              }
+            },
+            "elements": [
+              {
+                "tag": "div",
+                "text": {
+                  "tag": "plain_text",
+                  "content": "This is English content."
+                }
+              }
+            ]
+          }
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

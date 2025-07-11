@@ -1,0 +1,43 @@
+{
+  "name": "获取历史消息_sort_type非法值",
+  "description": "测试sort_type传入非法枚举值时的处理",
+  "category": "negative",
+  "request": {
+    "method": "GET",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "container_id_type": "chat",
+      "container_id": "$chat_id$",
+      "sort_type": "InvalidSortType",
+      "page_size": 5
+    },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Bearer $tenant_access_token$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "tenant_access_token"
+    },
+    {
+      "action": "get_chat_id",
+      "save_to": "chat_id"
+    }
+  ]
+}

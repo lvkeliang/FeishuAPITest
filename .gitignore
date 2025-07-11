@@ -10,3 +10,6 @@ __pycache__/
 *.pyo
 *.pyd
 *.pyi
+
+.DS_Store
+**/.DS_Store

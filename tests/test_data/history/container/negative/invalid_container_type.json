@@ -1,0 +1,41 @@
+{
+    "name": "获取历史消息_无效容器类型",
+    "description": "测试使用无效容器类型获取历史消息",
+    "category": "negative",
+    "request": {
+        "method": "GET",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "container_id_type": "invalid_container_type",
+            "container_id": "$chat_id$"
+        },
+        "headers": {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Bearer $tenant_access_token$"
+        }
+    },
+    "expected": {
+        "status_code": 400,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "tenant_access_token"
+        },
+        {
+            "action": "get_chat_id",
+            "save_to": "chat_id"
+        }
+    ]
+}

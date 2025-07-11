@@ -1,0 +1,58 @@
+{
+  "name": "幂等_UUID重复发送_内容不一致",
+  "description": "相同 UUID，修改内容发送请求，预期返回冲突",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content_json": {
+        "type": "message",
+        "elements": [
+          {
+            "tag": "plain_text",
+            "content": "幂等性测试：相同UUID但内容不一致"
+          }
+        ]
+      },
+      "uuid": "$shared_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "shared_uuid"
+    },
+    {
+      "action": "send_conflict_request_first"
+    }
+  ]
+}

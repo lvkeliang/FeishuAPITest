@@ -1,0 +1,44 @@
+{
+  "name": "音频消息-多人群发",
+  "description": "向多个 open_id 群发相同音频消息",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$receiver_id$",
+      "msg_type": "audio",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$uploaded_file_key$"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "code": 0,
+      "msg": "success"
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_ids", "save_to": "receiver_id_list" },
+    { "action": "generate_uuid", "save_to": "random_uuid" },
+    {
+      "action": "upload_file",
+      "save_to": "uploaded_file_key",
+      "file_path": "tests/test_data/message/audio/audio/sample.opus",
+      "file_type": "opus"
+    }
+  ],
+  "teardown": []
+}
