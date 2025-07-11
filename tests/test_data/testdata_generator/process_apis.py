@@ -3,17 +3,13 @@ import csv
 import re
 import requests
 from dotenv import load_dotenv
-
-# 加载环境变量（API密钥）
-load_dotenv()
-API_KEY = os.getenv("sk-chaqlygkvqpovgczihfimcvdmcojkoxwrrclfibehohoioyc")
-API_URL = "https://api.siliconflow.cn/v1/chat/completions"
-
-# 设置token限制
-MAX_TOKENS = 10000  # 根据Deepseek-ai Pro的128K上下文，设置保守阈值
-MAX_FILE_SIZE = 20000  # 字符数限制（约等于token数）
+import yaml
 
 """
+根据api_docs下的API文档生成参数总结，以供后续生成参数样例
+cd tests/test_data/testdata_generator
+python process_apis.py
+=====================================================
 api_docs内容示例：
 api_name：send_message-text # 表示测试send_message接口下特定的text文件格式
 请求体：{
@@ -33,6 +29,28 @@ string///
 示例值："ou_7d8a6e6df7621556ce0d21922b676706ccs"
 ......
 """
+
+# 加载配置函数
+def load_config():
+    config_path = "td_env.yaml"
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"配置文件 {config_path} 不存在")
+
+    with open(config_path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
+
+
+# 加载配置
+config = load_config()
+api_config = config.get('api', {})
+
+# 使用配置
+API_KEY = api_config.get('API_KEY')
+API_URL = api_config.get('API_URL')
+MODEL = api_config.get('model', "Pro/deepseek-ai/DeepSeek-R1")  # 默认值
+MAX_TOKENS = api_config.get('MAX_TOKENS', 10000)  # 默认值
+MAX_FILE_SIZE = api_config.get('MAX_FILE_SIZE', 20000)  # 默认值
+
 def read_api_doc(file_path):
     """读取API文档文件内容，检查长度"""
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -48,12 +66,16 @@ def read_api_doc(file_path):
 def generate_prompt(api_name, api_content):
     """prompt"""
     return f"""
-你是一个专业的API测试工程师，请分析以下API文档并提取测试参数。严格按照以下要求返回：
+你是一个专业的API测试工程师，请分析以下API文档并提取测试参数，以用于批量生成测试数据。严格按照以下要求返回：
 1. 输出CSV格式，每行一个参数
 2. 包含表头：api_name,parameter_name,type,required,description,test_data_generation_guidance
 3. 参数层级使用点号表示（如content.text）
-4. 测试数据生成指导用双引号包裹，内容为逗号分隔的生成要点
-5. 只返回CSV内容，不要包含任何额外文本
+4. type: 参数的数据类型（如string, object, array等）
+5. required: 是否必填（是/否）
+6. description: 参数的简要描述（从文档中总结）
+7. test_data_generation_guidance: 测试数据生成指导，根据边界值分析、错误注入等方法生成，用双引号包裹，内容为逗号分隔的生成要点（例如：生成：1.普通文本 2.空字符串 3.XSS攻击字符串 4.多语言文本 5.带样式标签文本）
+8. 只返回CSV内容，不要包含任何额外文本
+9. API名称可能会有细分，表示该API下的细化类型，例如api_name为send_message-post时，文档中出现“api_name为send_message-post-text”，其下参数的api_name要定义为send_message-post-text
 
 API名称：{api_name}
 API文档内容：
@@ -62,8 +84,10 @@ API文档内容：
 
 
 def call_llm_api(prompt):
-    """调用Deepseek API"""
-    # 检查提示长度是否超过限制
+    """调用SiliconFlow的Deepseek-ai Pro API"""
+    # 调试输出
+    # print(f"提示长度: {len(prompt)}字符")
+
     if len(prompt) > MAX_TOKENS:
         raise ValueError(f"提示过长 ({len(prompt)}字符)，超过最大限制 {MAX_TOKENS}字符")
 
@@ -71,19 +95,38 @@ def call_llm_api(prompt):
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
+
     payload = {
-        "model": "Pro/deepseek-ai/DeepSeek-R1",
+        "model": MODEL,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.3,
-        "max_tokens": 5000
+        "max_tokens": 4000
     }
 
     try:
-        response = requests.post(API_URL, json=payload, headers=headers, timeout=30)
+        # 调试输出请求详情
+        # print("发送请求到SiliconFlow API...")
+        # print(f"请求头: Authorization: Bearer {API_KEY[:5]}...{API_KEY[-5:]}")
+        # print(f"模型: {payload['model']}")
+
+        response = requests.post(API_URL, json=payload, headers=headers, timeout=100)
+
+        # 调试输出响应状态
+        # print(f"响应状态码: {response.status_code}")
+        # if response.status_code == 401:
+        #     print("错误: 未经授权 (401 Unauthorized)")
+        #     print("可能原因:")
+        #     print("1. API密钥无效或过期")
+        #     print("2. 账户没有访问权限")
+        #     print("3. 模型名称错误")
+        #     return None
+
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"].strip()
     except Exception as e:
         print(f"API调用失败: {e}")
+        # if hasattr(e, 'response') and e.response is not None:
+        #     print(f"错误响应内容: {e.response.text[:500]}")
         return None
 
 
@@ -97,22 +140,38 @@ def parse_llm_response(response):
 def save_to_csv(data, output_file="api_test_params.csv"):
     """保存数据到CSV文件，避免重复记录"""
     existing_records = set()
+    file_exists = os.path.exists(output_file)
 
     # 读取现有记录
-    if os.path.exists(output_file):
+    if file_exists:
         with open(output_file, 'r', encoding='utf-8') as f:
             reader = csv.reader(f)
-            next(reader, None)  # 跳过表头
-            for row in reader:
-                if len(row) >= 2:
-                    existing_records.add((row[0], row[1]))  # (api_name, parameter_name)
+            try:
+                header = next(reader)  # 读取表头
+                if header != ["api_name", "parameter_name", "type", "required", "description",
+                              "test_data_generation_guidance"]:
+                    # 表头不匹配，需要重建文件
+                    file_exists = False
+                    print("警告: CSV表头不匹配，将重建文件")
+                else:
+                    for row in reader:
+                        if len(row) >= 2:
+                            existing_records.add((row[0], row[1]))  # (api_name, parameter_name)
+            except StopIteration:
+                # 空文件
+                file_exists = False
 
-    # 追加新记录
-    with open(output_file, 'a', newline='', encoding='utf-8') as f:
+    # 确定文件打开模式
+    mode = 'w' if not file_exists else 'a'
+
+    with open(output_file, mode, newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        if not os.path.exists(output_file):
+
+        # 如果是新文件或需要重建，写入表头
+        if mode == 'w':
             writer.writerow(
                 ["api_name", "parameter_name", "type", "required", "description", "test_data_generation_guidance"])
+            print(f"创建新文件并写入表头: {output_file}")
 
         new_count = 0
         for line in data:

@@ -1,0 +1,15 @@
+api:
+  API_KEY: "your_api_key"
+  API_URL: "https://api.siliconflow.cn/v1/chat/completions"
+  model: "Pro/deepseek-ai/DeepSeek-V3"
+  MAX_TOKENS: 10000
+  MAX_FILE_SIZE: 20000
+
+testdata:
+  CSV_PATH: "test_params.csv"
+  OUTPUT_PATH: "generated_test_data.csv"
+  START_ROW: 3
+  END_ROW: 4
+  DOUBAO_API_URL: "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+  API_KEY: "your_api_key"
+  MODEL: "doubao-1-5-lite-32k-250115"

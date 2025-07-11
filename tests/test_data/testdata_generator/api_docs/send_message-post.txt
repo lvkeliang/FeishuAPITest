@@ -1,0 +1,191 @@
+API_name：send_message-post # 表示测试send_message接口下特定的post文件格式
+请求体：{
+"receive_id": "oc_820faa21d7ed275b53d1727a0feaa917",
+"content": "{"zh_cn":{"title":"我是一个标题","content":[[{"tag":"text","text":"第一行 :"},{"tag":"a","href":"http://www.feishu.cn","text":"超链接"},{"tag":"at","user_id":"ou_1avnmsbv3k45jnk34j5","user_name":"tom"}],[{"tag":"img","image_key":"img_7ea74629-9191-4176-998c-2e603c9c5e8g"}],[{"tag":"text","text":"第二行:"},{"tag":"text","text":"文本测试"}],[{"tag":"img","image_key":"img_7ea74629-9191-4176-998c-2e603c9c5e8g"}]]}}",
+"msg_type": "post"
+}
+参数说明：（名称///类型///是否必填///描述）
+zh_cn, en_us///
+
+object///
+
+是///
+
+多语言配置字段。如果不需要配置多语言，则仅配置一种语言即可。
+
+zh_cn 为富文本的中文内容
+en_us 为富文本的英文内容
+注意：该字段无默认值，至少要设置一种语言。
+示例值：zh_cn
+∟ title///
+
+string///
+
+否///
+
+富文本消息的标题。
+
+默认值：空
+
+示例值：title
+∟ content///
+
+string///
+
+是///
+
+富文本消息内容。由多个段落组成（段落由[]分隔），每个段落为一个 node 列表，所支持的 node 标签类型以及对应的参数说明，参见下文的 富文本支持的标签和参数说明 章节。
+
+注意：如 示例值 所示，各类型通过 tag 参数设置。例如文本（text）设置为 "tag": "text"。tag参数有text：文本标签，
+a：超链接标签，at：@标签，img：图片标签，media：视频标签，emotion：表情标签，code_block：代码块标签，hr：分割线标签。
+示例值：[[{"tag": "text","text": "text content"}]]
+API名称：send_message-post-text # 表示测试send_message接口下特定的post格式tag为text：
+text///
+
+string///
+
+是///
+
+文本内容。
+
+示例值：test content
+style///
+
+[]string///
+
+否///
+
+文本内容样式，支持的样式有：
+
+bold：加粗
+underline：下划线
+lineThrough：删除线
+italic：斜体
+注意：
+
+默认值为空，表示无样式。
+传入的值如果不是以上可选值，则被忽略。
+示例值：["bold", "underline"]
+API_name：send_message-post-a # 表示测试send_message接口下特定的post格式tag为a：
+text///
+
+string///
+
+是///
+
+超链接的文本内容。
+
+示例值：超链接
+href///
+
+string///
+
+是///
+
+超链接地址。
+
+注意：请确保链接地址的合法性，否则消息会发送失败。
+
+示例值：https://open.feishu.cn
+style///
+
+[]string///
+
+否///
+
+超链接文本内容样式，支持的样式有：
+
+bold：加粗
+underline：下划线
+lineThrough：删除线
+italic：斜体
+注意：
+
+默认值为空，表示无样式。
+传入的值如果不是以上可选值，则被忽略。
+示例值：["bold", "italic"]
+
+API_name：send_message-post-at # 表示测试send_message接口下特定的post格式tag为at：
+user_id///
+
+string///
+
+是///
+
+用户 ID，用来指定被 @ 的用户。传入的值可以是用户的 user_id、open_id、union_id。各类 ID 获取方式参见如何获取 User ID、Open ID 和 Union ID。
+
+注意：
+
+@ 单个用户时，该字段必须传入实际用户的真实 ID。
+如需 @ 所有人，则该参数需要传入 all。
+style///
+
+[]string///
+
+否///
+
+at 文本内容样式，支持的样式有：
+
+bold：加粗
+underline：下划线
+lineThrough：删除线
+italic：斜体
+注意：
+
+默认值为空，表示无样式。
+传入的值如果不是以上可选值，则被忽略。
+示例值：["lineThrough"]
+API_name：send_message-post-img # 表示测试send_message接口下特定的post格式tag为img：
+image_key///
+
+string///
+
+是///
+
+图片 Key。通过上传图片接口可以获取到图片 Key（image_key）。
+
+示例值：d640eeea-4d2f-4cb3-88d8-c964fab53987
+API_name：send_message-post-media # 表示测试send_message接口下特定的post格式tag为media：
+file_key///
+
+string///
+
+是///
+
+视频文件的 Key。通过上传文件接口上传视频（mp4 格式）后，可以获取到视频文件 Key（file_key）。
+
+示例值：file_v2_0dcdd7d9-fib0-4432-a519-41d25aca542j
+image_key///
+
+string///
+
+否///
+
+视频封面图片的 Key。通过上传图片接口可以获取到图片 Key（image_key）。
+
+默认值：空，表示无视频封面。
+
+示例值：img_7ea74629-9191-4176-998c-2e603c9c5e8g
+API_name：send_message-post-code_block # 表示测试send_message接口下特定的post格式tag为code_block：
+language///
+
+string///
+
+否///
+
+代码块的语言类型。可选值有 PYTHON、C、CPP、GO、JAVA、KOTLIN、SWIFT、PHP、RUBY、RUST、JAVASCRIPT、TYPESCRIPT、BASH、SHELL、SQL、JSON、XML、YAML、HTML、THRIFT 等。
+
+注意：
+
+取值不区分大小写。
+不传值则默认为文本类型。
+示例值：GO
+text///
+
+string///
+
+是///
+
+代码块内容。
+
+示例值：func main() int64 {\n return 0\n}

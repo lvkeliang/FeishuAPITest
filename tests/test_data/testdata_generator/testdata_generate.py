@@ -5,21 +5,37 @@ import os
 from pathlib import Path
 import time
 import re
+import yaml
+
+# 加载配置函数
+def load_config():
+    config_path = "td_env.yaml"
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"配置文件 {config_path} 不存在")
+
+    with open(config_path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
+
+
+# 加载配置
+config = load_config()
+testdata_config = config.get('testdata', {})
+
+# 使用配置
+CSV_PATH = testdata_config.get('CSV_PATH', "api_test_params.csv")
+OUTPUT_PATH = testdata_config.get('OUTPUT_PATH', "generated_test_data.csv")
+START_ROW = testdata_config.get('START_ROW', 0)
+END_ROW = testdata_config.get('END_ROW', None)
+DOUBAO_API_URL = testdata_config.get('DOUBAO_API_URL')
+DOUBAO_API_KEY = testdata_config.get('API_KEY')
+DOUBAO_MODEL = testdata_config.get('MODEL')
 
 """
+根据test_params.csv的参数内容生成样例
+修改参数中的START_ROW，END_ROW以指定范围
 cd tests/test_data/testdata_generator
 python testdata_generate.py
 """
-# 设置参数
-CSV_PATH = "test_params.csv"  # API参数CSV文件路径
-OUTPUT_PATH = "generated_test_data.csv"  # 输出CSV文件路径
-START_ROW = 5  # 起始行号（包含）
-END_ROW = 20  # 结束行号（包含）
-
-# LLM API配置
-DOUBAO_API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
-API_KEY = "9232867e-1626-4516-9e3d-443d567d6673"
-MODEL = "doubao-1-5-lite-32k-250115"
 
 # prompt
 PROMPT_TEMPLATE = """
@@ -30,17 +46,24 @@ PROMPT_TEMPLATE = """
 {parameters_info}
 
 ### 生成要求:
+你是一个专业的API测试工程师，需要为飞书API的{api_name}接口生成测试数据。
+请使用条件组合、边界值分析和错误注入等方法，生成包含pass(正常数据)和xfail(预期失败)的测试用例。
+
+### API参数说明:
+{parameters_info}
+
+### 生成要求:
 1. 为每个参数生成多种测试数据，包括有效值和无效值
 2. 对于无法生成正确的测试用例，例如file_key，open_id等真实数据，生成无效值或空值即可
 3. 对于含有多个参数的API，可以对所有参数生成测试数据，并打包为一个content(把参数平铺，不要有上下级结构)，并在description字段说明在哪个参数上设置了无效值
-3. 使用以下方法生成测试数据:
+4. 使用以下方法生成测试数据:
    - 条件组合: 组合不同参数的边界值
    - 边界值分析: 针对数值和长度参数
    - 错误注入: 故意插入错误数据，必填的参数可设置空值
    - 等价类划分: 将输入划分为有效和无效等价类
-4. 为每个测试用例添加category标签: pass或xfail
-5. 为每个测试用例添加method标签: 使用的生成方法
-6. 为每个测试用例添加description: 简要描述测试目的
+5. 为每个测试用例添加category标签: pass或xfail
+6. 为每个测试用例添加method标签: 使用的生成方法
+7. 为每个测试用例添加description: 简要描述测试目的
 
 ### 输出格式:
 以JSON格式返回测试数据，结构如下:
@@ -66,6 +89,14 @@ PROMPT_TEMPLATE = """
     }}
   ]
 }}
+
+### 注意:
+1. 请确保输出是有效的JSON格式
+2. 所有字符串值必须使用双引号
+3. 数组元素之间必须有逗号分隔
+4. 对象键值对之间必须有逗号分隔
+5. 不要包含任何注释或额外文本
+6. 确保所有特殊字符正确转义
 """
 
 
@@ -189,7 +220,8 @@ def extract_json_from_response(content):
             json_str = json_match.group(0)
             return json.loads(json_str)
     except json.JSONDecodeError as e:
-        print(f"JSON提取失败: {e}")
+        pass
+        # print(f"JSON提取失败: {e}")
 
     return None
 
