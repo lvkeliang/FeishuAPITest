@@ -1,0 +1,42 @@
+{
+  "name": "UTF-8 编码边界字符测试",
+  "description": "发送包含 emoji、零宽不间断空格等特殊 UTF-8 字符的文本，验证 UI 渲染",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "text",
+      "content": {
+        "__needs_json_encode": true,
+        "text": "测试 emoji 😀，零宽非连接符\u200C，零宽空格\u200B，换行符\n制表符\t"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+"expected": {
+  "status_code": 200,
+  "body": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "msg_type": "text",
+      "deleted": false,
+      "updated": false
+    }
+  }
+},
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

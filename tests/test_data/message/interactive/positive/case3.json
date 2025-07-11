@@ -55,7 +55,7 @@
         {
             "action": "load_and_dump_json",
             "save_to": "json_card",
-            "json_path": "tests\\test_data\\message\\interactive\\cards\\test_card2.json"
+            "json_path": "tests/test_data/message/interactive/cards/test_card2.json"
         }
     ],
     "teardown": [

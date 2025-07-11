@@ -57,7 +57,7 @@
     {
       "action": "load_text",
       "save_to": "text",
-      "text_path": "tests\\test_data\\message\\text\\text\\testtext.txt"
+      "text_path": "tests/test_data/message/text/text/testtext.txt"
     }
   ],
   "teardown": [

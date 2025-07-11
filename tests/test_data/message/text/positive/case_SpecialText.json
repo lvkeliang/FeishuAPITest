@@ -1,0 +1,54 @@
+{
+  "name": "文本内容特殊字符测试",
+  "description": "发送包含特殊字符 & < > \\n \\t 等的文本，验证 JSON 编码和 UI 展示一致性",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "text",
+      "content": {
+        "__needs_json_encode": true,
+        "text": "特殊符号：& < > \\n \\t \" '"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "schema": "message_response_schema",
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "msg_type": "text",
+        "body.content.text": "@contains &"
+      }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    }
+  ]
+}

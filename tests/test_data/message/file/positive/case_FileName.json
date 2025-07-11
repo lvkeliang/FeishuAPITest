@@ -1,0 +1,67 @@
+{
+  "name": "设置文件名字段测试",
+  "description": "测试发送文件消息时设置自定义文件名 '测试文件.doc'",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "file",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$uploaded_file_key$",
+        "file_name": "测试文件.doc"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "code": 0,
+      "data": {
+        "file_key": "@not_empty"
+      },
+      "msg": "success"
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "upload_file",
+      "save_to": "uploaded_file_key",
+      "file_path": "tests/test_data/message/file/file/sample.doc",
+      "file_type": "doc"
+    }
+  ],
+  "teardown": [
+    {
+      "action": "delete_message",
+      "params": {
+        "message_id": "$response.data.message_id$"
+      }
+    }
+  ]
+}

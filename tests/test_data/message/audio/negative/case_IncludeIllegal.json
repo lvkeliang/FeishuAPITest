@@ -1,0 +1,57 @@
+{
+  "name": "file_name 非法字符",
+  "description": "file_name 含非法字符（如 / \\ * ? < >）应被校验",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "audio",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$uploaded_file_key$",
+        "file_name": "audio<test>?file.opus"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    } 
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "upload_file",
+      "save_to": "uploaded_file_key",
+      "file_path": "tests/test_data/message/audio/audio/sample.opus",
+      "file_type": "opus"
+    }
+  ]
+}

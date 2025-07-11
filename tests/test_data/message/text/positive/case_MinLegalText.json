@@ -1,0 +1,67 @@
+{
+  "name": "最小合法文本消息",
+  "description": "仅包含基本 text 内容的合法文本消息",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "text",
+      "content": {
+        "__needs_json_encode": true,
+        "text": "这是一个最小合法的文本消息"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "schema": "message_response_schema",
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "msg_type": "text",
+        "deleted": false,
+        "updated": false,
+        "sender.id_type": "app_id",
+        "body.content": {
+          "@contains": "这是一个最小合法的文本消息"
+        }
+      }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    }
+  ],
+  "teardown": [
+    {
+      "action": "delete_message",
+      "params": {
+        "message_id": "$response.data.message_id$"
+      }
+    }
+  ]
+}

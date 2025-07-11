@@ -1,0 +1,50 @@
+{
+  "name": "结构嵌套测试",
+  "description": "发送 text 元素中错误嵌套 children 字段，验证接口校验",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "非法结构嵌套测试",
+          "content": [
+            [
+              {
+                "tag": "text",
+                "text": "错误的嵌套",
+                "children": [
+                  { "tag": "text", "text": "不允许的子元素" }
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+"body": {
+      "code": 0,
+      "msg":"success"
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

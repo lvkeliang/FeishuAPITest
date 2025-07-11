@@ -1,0 +1,49 @@
+{
+  "name": "富文本测试 - 重复 UUID 幂等测试",
+  "description": "使用相同 UUID 重复发送富文本消息，期望服务端返回幂等处理信息",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "幂等性测试",
+          "content": [
+            [
+              { "tag": "text", "text": "测试重复 UUID 消息" }
+            ]
+          ]
+        }
+      },
+      "uuid": "$fixed_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "code": 0,
+      "msg":"success"
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    {
+      "action": "set_variable",
+      "key": "fixed_uuid",
+      "value": "123e4567-e89b-12d3-a456-426614174000"
+    }
+  ],
+  "teardown": []
+}

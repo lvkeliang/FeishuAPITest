@@ -1,0 +1,62 @@
+{
+    "name": "幂等性测试 - 重复 UUID 发送图片消息",
+    "description": "测试相同 uuid 多次请求发送相同图片消息，验证接口幂等性，应返回相同 msg_id",
+    "category": "positive",
+    "request": {
+        "method": "POST",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "receive_id_type": "open_id"
+        },
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $access_token$"
+        },
+        "body": {
+            "receive_id": "$open_id$",
+            "msg_type": "image",
+            "content_json": {
+                "image_key": "$uploaded_image_key$"
+            },
+            "uuid": "$fixed_uuid$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "schema": "message_response_schema",
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "msg_type": "image",
+                "deleted": false,
+                "updated": false,
+                "sender.id_type": "app_id"
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "access_token"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id"
+        },
+        {
+            "action": "generate_fixed_uuid",
+            "save_to": "fixed_uuid"
+        },
+        {
+            "action": "upload_image",
+            "save_to": "uploaded_image_key",
+            "image_path": "tests/test_data/message/image/image/image4.webp",
+            "image_type": "message"
+        }
+    ],
+    "teardown": []
+}
