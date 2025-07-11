@@ -1,0 +1,99 @@
+{
+  "name": "卡片消息最大组件数量测试",
+  "description": "构造含 50 个 div 的卡片消息，验证组件数量上限",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "schema": "2.0",
+        "header": {
+          "title": {
+            "tag": "plain_text",
+            "content": "组件数量边界测试（50个div）"
+          }
+        },
+        "elements": [
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 1" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 2" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 3" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 4" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 5" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 6" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 7" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 8" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 9" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 10" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 11" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 12" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 13" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 14" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 15" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 16" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 17" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 18" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 19" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 20" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 21" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 22" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 23" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 24" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 25" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 26" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 27" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 28" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 29" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 30" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 31" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 32" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 33" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 34" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 35" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 36" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 37" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 38" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 39" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 40" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 41" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 42" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 43" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 44" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 45" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 46" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 47" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 48" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 49" } },
+          { "tag": "div", "text": { "tag": "plain_text", "content": "Div 50" } }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

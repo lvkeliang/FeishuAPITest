@@ -1,0 +1,59 @@
+{
+  "name": "幂等_UUID重复发送_内容一致",
+  "description": "使用相同 UUID 重复请求，内容完全一致，验证幂等性返回",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "type": "message",
+        "elements": [
+          {
+            "tag": "plain_text",
+            "content": "幂等性测试：相同UUID内容一致"
+          }
+        ]
+      },
+      "uuid": "$shared_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "shared_uuid"
+    },
+    {
+      "action": "send_same_request_again"
+    }
+  ]
+}

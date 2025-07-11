@@ -1,0 +1,68 @@
+{
+  "name": "卡片消息 fields 组件测试",
+  "description": "展示键值对数据",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "schema": "2.0",
+        "header": {
+          "title": {
+            "tag": "plain_text",
+            "content": "fields 组件"
+          }
+        },
+        "elements": [
+          {
+            "tag": "fields",
+            "fields": [
+              {
+                "is_short": true,
+                "text": {
+                  "tag": "lark_md",
+                  "content": "**姓名：**张三"
+                }
+              },
+              {
+                "is_short": true,
+                "text": {
+                  "tag": "lark_md",
+                  "content": "**年龄：**28"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

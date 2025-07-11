@@ -1,0 +1,47 @@
+{
+  "name": "音频消息-重复UUID幂等测试",
+  "description": "发送相同 uuid 音频消息验证幂等性",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "audio",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$uploaded_file_key$"
+      },
+      "uuid": "$fixed_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "code": 0,
+      "msg": "success",
+      "data": {
+        "file_key": "@not_empty"
+      }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "fixed_uuid" },
+    {
+      "action": "upload_file",
+      "save_to": "uploaded_file_key",
+      "file_path": "tests/test_data/message/audio/audio/sample.opus",
+      "file_type": "opus"
+    }
+  ],
+  "teardown": []
+}

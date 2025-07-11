@@ -1,0 +1,49 @@
+{
+  "name": "缺少 file_key 字段",
+  "description": "发送 audio 消息时 content 中缺失 file_key 字段",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "audio",
+      "content": {
+        "__needs_json_encode": true
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+    "body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    } 
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    }
+  ]
+}

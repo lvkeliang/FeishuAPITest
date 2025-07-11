@@ -1,0 +1,48 @@
+{
+  "name": "富文本反向测试 - 错误的 receive_id_type",
+  "description": "测试 receive_id_type 为非法值时接口行为，期望接口拒绝请求",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "invalid_type"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "123456777",
+      "msg_type": "post",
+      "content": {
+        "__needs_json_encode": true,
+        "zh_cn": {
+          "title": "错误ID类型",
+          "content": [
+            [
+              { "tag": "text", "text": "非法 ID 类型测试" }
+            ]
+          ]
+        }
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

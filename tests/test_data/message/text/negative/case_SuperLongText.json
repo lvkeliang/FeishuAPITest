@@ -1,0 +1,55 @@
+{
+  "name": "超长文本字段测试",
+  "description": "发送长度超过限制的文本内容（如超过10000字符）",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "text",
+      "content": {
+        "__needs_json_encode": true,
+        "text": "$long_string_10001$"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "generate_long_string",
+      "length": 10001,
+      "save_to": "long_string_10001"
+    }
+  ]
+}

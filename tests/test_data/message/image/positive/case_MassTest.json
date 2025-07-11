@@ -1,0 +1,90 @@
+{
+    "name": "多人群发测试 - 多个 open_id 连续发送相同图片消息",
+    "description": "测试给多个不同 open_id 连续发送相同图片消息，验证接口支持多次发送",
+    "category": "positive",
+    "parameters": [
+        {
+            "receive_id_type": "open_id",
+            "receive_id_list": ["$open_id_1$", "$open_id_2$", "$open_id_3$"],
+            "id_setup": [
+                {
+                    "action": "get_open_id",
+                    "save_to": "open_id_1"
+                },
+                {
+                    "action": "get_open_id",
+                    "save_to": "open_id_2"
+                },
+                {
+                    "action": "get_open_id",
+                    "save_to": "open_id_3"
+                }
+            ]
+        }
+    ],
+    "request": {
+        "method": "POST",
+        "endpoint": "/open-apis/im/v1/messages",
+        "query_params": {
+            "receive_id_type": "open_id"
+        },
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $access_token$"
+        },
+        "body": {
+            "receive_id": "{{receive_id}}",
+            "msg_type": "image",
+            "content_json": {
+                "image_key": "$uploaded_image_key$"
+            },
+            "uuid": "$random_uuid$"
+        }
+    },
+    "expected": {
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "schema": "message_response_schema",
+        "body": {
+            "code": 0,
+            "msg": "success",
+            "data": {
+                "msg_type": "image",
+                "deleted": false,
+                "updated": false,
+                "sender.id_type": "app_id"
+            }
+        }
+    },
+    "setup": [
+        {
+            "action": "get_tenant_access_token",
+            "save_to": "access_token"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id_1"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id_2"
+        },
+        {
+            "action": "get_open_id",
+            "save_to": "open_id_3"
+        },
+        {
+            "action": "upload_image",
+            "save_to": "uploaded_image_key",
+            "image_path": "tests/test_data/message/image/image/image4.webp",
+            "image_type": "message"
+        },
+        {
+            "action": "generate_uuid",
+            "save_to": "random_uuid"
+        }
+    ],
+    "teardown": []
+}

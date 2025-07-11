@@ -1,0 +1,56 @@
+{
+  "name": "卡片标题超长测试",
+  "description": "构造标题超长（>255字符）的卡片消息，验证标题长度限制",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content": {
+        "__needs_json_encode": true,
+        "schema": "2.0",
+        "header": {
+          "title": {
+            "tag": "plain_text",
+            "content": "标题超长测试：这是一段超过 255 字符的标题，用于验证接口是否对卡片标题字段的长度做出限制。以下将使用重复字符填充直到达到超长限制：AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        "elements": [
+          {
+            "tag": "div",
+            "text": {
+              "tag": "plain_text",
+              "content": "这是卡片正文部分，用于配合超长标题测试。"
+            }
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  },
+  "setup": [
+    { "action": "get_tenant_access_token", "save_to": "access_token" },
+    { "action": "get_open_id", "save_to": "open_id" },
+    { "action": "generate_uuid", "save_to": "random_uuid" }
+  ]
+}

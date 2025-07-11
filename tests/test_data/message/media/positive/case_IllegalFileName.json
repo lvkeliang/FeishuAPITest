@@ -1,0 +1,63 @@
+{
+  "name": "媒体消息测试-file_name非法字符",
+  "description": "测试发送文件时 file_name 包含非法字符（如 / \\ ? * 等），验证文件名格式校验",
+  "category": "positive",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "media",
+      "content": {
+        "__needs_json_encode": true,
+        "file_key": "$uploaded_file_key$",
+        "file_name": "test/illegal\\name?.mp4",
+        "image_key": "$uploaded_cover_image_key$"
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "code": 0,
+      "msg":"success"
+    }
+  },
+  "setup": [
+    {
+      "action": "get_tenant_access_token",
+      "save_to": "access_token"
+    },
+    {
+      "action": "get_open_id",
+      "save_to": "open_id"
+    },
+    {
+      "action": "generate_uuid",
+      "save_to": "random_uuid"
+    },
+    {
+      "action": "upload_file",
+      "save_to": "uploaded_file_key",
+      "file_path": "tests/test_data/message/media/media/sample1.mp4",
+      "file_type": "mp4"
+    },
+    {
+      "action": "upload_image",
+      "save_to": "uploaded_cover_image_key",
+      "image_path": "tests/test_data/message/media/media/cover1.jpg",
+      "image_type": "message"
+    }
+  ]
+}

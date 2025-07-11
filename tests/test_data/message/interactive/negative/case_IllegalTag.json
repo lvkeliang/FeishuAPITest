@@ -1,0 +1,41 @@
+{
+  "name": "异常_非法 tag 值",
+  "description": "组件中使用未定义的 tag（texts）",
+  "category": "negative",
+  "request": {
+    "method": "POST",
+    "endpoint": "/open-apis/im/v1/messages",
+    "query_params": {
+      "receive_id_type": "open_id"
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $access_token$"
+    },
+    "body": {
+      "receive_id": "$open_id$",
+      "msg_type": "interactive",
+      "content_json": {
+        "type": "message",
+        "elements": [
+          {
+            "tag": "texts",
+            "content": "非法 tag 测试"
+          }
+        ]
+      },
+      "uuid": "$random_uuid$"
+    }
+  },
+  "expected": {
+    "status_code": 400,
+"body": {
+      "code": {
+        "@not_equal": 0
+      },
+      "msg": {
+          "@not_empty": true
+        }
+    }
+  }
+}
