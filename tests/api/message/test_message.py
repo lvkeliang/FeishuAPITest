@@ -69,7 +69,57 @@ def test_image_messages(client, prepared_test_case, receiver_info):
 # @pytest.mark.skip(reason="正在开发其他的测试")
 @case_msg_type("post")
 def test_post_messages(client, prepared_test_case, receiver_info):
-    _generic_message_test(feishu_client, prepared_test_case, receiver_info)
+    receive_id_type, receive_id = receiver_info
+    """通用消息发送测试"""
+    with allure.step("Step 1: 准备测试用例"):
+        test_data = prepared_test_case
+        request_data = test_data["request"]
+
+        # --- 动态注入参数 ---
+        # 1. 注入 receive_id_type 到查询参数
+        query_params = request_data.get("query_params", {})
+        query_params["receive_id_type"] = receive_id_type  # 覆盖或新增
+
+        # 2. 注入 receive_id 到请求体
+        request_body = request_data.get("body", {})
+
+        if test_data["original_case"].request.query_params["receive_id_type"] != "invalid_type":
+            request_body["receive_id"] = receive_id  # 覆盖或新增
+
+    with allure.step("Step 2: 发送请求"):
+        response = client.request(
+            method=request_data["method"],
+            endpoint=request_data["endpoint"],
+            params=query_params,  # 使用修改后的查询参数
+            headers=request_data.get("headers"),
+            json=request_body  # 使用修改后的请求体
+        )
+
+    # 将响应保存到测试上下文中，供teardown使用
+    pytest.api_response = response
+
+    with allure.step("Step 3: 验证响应"):
+        # 验证响应
+        expected = test_data["expected"]
+
+        # 1. 验证状态码
+        ResponseValidator.validate_status_code(response, expected["status_code"])
+
+        # 2. 验证响应头
+        if expected.get("headers"):
+            ResponseValidator.validate_headers(response, expected["headers"])
+
+        # 3. 验证响应体Schema
+        if expected.get("schema"):
+            ResponseValidator.validate_schema(response, expected["schema"])
+
+        # 4. 验证响应体具体字段
+        if expected.get("body"):
+            # 判断是否为错误响应（反向用例）
+            if test_data["original_case"].category == "negative" or response.status_code >= 400:
+                ResponseValidator.validate_error_response(response, expected["body"])
+            else:
+                ResponseValidator.validate_body(response, expected["body"])
 
 
 # @pytest.mark.skip(reason="正在开发其他的测试")
@@ -173,8 +223,8 @@ def _generic_message_test(client, prepared_test_case, receiver_info):
 
         # 2. 注入 receive_id 到请求体
         request_body = request_data.get("body", {})
-        if test_data["original_case"].category == "positive":
-            request_body["receive_id"] = receive_id  # 覆盖或新增
+
+        request_body["receive_id"] = receive_id  # 覆盖或新增
 
     with allure.step("Step 2: 发送请求"):
         response = client.request(

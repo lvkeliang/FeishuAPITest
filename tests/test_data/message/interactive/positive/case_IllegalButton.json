@@ -1,6 +1,6 @@
 {
-  "name": "异常_多层嵌套 div",
-  "description": "div 组件中嵌套另一个 div，测试嵌套限制",
+  "name": "异常_非法 button.type",
+  "description": "button 使用未定义的 type 类型（invalid_type）, 服务端检测到是未定义的类型就自动使用default类型来替代",
   "category": "negative",
   "request": {
     "method": "POST",
@@ -34,26 +34,24 @@
           "padding": "12px 12px 12px 12px",
           "elements": [
             {
-              "tag": "div",
+              "tag": "button",
               "text": {
                 "tag": "plain_text",
-                "content": "这是示例文本。",
-                "text_size": "normal",
-                "text_align": "center",
-                "text_color": "default",
-                "elements": [
-                  {
-                    "tag": "div",
-                    "text": {
-                      "tag": "plain_text",
-                      "content": "这是示例文本。",
-                      "text_size": "normal",
-                      "text_align": "center",
-                      "text_color": "default"
-                    }
-                  }
-                ]
-              }
+                "content": "🌞更多景点介绍"
+              },
+              "type": "invalid_type",
+              "width": "default",
+              "size": "medium",
+              "behaviors": [
+                {
+                  "type": "open_url",
+                  "default_url": "https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821",
+                  "pc_url": "",
+                  "ios_url": "",
+                  "android_url": ""
+                }
+              ],
+              "margin": "0px 0px 0px 0px"
             }
           ]
         }
@@ -62,14 +60,10 @@
     }
   },
   "expected": {
-    "status_code": 400,
+    "status_code": 200,
     "body": {
-      "code": {
-        "@not_equal": 0
-      },
-      "msg": {
-        "@not_empty": true
-      }
+      "code": 0,
+      "msg": "success"
     }
   }
 }

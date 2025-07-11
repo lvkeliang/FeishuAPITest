@@ -18,8 +18,8 @@
             "content_json": {
                 "type": "template",
                 "data": {
-                    "template_id": "AAqIBU0JrWXU4",
-                    "template_version_name": "1.0.0"
+                    "template_id": "AAqIzyuLeto43",
+                    "template_version_name": "1.0.1"
                 }
             },
             "uuid": "$random_uuid$"
